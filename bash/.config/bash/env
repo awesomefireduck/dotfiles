@@ -1,0 +1,19 @@
+#!/bin/bash
+
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+
+path_parts=("${HOME}/.cargo/bin" "$HOME/bin")
+
+for path_part in "${path_parts[@]}";
+do
+  if ! [[ ":${PATH}:" == *":${path_part}:"* ]] && [[ -d "$path_part" ]];
+  then
+    PATH="${path_part}:${PATH}";
+  fi
+done
+export PATH
+
+export EDITOR="nvim"
+export VISUAL="nvim"
+
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'

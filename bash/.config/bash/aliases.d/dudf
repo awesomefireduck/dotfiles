@@ -1,0 +1,5 @@
+#!/bin/bash
+
+alias du='du -h'
+alias df='df -h'
+alias dush='(du -schx ./* | tee dush.txt); echo -e "dush: \"$PWD\" done.\007"'

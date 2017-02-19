@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# set 256 colors and unicode support
+alias tmux="tmux -2 -u -f $HOME/.config/tmux/config"
+alias tn="tmux new-session -s $(hostname)"

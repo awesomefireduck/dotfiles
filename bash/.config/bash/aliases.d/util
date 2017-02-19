@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# prepend every line with 4 spaces for e.g. markdown
+codecat() {
+ sed -e 's/^/    /' "$@";
+}
