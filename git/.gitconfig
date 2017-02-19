@@ -1,3 +1,5 @@
 [user]
 	email = vince@vince.lol
 	name = Vince van Oosten
+[push]
+	default = simple
