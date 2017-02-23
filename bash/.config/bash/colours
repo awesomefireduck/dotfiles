@@ -1,0 +1,67 @@
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color) color_prompt=yes;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+force_color_prompt=yes
+
+
+
+txtblk="$(tput setaf 0)" # Black - Regular
+txtred="$(tput setaf 1)" # Red
+txtgrn="$(tput setaf 2)" # Green  joshua
+txtylw="$(tput setaf 3)" # Yellow
+txtblu="$(tput setaf 4)" # Blue   leidenuniv
+txtpur="$(tput setaf 5)" # Purple cesium
+txtcyn="$(tput setaf 6)" # Cyan   titanium
+txtwht="$(tput setaf 7)" # White
+bold="$(tput bold )"
+bldblk="${bold}${txtblk}" # Black - Bold
+bldred="${bold}${txtred}" # Red
+bldgrn="${bold}${txtgrn}" # Green
+bldylw="${bold}${txtylw}" # Yellow
+bldblu="${bold}${txtblu}" # Blue
+bldpur="${bold}${txtpur}" # Purple
+bldcyn="${bold}${txtcyn}" # Cyan
+bldwht="${bold}${txtwht}" # White
+unkblk="${underline}${txtblk}" # Black - Underline
+undred="${underline}${txtred}" # Red
+undgrn="${underline}${txtgrn}" # Green
+undylw="${underline}${txtylw}" # Yellow
+undblu="${underline}${txtblu}" # Blue
+undpur="${underline}${txtpur}" # Purple
+undcyn="${underline}${txtcyn}" # Cyan
+undwht="${underline}${txtwht}" # White
+bakblk="${background}${txtblk}"   # Black - Background
+bakred="${background}${txtred}"   # Red
+bakgrn="${background}${txtgrn}"   # Green
+bakylw="${background}${txtylw}"   # Yellow
+bakblu="${background}${txtblu}"  # Blue
+bakpur="${background}${txtpur}"   # Purple
+bakcyn="${background}${txtcyn}"   # Cyan
+bakwht="${background}${txtwht}"   # White
+txtrst="$(tput sgr0)"   # Text Reset
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+	# We have color support; assume it's compliant with Ecma-48
+	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+	# a case would tend to support setf rather than setaf.)
+	color_prompt=yes
+    else
+	color_prompt=
+    fi
+fi
+
+#colours for neovim
+export COLORTERM="gnome-terminal"
+
+#colour for GCC !!
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+hostsum="$(hostname | cksum | awk '{print $1}')";
+export hostnum="$((hostsum%253))";
+export hostcolor="$(tput setaf $hostnum)"

@@ -29,9 +29,16 @@ find_abs_path() {
   echo "$RESULT"
 }
 
+#find platform
+case $(uname) in
+  "Darwin") platform="OSX" ;;
+  "linux") platform="linux" ;;
+  "Linux") platform="linux" ;;
+esac
+
 bash_abs_path="$(dirname "$(find_abs_path "${BASH_SOURCE[0]}" )")"
 
-for file in "options" "env" "aliases" "completion";
+for file in "options" "env" "aliases" "completion" "colours" "prompt";
 do
   source "$bash_abs_path/.config/bash/$file"
 done

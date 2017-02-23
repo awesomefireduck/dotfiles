@@ -9,11 +9,15 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 alias grep='grep --color=auto'
 
-alias ls='ls --color=auto'
-alias l='ls -CF'
-alias la='ls -A'
-alias ll='ls -alF'
+lscolor="--color=auto"
+if [[ $platform == "OSX" ]]; then
+	lscolor="-G"
+fi
+alias ls="ls -F $lscolor"
+alias la="ls -A $lscolor"
+alias ll="ls -AlhF $lscolor";
 
+unset lscolor
 
 alias_path="$bash_abs_path/.config/bash/aliases.d"
 
