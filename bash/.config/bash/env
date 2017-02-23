@@ -6,20 +6,20 @@ path_parts=("${HOME}/.cargo/bin" "$HOME/bin")
 
 for path_part in "${path_parts[@]}";
 do
-  if ! [[ ":${PATH}:" == *":${path_part}:"* ]] && [[ -d "$path_part" ]];
-  then
-    PATH="${path_part}:${PATH}";
-  fi
+	if ! [[ ":${PATH}:" == *":${path_part}:"* ]] && [[ -d "$path_part" ]];
+	then
+		PATH="${path_part}:${PATH}";
+	fi
 done
 export PATH
 
 if command -v nvim &>/dev/null;
 then
 	EDITOR="nvim"
-else if command -v vim &>/dev/null
+elif command -v vim &>/dev/null
 then
 	EDITOR="vim"
-else if command -v vi &>/dev/null
+elif command -v vi &>/dev/null
 then
 	EDITOR="vi"
 else

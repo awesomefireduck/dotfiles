@@ -1,3 +1,8 @@
+#!/usr/bin/env bash
+# Sexy bash prompt by twolfson
+# https://github.com/twolfson/sexy-bash-prompt
+# Forked from gf3, https://gist.github.com/gf3/306785
+
 PROMPT_SYNCED_SYMBOL=" "
 PROMPT_DIRTY_SYNCED_SYMBOL=" "
 PROMPT_UNPUSHED_SYMBOL=" unpushed"
@@ -7,10 +12,6 @@ PROMPT_DIRTY_UNPULLED_SYMBOL=" unpulled"
 PROMPT_UNPUSHED_UNPULLED_SYMBOL=" unpushed & unpulled"
 PROMPT_DIRTY_UNPUSHED_UNPULLED_SYMBOL=" unpushed, unpulled"
 
-#!/usr/bin/env bash
-# Sexy bash prompt by twolfson
-# https://github.com/twolfson/sexy-bash-prompt
-# Forked from gf3, https://gist.github.com/gf3/306785
 
 # If we are on a colored terminal
 if tput setaf 1 &> /dev/null; then
