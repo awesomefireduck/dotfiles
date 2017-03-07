@@ -66,7 +66,7 @@ Plug 'vim-airline/vim-airline-themes'
 "Plug 'vim-scripts/xoria256.vim'
 "Plug 'nanotech/jellybeans.vim'
 "Plug 'altercation/vim-colors-solarized'
-Plug 'flazz/vim-colorschemes' " a whole bunch
+"Plug 'flazz/vim-colorschemes' " a whole bunch
 Plug 'NLKNguyen/papercolor-theme'
 let g:PaperColor_Light_Override = { 'background' : '#ffffff', 'cursorline' : '#dfdfdf', 'matchparen' : '#d6d6d6' , 'comment' : '#8e908c' , 'linenumbers_fg': '#FF0000', 'diffadd_fg': '#00FF00', 'diffadd_bg': '#000000'}
 "Plug 'wellsjo/wells-colorscheme.vim'
@@ -79,12 +79,12 @@ Plug 'romainl/Apprentice'
 "git branches (needs fugitive)
 "Plug 'vim-scripts/Merginal'
 " colorscheme that works for git diff. requires: syntax enable
-Plug 'andreicristianpetcu/vim-modokay'
-syntax enable
-let diffcolorscheme = 'modokay'
+"Plug 'andreicristianpetcu/vim-modokay'
+"syntax enable
+"let diffcolorscheme = 'modokay'
 
 "better commit message editing
-Plug 'rhysd/committia.vim'
+Plug 'rhysd/committia.vim',
 
 " git status in sidebar
 Plug 'airblade/vim-gitgutter'
@@ -93,7 +93,7 @@ let g:gitgutter_sign_column_always = 1
 
 "# search
 " regex search through all buffers with :Bsgrep
-Plug 'jeetsukumaran/vim-buffersaurus'
+"Plug 'jeetsukumaran/vim-buffersaurus'
 nnoremap <leader>f :Bsgrep<space>
 
 " move through visible lines with binary search-like movement
@@ -112,10 +112,10 @@ highlight BottomHighlight term=bold ctermfg=88 ctermbg=252
 "Plug 'evidanary/grepg.vim'
 
 " file finder using fzy. see 'cloudhead/neovim-fuzzy' and jhawthorn/fzy
-"Plug 'cloudhead/neovim-fuzzy'
-"nnoremap <silent> <leader>o :FuzzyOpen<CR>
-"let g:fuzzy_tabopen = 1
-"let g:fuzzy_jump_if_open = 1
+Plug 'cloudhead/neovim-fuzzy'
+nnoremap <silent> <leader>o :FuzzyOpen<CR>
+let g:fuzzy_tabopen = 1
+let g:fuzzy_jump_if_open = 1
 
 
 " open file at a line from shell:
@@ -150,7 +150,7 @@ Plug 'mxw/vim-jsx', {'for': 'javascript.jsx'}
 " rust highlighting
 Plug 'rust-lang/rust.vim', {'for': 'rust'}
 "Plug 'octol/vim-cpp-enhanced-highlight', {'for', 'cpp'}
-Plug 'tmhedberg/SimpylFold', {'for': 'python'} " better folding for python
+"Plug 'tmhedberg/SimpylFold', {'for': 'python'} " better folding for python
 Plug 'vim-scripts/indentpython.vim' , {'for': 'python'} "better indent detection
 
 
@@ -172,9 +172,15 @@ let g:NERDTrimTrailingWhitespace = 1 " Enable trimming of trailing whitespace wh
 "Plug 'pseewald/vim-anyfold'
 filetype plugin indent on
 syntax on
-let anyfold_activate=1
+let anyfold_activate=0
 set foldlevel=0
 Plug 'Konfekt/FastFold'
+let g:tex_fold_enabled=1
+let g:vimsyn_folding='af'
+let g:xml_syntax_folding = 1
+let g:php_folding = 1
+let g:perl_fold = 1
+let g:javascript_fold = 1
 
 " better session management
 Plug 'manasthakur/VimSessionist'
@@ -197,12 +203,16 @@ Plug 'thirtythreeforty/lessspace.vim'
 let g:lessspace_blacklist = ['md', 'markdown']
 
 "#prose writing
-"Plug 'vimwiki/vimwiki'
+Plug 'vimwiki/vimwiki', {'for': ['vimwiki', 'markdown', 'text']}
+nmap <Leader>W <Plug>VimwikiTabIndex
+nmap <Leader>d <Plug>VimwikiTabMakeDiaryNote
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'Konfekt/vim-guesslang' "guess the language for spell checking
 let g:guesslang_langs = [ 'en_US', 'nl_NL', 'nl' ]
-autocmd FileType text,markdown,mail setlocal spell
+autocmd FileType text,markdown,mail,gitcommit setlocal spell
+autocmd FileType help setlocal nospell
+
 
 " detect mixed indents within a file
 Plug 'vim-scripts/IndentConsistencyCop'
@@ -214,6 +224,7 @@ let g:undotree_WindowLayout = 4
 let g:undotree_DiffAutoOpen = 1
 let g:undotree_ShortIndicators = 1
 let g:undotree_DiffpanelHeight = 10
+
 " flips words around a delimiter
 Plug 'mmahnic/vim-flipwords'
 " Examples
@@ -256,6 +267,12 @@ if has('mac')
   " preview markdown on OSX
   "Plug 'junegunn/vim-xmark', { 'do': 'make' }
 endif
+
+Plug 'tweekmonster/startuptime.vim'
+
+Plug 'dodie/vim-disapprove-deep-indentation'
+
+Plug 'LnL7/vim-nix', {'for': 'nix'}
 
 call plug#end()
 
