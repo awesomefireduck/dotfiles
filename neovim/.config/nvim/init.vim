@@ -93,7 +93,7 @@ let g:gitgutter_sign_column_always = 1
 
 "# search
 " regex search through all buffers with :Bsgrep
-"Plug 'jeetsukumaran/vim-buffersaurus'
+Plug 'jeetsukumaran/vim-buffersaurus'
 nnoremap <leader>f :Bsgrep<space>
 
 " move through visible lines with binary search-like movement
