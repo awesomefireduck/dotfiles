@@ -27,3 +27,8 @@ do
 done
 
 unset alias_path
+
+if [[ -f "$bash_abs_path/.config/bash/tabcomplete_aliases" ]];
+then
+	source "$bash_abs_path/.config/bash/tabcomplete_aliases";
+fi
