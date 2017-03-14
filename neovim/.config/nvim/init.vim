@@ -274,6 +274,8 @@ Plug 'dodie/vim-disapprove-deep-indentation'
 
 Plug 'LnL7/vim-nix', {'for': 'nix'}
 
+Plug 'mattn/emmet-vim', {'for': ['html', 'css', 'javascript', 'php']}
+
 call plug#end()
 
 call arpeggio#load()
