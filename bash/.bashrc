@@ -50,3 +50,5 @@ do
 	fi
 done
 
+unset bash_abs_path
+
