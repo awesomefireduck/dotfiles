@@ -126,7 +126,7 @@ Plug 'mptre/vim-printf'
 autocmd FileType vim let b:printf_pattern = 'echom printf("%s", %s)'
 autocmd FileType rust let b:printf_pattern = 'println!("%s {}", %s);'
 autocmd FileType php let b:printf_pattern = 'error_log(var_export(["%s" => %s], true);'
-autocmd FileType javascript let b:printf_pattern = 'console.debug("%s: ",%s);'
+autocmd FileType javascript let b:printf_pattern = 'console.debug("%s: ", %s);'
 
 nnoremap <Leader>p :Printf<CR>
 
