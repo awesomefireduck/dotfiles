@@ -152,6 +152,7 @@ Plug 'rust-lang/rust.vim', {'for': 'rust'}
 "Plug 'octol/vim-cpp-enhanced-highlight', {'for', 'cpp'}
 "Plug 'tmhedberg/SimpylFold', {'for': 'python'} " better folding for python
 Plug 'vim-scripts/indentpython.vim' , {'for': 'python'} "better indent detection
+Plug 'ElmCast/elm-vim' , {'for': 'elm'}
 
 
 
