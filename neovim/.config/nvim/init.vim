@@ -278,6 +278,12 @@ Plug 'LnL7/vim-nix', {'for': 'nix'}
 
 Plug 'mattn/emmet-vim', {'for': ['html', 'css', 'javascript', 'php']}
 
+Plug 'rhysd/nyaovim-running-gopher'
+Plug 'rhysd/nyaovim-tree-view'
+if exists('g:nyaovim_version')
+	echo "has nyaovim"
+endif
+
 call plug#end()
 
 call arpeggio#load()
