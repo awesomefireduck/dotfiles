@@ -1,20 +1,25 @@
-if [[ ! -z $__zsh__prompt__file ]] return;
-__zsh__prompt__file="loaded"
+[[ $__zsh__prompt__file == "loaded" ]] && return
+local __zsh__prompt__file="loaded"
+
 
 source ~/.zshcolours
 source ~/.zshgit
 
 function build_prompt {
-	cat <<- EOF
-	$(get_cmd_line)\
-	$(get_path)\
-	$(get_git)\
-	$(get_jobs)\
-	$(get_host)\
-	$(get_user)\
-	EOF
+	get_cmd_line
+	get_path
+	get_git
+	get_jobs
+	get_host
+	get_user
 }
 
+function move_to_end {
+	local term_height="$(tput -T${TERM} cols)"
+	echo -en "%{"
+	echo -n  "$(tput -T$TERM cup $term_height 0)"
+	echo -en "%}"
+}
 
 function move_cursor {
 	local error_height="$(get_cmd_line | wc -l)"
@@ -27,7 +32,7 @@ function move_cursor {
 	local cmd_line_width=$(($(get_prompt_symbol | wc -m) + 1));
 
 	echo -en "%{"
-	echo -n "$(tput -T$TERM cup $cmd_line_height $cmd_line_width)"
+	echo -n  "$(tput -T$TERM cup $cmd_line_height $cmd_line_width)"
 	echo -en "%}"
 }
 
@@ -64,17 +69,25 @@ function get_jobs {
 	# ${(f)$var} is magic to build an array out of the
 	# individual lines
 	# https://stackoverflow.com/questions/2930238/split-string-with-zsh-as-in-python/2930519#2930519
-	local -a running_jobs=("${(f)$(jobs -r)}")
-	local -a stopped_jobs=("${(f)$(jobs -s)}")
+	rjobs="$(jobs -r)";
+	sjobs="$(jobs -s)";
+	if [[ "$sjobs" != "" ]];
+	then
+		local -a stopped_jobs=("${(f)sjobs}")
+	fi
+	if [[ "$(jobs -r)" != "" ]];
+	then
+		local -a running_jobs=("${(f)rjobs}")
+	fi
 
-	if [[ ! -z $running_jobs ]] {
+	if [[ $rjobs != "" ]] {
         echo -ne "\n┃ 🏃  "
 
 		for job in $running_jobs; {
 			echo -n $job | format_job
 		}
 	}
-	if [[ ! -z $stopped_jobs ]] {
+	if [[ $sjobs != "" ]] {
         echo -ne "\n┃ 🚫  "
 
 		for job in $stopped_jobs; {
@@ -101,7 +114,7 @@ function get_path {
 
 }
 function get_git {
-	build_git_prompt
+	\build_git_prompt
 }
 function get_user {
 	echo -en "\n┗━ %n"
@@ -114,6 +127,3 @@ function calc_prompt_height {
 	build_prompt | wc -l
 }
 
-function clear line {
-
-}

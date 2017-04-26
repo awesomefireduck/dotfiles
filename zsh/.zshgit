@@ -3,13 +3,11 @@ __zsh__git__file="loaded"
 
 
 function build_git_prompt {
-	[[ ! is_on_git ]] && return
-
-	echo -ne "\n┃ ⛕ $(get_git_info)"
+	is_on_git && echo -ne "\n┃ ⛕ " && get_git_info
 }
 
 
-function is_on_git() {
+function is_on_git {
   git rev-parse 2> /dev/null
 }
 
@@ -24,7 +22,7 @@ function get_git_branch {
 	}
 }
 
-function get_git_progress() {
+function get_git_progress {
   # Detect in-progress actions (e.g. merge, rebase)
   # https://github.com/git/git/blob/v1.9-rc2/wt-status.c#L1199-L1241
   git_dir="$(git rev-parse --git-dir)"
@@ -57,7 +55,7 @@ function get_git_progress() {
   fi
 }
 
-function get_git_info() {
+function get_git_info {
   # Grab the branch
   branch="$(get_git_branch)"
 
@@ -70,12 +68,12 @@ function get_git_info() {
     output="$output$(get_git_status)"
 
     # Echo our output
-    echo "$output"
+    echo -n "$output"
   fi
 }
 
 
-parse_git_ahead () {
+function parse_git_ahead {
   # Grab the local and remote branch
   branch="$(get_git_branch)"
   remote_branch="origin/$branch"
@@ -96,7 +94,7 @@ parse_git_ahead () {
   fi
 }
 
-parse_git_behind () {
+function parse_git_behind {
   # Grab the branch
   branch="$(get_git_branch)"
   remote_branch="origin/$branch"
@@ -146,7 +144,9 @@ function get_git_status() {
     echo "$synced_symbol"
   fi
 }
-is_branch1_behind_branch2 () {
+
+
+function is_branch1_behind_branch2 {
   # $ git log origin/master..master -1
   # commit 4a633f715caf26f6e9495198f89bba20f3402a32
   # Author: Todd Wolfson <todd@twolfson.com>
@@ -161,7 +161,7 @@ is_branch1_behind_branch2 () {
   [[ -n "$first_log" ]]
 }
 
-branch_exists () {
+function branch_exists {
   # List remote branches           | # Find our branch and exit with 0 or 1 if found/not found
   git branch --remote 2> /dev/null | grep --quiet "$1"
 }

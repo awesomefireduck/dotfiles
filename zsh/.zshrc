@@ -9,9 +9,12 @@
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 #	source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
+source ~/.zshcolours
+source ~/.zshprompt
 
-# Customize to your needs...
 preexec () {
+	# clear all lines below the prompt so that no residual prompt chars are visible in the command output.
+	# test: remove this and run echo "a"
 	tput il 4
 }
 precmd () {
@@ -22,7 +25,10 @@ function get_exit_code {
 	export last_exit_code="$?"
 }
 
-source ~/.zshcolours
-source ~/.zshprompt
 
-export PS1="$(build_prompt)$(move_cursor)"
+
+# otherwise everything fails
+setopt PROMPT_SUBST
+export PS1="\$(move_to_end)\$(build_prompt)\$(move_cursor)"
+
+source ~/.nix-profile/etc/profile.d/nix.sh
