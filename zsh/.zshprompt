@@ -1,0 +1,119 @@
+if [[ ! -z $__zsh__prompt__file ]] return;
+__zsh__prompt__file="loaded"
+
+source ~/.zshcolours
+source ~/.zshgit
+
+function build_prompt {
+	cat <<- EOF
+	$(get_cmd_line)\
+	$(get_path)\
+	$(get_git)\
+	$(get_jobs)\
+	$(get_host)\
+	$(get_user)\
+	EOF
+}
+
+
+function move_cursor {
+	local error_height="$(get_cmd_line | wc -l)"
+	local term_height="$(tput -T${TERM} cols)"
+
+	local prompt_height=$(($(build_prompt | wc -l) - $error_height + 1))
+
+	local cmd_line_height=$(($term_height - $prompt_height + 2))
+
+	local cmd_line_width=$(($(get_prompt_symbol | wc -m) + 1));
+
+	echo -en "%{"
+	echo -n "$(tput -T$TERM cup $cmd_line_height $cmd_line_width)"
+	echo -en "%}"
+}
+
+
+function get_prompt_symbol {
+	# If we are root, display `#`. Otherwise, the other thing
+	echo -n "━━━"
+	if [[ "$UID" == 0 ]]; then
+		echo -n "#"
+	else
+		echo -n "▌"
+	fi
+	echo -n " "
+}
+
+
+function get_cmd_line {
+	# adds previous cmd's exit code if it is not null
+	if [[ "$last_exit_code" -ne "0" ]] {
+		cat <<- EOF
+		${error_color}\
+		┏ program exited with: $last_exit_code
+		┃$(tput sgr0)
+		┣\
+		EOF
+	} else {
+		echo -en "┏"
+	}
+	get_prompt_symbol
+}
+
+
+function get_jobs {
+	# ${(f)$var} is magic to build an array out of the
+	# individual lines
+	# https://stackoverflow.com/questions/2930238/split-string-with-zsh-as-in-python/2930519#2930519
+	local -a running_jobs=("${(f)$(jobs -r)}")
+	local -a stopped_jobs=("${(f)$(jobs -s)}")
+
+	if [[ ! -z $running_jobs ]] {
+        echo -ne "\n┃ 🏃  "
+
+		for job in $running_jobs; {
+			echo -n $job | format_job
+		}
+	}
+	if [[ ! -z $stopped_jobs ]] {
+        echo -ne "\n┃ 🚫  "
+
+		for job in $stopped_jobs; {
+			echo -n $job | format_job
+		}
+	}
+
+
+}
+
+function format_job {
+	# [1]  - running    sleep 20
+	# [2]  + running    sleep 20
+	# [3]  + running    sudo sleep 20
+	# [1]  + 49974 suspended (tty output)  sudo sleep 20
+	# [1]  + 50890 suspended  sleep 20
+	sed -E \
+		-e 's/^\[([0-9]+)\]  (\+|-) (running  |suspended)  /\1:/' \
+	| sed -E \
+		-e "s/sudo /${sudo_color}sudo /"
+}
+function get_path {
+	echo -en "\n┃ 📂  %~"
+
+}
+function get_git {
+	build_git_prompt
+}
+function get_user {
+	echo -en "\n┗━ %n"
+}
+function get_host {
+	echo -en "\n┃ %m"
+}
+
+function calc_prompt_height {
+	build_prompt | wc -l
+}
+
+function clear line {
+
+}

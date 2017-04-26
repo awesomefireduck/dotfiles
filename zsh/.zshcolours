@@ -1,0 +1,41 @@
+[[ ! -z $__zsh__colours__file ]] && return;
+__zsh__colours__file="loaded"
+
+bold="$(tput smso)"
+nobold="$(tput rmso)"
+
+txtblk="$(tput setaf 0)" # Black - Regular
+txtred="$(tput setaf 1)" # Red
+txtgrn="$(tput setaf 2)" # Green  joshua
+txtylw="$(tput setaf 3)" # Yellow
+txtblu="$(tput setaf 4)" # Blue   leidenuniv
+txtpur="$(tput setaf 5)" # Purple cesium
+txtcyn="$(tput setaf 6)" # Cyan   titanium
+txtwht="$(tput setaf 7)" # White
+bldblk="${bold}${txtblk}" # Black - Bold
+bldred="${bold}${txtred}" # Red
+bldgrn="${bold}${txtgrn}" # Green
+bldylw="${bold}${txtylw}" # Yellow
+bldblu="${bold}${txtblu}" # Blue
+bldpur="${bold}${txtpur}" # Purple
+bldcyn="${bold}${txtcyn}" # Cyan
+bldwht="${bold}${txtwht}" # White
+unkblk="${underline}${txtblk}" # Black - Underline
+undred="${underline}${txtred}" # Red
+undgrn="${underline}${txtgrn}" # Green
+undylw="${underline}${txtylw}" # Yellow
+undblu="${underline}${txtblu}" # Blue
+undpur="${underline}${txtpur}" # Purple
+undcyn="${underline}${txtcyn}" # Cyan
+undwht="${underline}${txtwht}" # White
+bakblk="${background}${txtblk}"   # Black - Background
+bakred="${background}${txtred}"   # Red
+bakgrn="${background}${txtgrn}"   # Green
+bakylw="${background}${txtylw}"   # Yellow
+bakblu="${background}${txtblu}"  # Blue
+bakpur="${background}${txtpur}"   # Purple
+bakcyn="${background}${txtcyn}"   # Cyan
+bakwht="${background}${txtwht}"   # White
+txtrst="$(tput sgr0)"   # Text Reset
+
+
