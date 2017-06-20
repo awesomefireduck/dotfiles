@@ -14,7 +14,7 @@ autocmd BufEnter * sign define dummy
 autocmd BufEnter * execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
 
 
-set background=light
+set background=dark
 
 set cursorline
 set laststatus=2
@@ -290,6 +290,6 @@ call arpeggio#load()
 Arpeggio inoremap jk  <Esc>
 
 colorscheme apprentice " for base colours of bottom bar
-set background=light
+set background=dark
 if &diff | exe 'colorscheme'.diffcolorscheme | else | exe 'colorscheme '.normalcolorscheme | endif
 au FilterWritePre * if &diff | exe 'colorscheme '.diffcolorscheme | else | exe 'colorscheme '. normalcolorscheme | endif
