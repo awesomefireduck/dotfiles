@@ -521,9 +521,9 @@ PROMPT_COMMAND="get_exit_code;cpupercent"
 PS1="\n\
 ┏━━━\[$user_color\] $user_name \[$reset\]\$(get_newl)\
 \[$preposition_color\] 💻 \[$reset\]\
-\[\$(host_color)\] $host_name \[$reset\]
+\[\$(host_color)\]$host_name \[$reset\]
 ┃\[$preposition_color\] 📂 \[$reset\]\
-\[$dir_color\] \w (\$(get_dirstack_count))\[$reset\]\
+\[$dir_color\]\w (\$(get_dirstack_count))\[$reset\]\
 \$(get_files)\
 \$(get_time)\
 \$( is_on_git &&\
