@@ -1,0 +1,3 @@
+#!/bin/bash
+# be verbose when files are the same
+alias diff='diff -s'
