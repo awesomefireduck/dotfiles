@@ -17,8 +17,8 @@ let hlstate=0
 nnoremap <silent> <leader>h :set hlsearch!<cr>
 nnoremap <silent> <leader>w :w<cr>
 nnoremap <silent> ZQ :cq<cr>
-nnoremap jk <Esc>
-nnoremap kj <Esc>
+inoremap jk <Esc>
+inoremap kj <Esc>
 if has('nvim')
 	set inccommand=nosplit
 endif
@@ -47,10 +47,6 @@ let g:rainbow_active = 1
 " syntax highlighting within another syntax
 Plug 'inkarkat/vim-ingo-library'
 Plug 'inkarkat/vim-SyntaxRange'
-" markdown highlighting, see https://github.com/plasticboy/vim-markdown/#mappings
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown', {'for': 'markdown', 'do': 'make' }
-let g:vim_markdown_folding_disabled = 1
 
 " GIT
 "better commit message editing
@@ -111,6 +107,26 @@ Plug 'mmahnic/vim-flipwords'
 " (a, |b, c)  :Flip , )    (a, c, b)
 " to make sure functions do not become massive
 Plug 'dodie/vim-disapprove-deep-indentation'
+Plug 'easymotion/vim-easymotion'
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+
+" Jump to anywhere you want with minimal keystrokes, with just one key binding.
+" `s{char}{label}`
+nmap s <Plug>(easymotion-overwin-f)
+" or
+" `s{char}{char}{label}`
+" Need one more keystroke, but on average, it may be more comfortable.
+nmap s <Plug>(easymotion-overwin-f2)
+
+" Turn on case insensitive feature
+let g:EasyMotion_smartcase = 1
+
+" JK motions: Line motions
+map j <Plug>(easymotion-j)
+map k <Plug>(easymotion-k)
+map w <Plug>(easymotion-w)
+map b <Plug>(easymotion-b)
+map e <Plug>(easymotion-e)
 
 " WRITING
 Plug 'vimwiki/vimwiki', {'for': ['vimwiki', 'markdown', 'text']}
@@ -124,7 +140,10 @@ autocmd FileType text,markdown,mail,gitcommit setlocal spell
 autocmd FileType help setlocal nospell
 
 " RUST
+" highlighting for rust
 Plug 'rust-lang/rust.vim', {'for': 'rust'}
+" highlighting for Cargo.toml
+Plug 'cespare/vim-toml'
 
 " PYTHON
 Plug 'vim-scripts/indentpython.vim' , {'for': 'python'} "better indent detection
@@ -140,6 +159,14 @@ Plug 'LnL7/vim-nix', {'for': 'nix'}
 " easy html writing:  div.someclass#somediv => <C-y>, => <div class="someclass" id="somediv"></div>
 Plug 'mattn/emmet-vim', {'for': ['html', 'css', 'javascript', 'php']}
 let g:user_emmet_leader_key='<leader>'
+
+" MARKDOWN
+" markdown highlighting, see https://github.com/plasticboy/vim-markdown/#mappings
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown', {'for': 'markdown', 'do': 'make' }
+let g:vim_markdown_folding_disabled = 1
+" easy table of contents insert
+Plug 'mzlogin/vim-markdown-toc'
 
 " OTHER
 " measure startuptime
