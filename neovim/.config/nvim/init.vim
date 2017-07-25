@@ -1,23 +1,9 @@
-"let $VIMRUNTIME = '~/git/neovim/runtime'
-"let g:airline#extensions#tabline#enabled = 1
 let mapleader = "\<Space>"
-let normalcolorscheme = "PaperColor"
-let diffcolorscheme = "iceberg"
-
+" enable syntax highlighting
 syntax enable
+" enable 256 colours support
 set t_Co=256
-set timeoutlen=200
-
-" always show sign column
-autocmd BufEnter * sign define dummy
-autocmd BufEnter * execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
-
-
-set background=dark
-
-set cursorline
-set laststatus=2
-set nu
+"set timeoutlen=200
 
 if has('persistent_undo')
   set undofile
@@ -27,16 +13,17 @@ if has('persistent_undo')
 endif
 
 let hlstate=0
+" toggle search highlight with <Space>h
 nnoremap <silent> <leader>h :set hlsearch!<cr>
 nnoremap <silent> <leader>w :w<cr>
-nnoremap <silent> <leader>w :w<cr>
 nnoremap <silent> ZQ :cq<cr>
-
 nnoremap jk <Esc>
 nnoremap kj <Esc>
+if has('nvim')
+	set inccommand=nosplit
+endif
 
 source ~/.config/nvim/tabline.vim
-
 
 " no shift for command mode
 map ; :
@@ -44,6 +31,7 @@ map ; :
 noremap ;; ;
 
 
+" auto install plugin manager if it is not installed
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
   silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -51,145 +39,34 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.config/nvim/plugged')
-
-if ! has('nvim')
-" some sensible defaults for regular vim
-Plug 'tpope/vim-sensible'
-endif
-
-"status bar at the bottom
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-"colorschemes
-"Plug 'vim-scripts/xoria256.vim'
-"Plug 'nanotech/jellybeans.vim'
-"Plug 'altercation/vim-colors-solarized'
-"Plug 'flazz/vim-colorschemes' " a whole bunch
+" COLOURS
 Plug 'NLKNguyen/papercolor-theme'
-let g:PaperColor_Light_Override = { 'background' : '#ffffff', 'cursorline' : '#dfdfdf', 'matchparen' : '#d6d6d6' , 'comment' : '#8e908c' , 'linenumbers_fg': '#FF0000', 'diffadd_fg': '#00FF00', 'diffadd_bg': '#000000'}
-"Plug 'wellsjo/wells-colorscheme.vim'
-Plug 'romainl/Apprentice'
+" give paretheses matching colours
+Plug 'luochen1990/rainbow'
+let g:rainbow_active = 1
+" syntax highlighting within another syntax
+Plug 'inkarkat/vim-ingo-library'
+Plug 'inkarkat/vim-SyntaxRange'
+" markdown highlighting, see https://github.com/plasticboy/vim-markdown/#mappings
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown', {'for': 'markdown', 'do': 'make' }
+let g:vim_markdown_folding_disabled = 1
 
-"# git
-" git commands (:Gdiff !)
-"Plug 'tpope/vim-fugitive'
-"set statusline=%{fugitive#statusline()}
-"git branches (needs fugitive)
-"Plug 'vim-scripts/Merginal'
-" colorscheme that works for git diff. requires: syntax enable
-"Plug 'andreicristianpetcu/vim-modokay'
-"syntax enable
-"let diffcolorscheme = 'modokay'
-
+" GIT
 "better commit message editing
-Plug 'rhysd/committia.vim',
-
+Plug 'rhysd/committia.vim'
 " git status in sidebar
 Plug 'airblade/vim-gitgutter'
 let g:gitgutter_sign_column_always = 1
+" git commands (:Gdiff !)
+Plug 'tpope/vim-fugitive'
 
-
-"# search
-" regex search through all buffers with :Bsgrep
-Plug 'jeetsukumaran/vim-buffersaurus'
-nnoremap <leader>f :Bsgrep<space>
-
-" move through visible lines with binary search-like movement
-Plug 'hoelzro/vim-split-navigate'
-let g:splitnavigate_start_key = "<leader>s"
-let g:splitnavigate_up_key = "u"
-let g:splitnavigate_down_key = "d"
-let g:splitnavigate_abort_key = "q"
-" custom blue on white
-highlight TopHighlight term=bold ctermfg=18 ctermbg=152
-" custom red on white
-highlight BottomHighlight term=bold ctermfg=88 ctermbg=252
-
-" search through https://www.greppage.com with :G <query>
-" N.B. requires https://github.com/evidanary/grepg-python
-"Plug 'evidanary/grepg.vim'
-
+" FILES
 " file finder using fzy. see 'cloudhead/neovim-fuzzy' and jhawthorn/fzy
 Plug 'cloudhead/neovim-fuzzy'
 nnoremap <silent> <leader>o :FuzzyOpen<CR>
 let g:fuzzy_tabopen = 1
 let g:fuzzy_jump_if_open = 1
-
-
-" open file at a line from shell:
-" `$ vim path/to/file.txt:20` will open the file at line 20
-Plug 'bogado/file-line'
-
-Plug 'mptre/vim-printf'
-autocmd FileType vim let b:printf_pattern = 'echom printf("%s", %s)'
-autocmd FileType rust let b:printf_pattern = 'println!("%s {}", %s);'
-autocmd FileType php let b:printf_pattern = 'error_log(var_export(["%s" => %s], true);'
-autocmd FileType javascript let b:printf_pattern = 'console.debug("%s: ", %s);'
-
-nnoremap <Leader>p :Printf<CR>
-
-" navigate seamlessly between tmux & vim. requires tmux config (see repo)
-Plug 'christoomey/vim-tmux-navigator'
-nnoremap <silent> <BS> :TmuxNavigateLeft<cr>
-nnoremap <silent> <BS> :TmuxNavigateLeft<cr>
-
-" generate UUIDs
-"Plug 'kburdett/vim-nuuid'
-"let g:nuuid_no_mappings = 1
-" display tags in a window
-"Plug 'majutsushi/tagbar'
-
-
-"# highlighting
-" better javascript highlighting
-Plug 'pangloss/vim-javascript', {'for': 'javascript'}
-" highlighting for JSX (react)
-Plug 'mxw/vim-jsx', {'for': 'javascript.jsx'}
-" rust highlighting
-Plug 'rust-lang/rust.vim', {'for': 'rust'}
-"Plug 'octol/vim-cpp-enhanced-highlight', {'for', 'cpp'}
-"Plug 'tmhedberg/SimpylFold', {'for': 'python'} " better folding for python
-Plug 'vim-scripts/indentpython.vim' , {'for': 'python'} "better indent detection
-Plug 'ElmCast/elm-vim' , {'for': 'elm'}
-Plug 'hoelzro/vim-elm-help', {'for': 'elm'}
-" give paretheses matching colours
-Plug 'luochen1990/rainbow'
-let g:rainbow_active = 1
-
-Plug 'inkarkat/vim-ingo-library'
-Plug 'inkarkat/vim-SyntaxRange'
-
-
-
-
-" detect indentation of the current file
-"Plug 'roryokane/detectindent'
-
-" (un)comment code easily
-Plug 'scrooloose/nerdcommenter'
-" <leader>cA  add comment at end of line
-" [count]<leader>c<space> toggle comments according to the topmost line
-filetype plugin on
-let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters by default
-let g:NERDCommentEmptyLines = 1 " Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDTrimTrailingWhitespace = 1 " Enable trimming of trailing whitespace when uncommenting
-
-
-" better folding
-"Plug 'pseewald/vim-anyfold'
-filetype plugin indent on
-syntax on
-let anyfold_activate=0
-set foldlevel=0
-Plug 'Konfekt/FastFold'
-let g:tex_fold_enabled=1
-let g:vimsyn_folding='af'
-let g:xml_syntax_folding = 1
-let g:php_folding = 1
-let g:perl_fold = 1
-let g:javascript_fold = 1
-
 " better session management
 Plug 'manasthakur/VimSessionist'
 "SS save
@@ -197,21 +74,45 @@ Plug 'manasthakur/VimSessionist'
 "SP restore prev
 "SL list
 "SD delete
-
 " Keep cursor between file openings / buffer switches
 Plug 'kopischke/vim-stay'
 set viewoptions=cursor,folds,slash,unix
+" make vim ignore files in gitignore
+Plug 'vim-scripts/gitignore.vim'
 
+" EDITING
+"easily add print statements
+Plug 'mptre/vim-printf'
+autocmd FileType vim let b:printf_pattern = 'echom printf("%s", %s)'
+autocmd FileType rust let b:printf_pattern = 'println!("%s {}", %s);'
+autocmd FileType php let b:printf_pattern = 'error_log(var_export(["%s" => %s], true);'
+autocmd FileType javascript let b:printf_pattern = 'console.debug("%s: ", %s);'
+nnoremap <Leader>p :Printf<CR>
 " auto insert matching parens, brackets and quotes
-"Plug 'jiangmiao/auto-pairs
-Plug 'Raimondi/delimitMate'
-
-
+Plug 'jiangmiao/auto-pairs'
+"Plug 'Raimondi/delimitMate'
 " strip trailing whitespace on edited lines only
 Plug 'thirtythreeforty/lessspace.vim'
 let g:lessspace_blacklist = ['md', 'markdown']
+" undo tree visualiser with live diff
+Plug 'mbbill/undotree'
+nnoremap <silent> <leader>u :UndotreeToggle\|UndotreeFocus<cr>
+let g:undotree_WindowLayout = 4
+let g:undotree_DiffAutoOpen = 1
+let g:undotree_ShortIndicators = 1
+let g:undotree_DiffpanelHeight = 10
+" flips words around a delimiter
+Plug 'mmahnic/vim-flipwords'
+" Examples
+" |a b        :Flip        b a
+" |a, b       :Flip        b a,       "oops...
+" |a, b       :Flip ,      b, a
+" (a, |b, c)  :Flip ,      (a, c), b  "oops...
+" (a, |b, c)  :Flip , )    (a, c, b)
+" to make sure functions do not become massive
+Plug 'dodie/vim-disapprove-deep-indentation'
 
-"#prose writing
+" WRITING
 Plug 'vimwiki/vimwiki', {'for': ['vimwiki', 'markdown', 'text']}
 nmap <Leader>W <Plug>VimwikiTabIndex
 nmap <Leader>d <Plug>VimwikiTabMakeDiaryNote
@@ -222,124 +123,44 @@ let g:guesslang_langs = [ 'en_US', 'nl_NL', 'nl' ]
 autocmd FileType text,markdown,mail,gitcommit setlocal spell
 autocmd FileType help setlocal nospell
 
+" RUST
+Plug 'rust-lang/rust.vim', {'for': 'rust'}
 
-" detect mixed indents within a file
-Plug 'vim-scripts/IndentConsistencyCop'
+" PYTHON
+Plug 'vim-scripts/indentpython.vim' , {'for': 'python'} "better indent detection
 
-" undo tree visualiser with live diff
-Plug 'mbbill/undotree'
-nnoremap <silent> <leader>u :UndotreeToggle\|UndotreeFocus<cr>
-let g:undotree_WindowLayout = 4
-let g:undotree_DiffAutoOpen = 1
-let g:undotree_ShortIndicators = 1
-let g:undotree_DiffpanelHeight = 10
+" ELM
+Plug 'ElmCast/elm-vim' , {'for': 'elm'}
+Plug 'hoelzro/vim-elm-help', {'for': 'elm'}
 
-" flips words around a delimiter
-Plug 'mmahnic/vim-flipwords'
-" Examples
-" |a b        :Flip        b a
-" |a, b       :Flip        b a,       "oops...
-" |a, b       :Flip ,      b, a
-" (a, |b, c)  :Flip ,      (a, c), b  "oops...
-" (a, |b, c)  :Flip , )    (a, c, b)
-
-"Plug 'mhinz/vim-startify'
-Plug 'cazador481/fakeclip.neovim'
-let g:vim_fakeclip_tmux_plus=1
-Plug 'vim-scripts/gitignore.vim'
-"Plug 'luochen1990/indent-detector.vim'
-
-" markdown highlighting, see https://github.com/plasticboy/vim-markdown/#mappings
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown', {'for': 'markdown', 'do': 'make' }
-let g:vim_markdown_folding_disabled = 1
-
-
-" vim commands with simultaneous keypreses
-Plug 'kana/vim-arpeggio'
-
-if has('nvim') && has('python3')
-  function! DoRemote(arg)
-    UpdateRemotePlugins
-  endfunction
-  Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-  let g:deoplete#enable_at_startup = 1
-endif
-
-if has('nvim')
-    " the framework
-    "Plug 'roxma/nvim-completion-manager'
-endif
-
-if has('nvim')
-  "Plug 'neomake/neomake'
-  "autocmd InsertChange,TextChanged * update | Neomake
-  "let g:neomake_javascript_enabled_makers = ['./node_modules/.bin/eslint']
-endif
-
-if has('mac')
-  " preview markdown on OSX
-  "Plug 'junegunn/vim-xmark', { 'do': 'make' }
-endif
-
-Plug 'tweekmonster/startuptime.vim'
-
-Plug 'dodie/vim-disapprove-deep-indentation'
-
+" NIX config files
 Plug 'LnL7/vim-nix', {'for': 'nix'}
 
+" HTML
+" easy html writing:  div.someclass#somediv => <C-y>, => <div class="someclass" id="somediv"></div>
 Plug 'mattn/emmet-vim', {'for': ['html', 'css', 'javascript', 'php']}
+let g:user_emmet_leader_key='<leader>'
 
-Plug 'rhysd/nyaovim-running-gopher'
-Plug 'rhysd/nyaovim-tree-view'
-
+" OTHER
+" measure startuptime
+Plug 'tweekmonster/startuptime.vim'
+" tiny breakout game
 Plug 'johngrib/vim-game-code-break'
-
-if exists('g:nyaovim_version')
-	echo "has nyaovim"
-endif
-
+" lightweight statusbar
+Plug 'itchyny/lightline.vim'
+set laststatus=2
+let g:lightline = {
+      \ 'colorscheme': 'PaperColor',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }
 call plug#end()
 
-call arpeggio#load()
-Arpeggio inoremap jk  <Esc>
-
-colorscheme apprentice " for base colours of bottom bar
 set background=dark
-if &diff | exe 'colorscheme'.diffcolorscheme | else | exe 'colorscheme '.normalcolorscheme | endif
-au FilterWritePre * if &diff | exe 'colorscheme '.diffcolorscheme | else | exe 'colorscheme '. normalcolorscheme | endif
-
-map <F7> :w !xclip -selection clipboard<CR><CR>
-vmap <F7> "*y
-map <F8> :r!xclip -selection clipboard -o<CR>
-
-"let s:directories = split(&runtimepath, ",")
-"let s:syntaxfiles = []
-"for s:directory in s:directories
-"	let s:syntaxfiles += glob(s:directory .'/syntax/*.vim', 1, 1)
-"	let s:syntaxfiles += glob(s:directory .'plugged/*/syntax/*.vim', 1, 1)
-"	let s:syntaxfiles += glob(s:directory .'/ftplugin/*.vim', 1, 1)
-"	let s:syntaxfiles += glob(s:directory .'plugged/*/ftplugin/*.vim', 1, 1)
-"endfor
-"echo s:syntaxfiles
-"let s:filetypeslist = []
-"for s:file in s:syntaxfiles
-"	let s:filetypeslist += [substitute(substitute(s:file,"^/.*/","","g"), '\.vim$', "", "g")]
-"endfor
-"echo s:filetypeslist
-"let s:filetypeslist = uniq(sort(s:filetypeslist))
-"echo s:filetypeslist
-"for s:filetype in s:filetypeslist
-"	call SyntaxRange#Include('```'.s:filetype.'$', '```', s:filetype, 'NonText')
-"endfor
-"let s:filetypeslist = ['json', 'javascript', 'markdown', 'sh']
-"for s:filetype in s:filetypeslist
-"	call SyntaxRange#Include('```'.s:filetype.'$', '```', s:filetype, 'NonText')
-"endfor
-"autocmd VimEnter * call SyntaxRange#Include('<script>', '</script>',"javascript")
-"call SyntaxRange#Include('style="', '"',"css")
-if has('nvim')
-	set inccommand=nosplit
-endif
-"autocmd BufEnter * call SyntaxRange#Include('```json', '```', "json", "NonText")
-"autocmd Syntax * call SyntaxRange#Include('Examples:$', '("""|\n\n)$', "python")
+colorscheme PaperColor
+autocmd Syntax * call SyntaxRange#Include('Examples:$', '("""|\\n\\n)$', "python")
