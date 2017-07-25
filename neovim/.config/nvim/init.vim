@@ -5,7 +5,6 @@ let normalcolorscheme = "PaperColor"
 let diffcolorscheme = "iceberg"
 
 syntax enable
-syntax on
 set t_Co=256
 set timeoutlen=200
 
@@ -154,6 +153,13 @@ Plug 'rust-lang/rust.vim', {'for': 'rust'}
 Plug 'vim-scripts/indentpython.vim' , {'for': 'python'} "better indent detection
 Plug 'ElmCast/elm-vim' , {'for': 'elm'}
 Plug 'hoelzro/vim-elm-help', {'for': 'elm'}
+" give paretheses matching colours
+Plug 'luochen1990/rainbow'
+let g:rainbow_active = 1
+
+Plug 'inkarkat/vim-ingo-library'
+Plug 'inkarkat/vim-SyntaxRange'
+
 
 
 
@@ -197,7 +203,8 @@ Plug 'kopischke/vim-stay'
 set viewoptions=cursor,folds,slash,unix
 
 " auto insert matching parens, brackets and quotes
-Plug 'jiangmiao/auto-pairs'
+"Plug 'jiangmiao/auto-pairs
+Plug 'Raimondi/delimitMate'
 
 
 " strip trailing whitespace on edited lines only
@@ -260,6 +267,11 @@ if has('nvim') && has('python3')
 endif
 
 if has('nvim')
+    " the framework
+    "Plug 'roxma/nvim-completion-manager'
+endif
+
+if has('nvim')
   "Plug 'neomake/neomake'
   "autocmd InsertChange,TextChanged * update | Neomake
   "let g:neomake_javascript_enabled_makers = ['./node_modules/.bin/eslint']
@@ -280,6 +292,9 @@ Plug 'mattn/emmet-vim', {'for': ['html', 'css', 'javascript', 'php']}
 
 Plug 'rhysd/nyaovim-running-gopher'
 Plug 'rhysd/nyaovim-tree-view'
+
+Plug 'johngrib/vim-game-code-break'
+
 if exists('g:nyaovim_version')
 	echo "has nyaovim"
 endif
@@ -293,3 +308,38 @@ colorscheme apprentice " for base colours of bottom bar
 set background=dark
 if &diff | exe 'colorscheme'.diffcolorscheme | else | exe 'colorscheme '.normalcolorscheme | endif
 au FilterWritePre * if &diff | exe 'colorscheme '.diffcolorscheme | else | exe 'colorscheme '. normalcolorscheme | endif
+
+map <F7> :w !xclip -selection clipboard<CR><CR>
+vmap <F7> "*y
+map <F8> :r!xclip -selection clipboard -o<CR>
+
+"let s:directories = split(&runtimepath, ",")
+"let s:syntaxfiles = []
+"for s:directory in s:directories
+"	let s:syntaxfiles += glob(s:directory .'/syntax/*.vim', 1, 1)
+"	let s:syntaxfiles += glob(s:directory .'plugged/*/syntax/*.vim', 1, 1)
+"	let s:syntaxfiles += glob(s:directory .'/ftplugin/*.vim', 1, 1)
+"	let s:syntaxfiles += glob(s:directory .'plugged/*/ftplugin/*.vim', 1, 1)
+"endfor
+"echo s:syntaxfiles
+"let s:filetypeslist = []
+"for s:file in s:syntaxfiles
+"	let s:filetypeslist += [substitute(substitute(s:file,"^/.*/","","g"), '\.vim$', "", "g")]
+"endfor
+"echo s:filetypeslist
+"let s:filetypeslist = uniq(sort(s:filetypeslist))
+"echo s:filetypeslist
+"for s:filetype in s:filetypeslist
+"	call SyntaxRange#Include('```'.s:filetype.'$', '```', s:filetype, 'NonText')
+"endfor
+"let s:filetypeslist = ['json', 'javascript', 'markdown', 'sh']
+"for s:filetype in s:filetypeslist
+"	call SyntaxRange#Include('```'.s:filetype.'$', '```', s:filetype, 'NonText')
+"endfor
+"autocmd VimEnter * call SyntaxRange#Include('<script>', '</script>',"javascript")
+"call SyntaxRange#Include('style="', '"',"css")
+if has('nvim')
+	set inccommand=nosplit
+endif
+"autocmd BufEnter * call SyntaxRange#Include('```json', '```', "json", "NonText")
+"autocmd Syntax * call SyntaxRange#Include('Examples:$', '("""|\n\n)$', "python")
