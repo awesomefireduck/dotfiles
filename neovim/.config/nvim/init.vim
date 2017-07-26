@@ -215,6 +215,7 @@ let g:lightline = {
       \   'gitbranch': 'fugitive#head'
       \ },
       \ }
+Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 
 set background=dark
