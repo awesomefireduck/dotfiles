@@ -107,6 +107,7 @@ Plug 'mmahnic/vim-flipwords'
 " |a, b       :Flip ,      b, a
 " (a, |b, c)  :Flip ,      (a, c), b  "oops...
 " (a, |b, c)  :Flip , )    (a, c, b)
+
 " to make sure functions do not become massive
 Plug 'dodie/vim-disapprove-deep-indentation'
 Plug 'easymotion/vim-easymotion'
