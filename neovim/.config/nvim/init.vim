@@ -172,6 +172,10 @@ Plug 'cespare/vim-toml'
 
 " PYTHON
 Plug 'vim-scripts/indentpython.vim' , {'for': 'python'} "better indent detection
+au FileType python set tabstop=4
+" since the body of a class method requires two indents, that leaves 5 for use
+" within the function body
+autocmd FileType python let g:LookOfDisapprovalTabThreshold=7 | let g:LookOfDisapprovalSpaceThreshold=(&tabstop*7)
 
 " ELM
 Plug 'ElmCast/elm-vim' , {'for': 'elm'}
