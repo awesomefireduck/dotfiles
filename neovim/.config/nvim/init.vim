@@ -159,7 +159,7 @@ Plug 'hoelzro/vim-elm-help', {'for': 'elm'}
 Plug 'LnL7/vim-nix', {'for': 'nix'}
 
 " HTML
-" easy html writing:  div.someclass#somediv => <C-y>, => <div class="someclass" id="somediv"></div>
+" easy html writing:  div.someclass#somediv => <Space>, => <div class="someclass" id="somediv"></div>
 Plug 'mattn/emmet-vim', {'for': ['html', 'css', 'javascript', 'php']}
 let g:user_emmet_leader_key='<leader>'
 
