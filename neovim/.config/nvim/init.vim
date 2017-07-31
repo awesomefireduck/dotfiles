@@ -17,8 +17,8 @@ let hlstate=0
 nnoremap <silent> <leader>h :set hlsearch!<cr>
 nnoremap <silent> <leader>w :w<cr>
 nnoremap <silent> ZQ :cq<cr>
-inoremap jk <Esc>
-inoremap kj <Esc>
+inoremap jj <Esc>
+inoremap hh <Esc>
 if has('nvim')
 	set inccommand=nosplit
 endif
@@ -45,8 +45,8 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'luochen1990/rainbow'
 let g:rainbow_conf = {
 	\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-	\	'ctermfgs': ['fg', 'lightblue', '208', '34', 'lightmagenta', 'darkblue', 'yellow', '167', '76', 'red'],
-	\	'operators': '_,\|*\|+\|-\|%\|/\|=\|==\|===\|!=\|!==\|<\|>_',
+	\	'ctermfgs': ['fg', '14', '208', '34', '196', '4', '11', '167', '76', '163'],
+	\	'operators': '_,\|[^\s^*/] ?*\|+\|-\|%\|/[^/]\|=\|==\|===\|!=\|!==\|<\|>_',
 	\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
 	\	'separately': {
 	\		'*': {},
@@ -61,7 +61,7 @@ let g:rainbow_conf = {
 	\		},
 	\		'html': {
 	\			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
-	\		'operators': '__',
+	\		'operators': '_=_',
 	\		},
 	\		'css': 0,
 	\	}
@@ -135,6 +135,7 @@ Plug 'mmahnic/vim-flipwords'
 Plug 'dodie/vim-disapprove-deep-indentation'
 Plug 'easymotion/vim-easymotion'
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
+let g:EasyMotion_keys = "aoeidtn;,.pyfgcrl/@'qjkxbmwvzuhs-"
 
 " Jump to anywhere you want with minimal keystrokes, with just one key binding.
 " `s{char}{label}`
@@ -169,7 +170,19 @@ autocmd FileType help setlocal nospell
 " highlighting for rust
 Plug 'rust-lang/rust.vim', {'for': 'rust'}
 " highlighting for Cargo.toml
-Plug 'cespare/vim-toml'
+Plug 'cespare/vim-toml', {'for': 'rust'}
+" rust completion for nvim-completion-manager
+Plug 'roxma/nvim-cm-racer'
+" completion using racer
+Plug 'racer-rust/vim-racer', {'for': 'rust'}
+let g:racer_experimental_completer = 1
+"set hidden
+let g:racer_cmd = "/home/vince/.cargo/bin/racer"
+au FileType rust nmap gd <Plug>(rust-def)
+au FileType rust nmap gs <Plug>(rust-def-split)
+au FileType rust nmap gx <Plug>(rust-def-vertical)
+au FileType rust nmap <leader>gd <Plug>(rust-doc)
+
 
 " PYTHON
 Plug 'vim-scripts/indentpython.vim' , {'for': 'python'} "better indent detection
@@ -197,6 +210,11 @@ Plug 'plasticboy/vim-markdown', {'for': 'markdown', 'do': 'make' }
 let g:vim_markdown_folding_disabled = 1
 " easy table of contents insert
 Plug 'mzlogin/vim-markdown-toc'
+
+" ELIXIR
+Plug 'elixir-editors/vim-elixir'
+au FileType elixir set tabstop=4
+au FileType elixir let g:LookOfDisapprovalTabThreshold=10000 | let g:LookOfDisapprovalSpaceThreshold=(&tabstop*10000)
 
 " OTHER
 " measure startuptime
