@@ -7,7 +7,7 @@ set t_ut=
 set timeoutlen=200
 set background=dark
 set number
-set colorcolumn=80,120
+set colorcolumn=120,121,122
 
 if has('persistent_undo')
   set undofile
@@ -121,9 +121,11 @@ nnoremap <Leader>p :Printf<CR>
 " auto insert matching parens, brackets and quotes
 Plug 'jiangmiao/auto-pairs'
 "Plug 'Raimondi/delimitMate'
+
 " strip trailing whitespace on edited lines only
 Plug 'thirtythreeforty/lessspace.vim'
 let g:lessspace_blacklist = ['md', 'markdown']
+
 " undo tree visualiser with live diff
 Plug 'mbbill/undotree'
 nnoremap <silent> <leader>u :UndotreeToggle\|UndotreeFocus<cr>
@@ -131,6 +133,7 @@ let g:undotree_WindowLayout = 4
 let g:undotree_DiffAutoOpen = 1
 let g:undotree_ShortIndicators = 1
 let g:undotree_DiffpanelHeight = 10
+
 " flips words around a delimiter
 Plug 'mmahnic/vim-flipwords'
 " Examples
@@ -142,6 +145,7 @@ Plug 'mmahnic/vim-flipwords'
 
 " to make sure functions do not become massive
 "Plug 'dodie/vim-disapprove-deep-indentation'
+
 Plug 'easymotion/vim-easymotion'
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 let g:EasyMotion_keys = "aoeidtn;,.pyfgcrl/@'qjkxbmwvzuhs-"
@@ -168,19 +172,11 @@ map e <Plug>(easymotion-e)
 Plug 'roman/golden-ratio'
 
 
-" syntax checking
-"Plug 'vim-syntastic/syntastic'
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-"Plug 'valloric/YouCompleteMe', {'do': './install.py --racer-completer'}
+" COMPLETION
 Plug 'roxma/nvim-completion-manager'
 Plug 'Shougo/neco-vim'
+
+" LINTING
 let g:ale_linters_install = 'sudo apt-get install -y tidy shellcheck python3-flake8 python3-neovim python3-pip yamllint && pip3 install vint proselint; sudo npm install -g xo jshint htmlhint stylelint'
 Plug 'w0rp/ale', {'do': g:ale_linters_install}
 let g:ale_linters = {
@@ -191,11 +187,14 @@ let g:ale_linters = {
 \}
 let g:ale_sh_shellcheck_options = '-x'
 
-" WRITING
+
+" WRITING / PROSE
 Plug 'vimwiki/vimwiki', {'for': ['vimwiki', 'markdown', 'text']}
 nmap <Leader>W <Plug>VimwikiTabIndex
 nmap <Leader>d <Plug>VimwikiTabMakeDiaryNote
+" distraction free writing
 Plug 'junegunn/goyo.vim'
+" only highlight current paragragh
 Plug 'junegunn/limelight.vim'
 Plug 'Konfekt/vim-guesslang' "guess the language for spell checking
 let g:guesslang_langs = [ 'en_US', 'nl_NL', 'nl' ]
@@ -208,13 +207,14 @@ augroup END
 " highlighting for rust
 Plug 'rust-lang/rust.vim', {'for': 'rust'}
 " highlighting for Cargo.toml
-Plug 'cespare/vim-toml', {'for': 'rust'}
+Plug 'cespare/vim-toml', {'for': 'toml'}
 " rust completion for nvim-completion-manager
 Plug 'roxma/nvim-cm-racer'
 " completion using racer
-Plug 'racer-rust/vim-racer', {'for': 'rust'}
+Plug 'racer-rust/vim-racer', {'for': 'rust', 'do': 'cargo install racer'}
 let g:racer_experimental_completer = 1
 "set hidden
+" plugin needs to know where it can find racer
 let g:racer_cmd = '/home/vince/.cargo/bin/racer'
 augroup rust
 au FileType rust nmap gd <Plug>(rust-def)
