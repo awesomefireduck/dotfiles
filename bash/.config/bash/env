@@ -2,7 +2,7 @@
 
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 
-path_parts=("${HOME}/.cargo/bin" "$HOME/bin")
+path_parts=("${HOME}/.cargo/bin" "$HOME/bin" "$HOME/.local/bin")
 
 for path_part in "${path_parts[@]}";
 do
@@ -35,3 +35,5 @@ if ! [[ "$TERM" =~ -256color$ ]];
 then
 	export TERM="${TERM}-256color"
 fi
+
+export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"

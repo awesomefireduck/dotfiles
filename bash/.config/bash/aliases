@@ -1,4 +1,6 @@
 #!/bin/bash
+# shellcheck disable=SC2139
+# SC2139: This expands when defined, not when used. Consider escaping.
 
 
 ## default aliases in ubuntu's bashrc
@@ -10,25 +12,28 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias grep='grep --color=auto'
 
 lscolor="--color=auto"
-if [[ $platform == "OSX" ]]; then
+if [[ ${platform:?} == "OSX" ]]; then
 	lscolor="-G"
 fi
+
 alias ls="ls -F $lscolor"
 alias la="ls -A $lscolor"
 alias ll="ls -AlhF $lscolor";
 
 unset lscolor
 
-alias_path="$bash_abs_path/.config/bash/aliases.d"
+alias_path="${bash_abs_path:?}/.config/bash/aliases.d"
 
-for alias_file in $(ls "$alias_path");
+for alias_file in ${alias_path}/*;
 do
-  source "$alias_path/$alias_file"
+  # shellcheck disable=1090
+  source "$alias_file"
 done
 
 unset alias_path
 
 if [[ -f "$bash_abs_path/.config/bash/tabcomplete_aliases" ]];
 then
+	# shellcheck source=/home/vince/.config/bash/tabcomplete_aliases
 	source "$bash_abs_path/.config/bash/tabcomplete_aliases";
 fi

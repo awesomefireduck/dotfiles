@@ -6,3 +6,4 @@ then
 fi
 
 alias vimrc='vim -c "e \$MYVIMRC"'
+alias initvim='nvim -c "e \$MYVIMRC"'
