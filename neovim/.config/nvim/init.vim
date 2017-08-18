@@ -1,18 +1,22 @@
-let mapleader = "\<Space>"
+let g:mapleader = "\<Space>"
 " enable syntax highlighting
 syntax enable
 " enable 256 colours support
 set t_Co=256
-"set timeoutlen=200
+set t_ut=
+set timeoutlen=200
+set background=dark
+set number
+set colorcolumn=80,120
 
 if has('persistent_undo')
   set undofile
-  set undodir=$HOME/.nvim/undo
+  set undodir=$HOME/.local/share/nvim/undo
   set undolevels=1000
   set undoreload=10000
 endif
 
-let hlstate=0
+let g:hlstate=0
 " toggle search highlight with <Space>h
 nnoremap <silent> <leader>h :set hlsearch!<cr>
 nnoremap <silent> <leader>w :w<cr>
@@ -35,7 +39,9 @@ noremap ;; ;
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
   silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  augroup bootstrap
   autocmd VimEnter * PlugInstall | source $MYVIMRC
+  augroup END
 endif
 
 call plug#begin('~/.config/nvim/plugged')
@@ -46,7 +52,7 @@ Plug 'luochen1990/rainbow'
 let g:rainbow_conf = {
 	\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
 	\	'ctermfgs': ['fg', '14', '208', '34', '196', '4', '11', '167', '76', '163'],
-	\	'operators': '_,\|[^\s^*/] ?*\|+\|-\|%\|/[^/]\|=\|==\|===\|!=\|!==\|<\|>_',
+	\	'operators': '_,\|[^\s^*/] ?*\|+\|-\|%\|/[^/]\|=\|==\|===\|!=\|!==\|<\|>\|:_',
 	\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
 	\	'separately': {
 	\		'*': {},
@@ -61,7 +67,7 @@ let g:rainbow_conf = {
 	\		},
 	\		'html': {
 	\			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
-	\		'operators': '_=_',
+	\		    'operators': '_=_',
 	\		},
 	\		'css': 0,
 	\	}
@@ -76,7 +82,7 @@ Plug 'inkarkat/vim-SyntaxRange'
 Plug 'rhysd/committia.vim'
 " git status in sidebar
 Plug 'airblade/vim-gitgutter'
-let g:gitgutter_sign_column_always = 1
+set signcolumn=yes
 " git commands (:Gdiff !)
 Plug 'tpope/vim-fugitive'
 
@@ -104,10 +110,13 @@ Plug 'vim-scripts/gitignore.vim'
 " EDITING
 "easily add print statements
 Plug 'mptre/vim-printf'
+augroup vim_printf
 autocmd FileType vim let b:printf_pattern = 'echom printf("%s", %s)'
 autocmd FileType rust let b:printf_pattern = 'println!("%s {}", %s);'
 autocmd FileType php let b:printf_pattern = 'error_log(var_export(["%s" => %s], true);'
 autocmd FileType javascript let b:printf_pattern = 'console.debug("%s: ", %s);'
+autocmd FileType elixir let b:printf_pattern = 'IO.puts " %s: #{%s}"'
+augroup END
 nnoremap <Leader>p :Printf<CR>
 " auto insert matching parens, brackets and quotes
 Plug 'jiangmiao/auto-pairs'
@@ -132,7 +141,7 @@ Plug 'mmahnic/vim-flipwords'
 " (a, |b, c)  :Flip , )    (a, c, b)
 
 " to make sure functions do not become massive
-Plug 'dodie/vim-disapprove-deep-indentation'
+"Plug 'dodie/vim-disapprove-deep-indentation'
 Plug 'easymotion/vim-easymotion'
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 let g:EasyMotion_keys = "aoeidtn;,.pyfgcrl/@'qjkxbmwvzuhs-"
@@ -155,6 +164,33 @@ map w <Plug>(easymotion-w)
 map b <Plug>(easymotion-b)
 map e <Plug>(easymotion-e)
 
+" auto resize active window
+Plug 'roman/golden-ratio'
+
+
+" syntax checking
+"Plug 'vim-syntastic/syntastic'
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+"
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+"Plug 'valloric/YouCompleteMe', {'do': './install.py --racer-completer'}
+Plug 'roxma/nvim-completion-manager'
+Plug 'Shougo/neco-vim'
+let g:ale_linters_install = 'sudo apt-get install -y tidy shellcheck python3-flake8 python3-neovim python3-pip yamllint && pip3 install vint proselint; sudo npm install -g xo jshint htmlhint stylelint'
+Plug 'w0rp/ale', {'do': g:ale_linters_install}
+let g:ale_linters = {
+\	'rust': ['rls'],
+\	'text': ['proselint'],
+\	'markdown': ['proselint'],
+\	'gitcommit': ['proselint'],
+\}
+let g:ale_sh_shellcheck_options = '-x'
+
 " WRITING
 Plug 'vimwiki/vimwiki', {'for': ['vimwiki', 'markdown', 'text']}
 nmap <Leader>W <Plug>VimwikiTabIndex
@@ -163,8 +199,10 @@ Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'Konfekt/vim-guesslang' "guess the language for spell checking
 let g:guesslang_langs = [ 'en_US', 'nl_NL', 'nl' ]
+augroup spell
 autocmd FileType text,markdown,mail,gitcommit setlocal spell
 autocmd FileType help setlocal nospell
+augroup END
 
 " RUST
 " highlighting for rust
@@ -177,19 +215,25 @@ Plug 'roxma/nvim-cm-racer'
 Plug 'racer-rust/vim-racer', {'for': 'rust'}
 let g:racer_experimental_completer = 1
 "set hidden
-let g:racer_cmd = "/home/vince/.cargo/bin/racer"
+let g:racer_cmd = '/home/vince/.cargo/bin/racer'
+augroup rust
 au FileType rust nmap gd <Plug>(rust-def)
 au FileType rust nmap gs <Plug>(rust-def-split)
 au FileType rust nmap gx <Plug>(rust-def-vertical)
 au FileType rust nmap <leader>gd <Plug>(rust-doc)
+augroup END
+
 
 
 " PYTHON
 Plug 'vim-scripts/indentpython.vim' , {'for': 'python'} "better indent detection
-au FileType python set tabstop=4
+augroup python
 " since the body of a class method requires two indents, that leaves 5 for use
 " within the function body
-autocmd FileType python let g:LookOfDisapprovalTabThreshold=7 | let g:LookOfDisapprovalSpaceThreshold=(&tabstop*7)
+au FileType python set tabstop=4 expandtab shiftwidth=4
+au FileType python let g:LookOfDisapprovalTabThreshold=7 | let g:LookOfDisapprovalSpaceThreshold=(&tabstop*7)
+au FileType python let b:ale_python_flake8_options = '--max-line-length 120'
+augroup END
 
 " ELM
 Plug 'ElmCast/elm-vim' , {'for': 'elm'}
@@ -212,7 +256,7 @@ let g:vim_markdown_folding_disabled = 1
 Plug 'mzlogin/vim-markdown-toc'
 
 " ELIXIR
-Plug 'elixir-editors/vim-elixir'
+Plug 'elixir-editors/vim-elixir', {'for': 'elixir'}
 au FileType elixir set tabstop=4
 au FileType elixir let g:LookOfDisapprovalTabThreshold=10000 | let g:LookOfDisapprovalSpaceThreshold=(&tabstop*10000)
 
@@ -239,4 +283,7 @@ call plug#end()
 
 set background=dark
 colorscheme PaperColor
+set background=dark
+augroup syntaxrange
 autocmd Syntax * call SyntaxRange#Include('Examples:$', '("""|\\n\\n)$', "python")
+augroup END
