@@ -3,3 +3,5 @@
 	name = Vince van Oosten
 [push]
 	default = simple
+[alias]
+	git = !exec git
