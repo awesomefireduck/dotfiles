@@ -117,6 +117,7 @@ Plug 'airblade/vim-gitgutter'
 set signcolumn=yes
 " git commands (:Gdiff !)
 Plug 'tpope/vim-fugitive'
+Plug 'junegunn/gv.vim' "requires fugitive
 
 " FILES
 " file finder using fzy. see 'cloudhead/neovim-fuzzy' and jhawthorn/fzy
