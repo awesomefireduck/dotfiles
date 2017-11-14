@@ -52,3 +52,5 @@ done
 
 unset bash_abs_path
 
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
