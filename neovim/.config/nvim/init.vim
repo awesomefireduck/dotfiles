@@ -191,17 +191,17 @@ nmap s <Plug>(easymotion-overwin-f)
 " or
 " `s{char}{char}{label}`
 " Need one more keystroke, but on average, it may be more comfortable.
-nmap s <Plug>(easymotion-overwin-f2)
+nmap S <Plug>(easymotion-overwin-f2)
 
 " Turn on case insensitive feature
 let g:EasyMotion_smartcase = 1
 
 " JK motions: Line motions
-map j <Plug>(easymotion-j)
-map k <Plug>(easymotion-k)
-map w <Plug>(easymotion-w)
-map b <Plug>(easymotion-b)
-map e <Plug>(easymotion-e)
+map <leader>j <Plug>(easymotion-j)
+map <leader>k <Plug>(easymotion-k)
+map <leader>w <Plug>(easymotion-w)
+map <leader>b <Plug>(easymotion-b)
+map <leader>e <Plug>(easymotion-e)
 
 " auto resize active window
 Plug 'roman/golden-ratio'
