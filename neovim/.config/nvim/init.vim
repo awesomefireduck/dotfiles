@@ -1,3 +1,8 @@
+
+if (has("termguicolors"))
+	set termguicolors
+endif
+
 let g:mapleader = "\<Space>"
 " enable syntax highlighting
 syntax enable
