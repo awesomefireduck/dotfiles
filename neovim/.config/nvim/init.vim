@@ -76,7 +76,7 @@ Plug 'luochen1990/rainbow'
 let g:rainbow_conf = {
 	\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
 	\	'ctermfgs': ['fg', '14', '208', '34', '196', '4', '11', '167', '76', '163'],
-	\	'operators': '_,\|[^\s^*/] ?*\|+\|-\|%\|/[^/]\|=\|==\|===\|!=\|!==\|<\|>\|:_',
+	\	'operators': '_,\|+\|-\|%\|/[^/]\|=\|==\|===\|!=\|!==\|<\|>\|:_',
 	\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
 	\	'separately': {
 	\		'*': {},
@@ -94,6 +94,7 @@ let g:rainbow_conf = {
 	\		    'operators': '_=_',
 	\		},
 	\		'css': 0,
+	\		'help': 0,
 	\	}
 	\}
 let g:rainbow_active = 1
