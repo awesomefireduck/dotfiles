@@ -229,6 +229,10 @@ let g:ale_sh_shellcheck_options = '-x'
 
 
 " WRITING / PROSE
+" emoji
+Plug 'junegunn/vim-emoji'
+" for writing
+Plug 'junegunn/vim-journal'
 Plug 'vimwiki/vimwiki', {'for': ['vimwiki', 'markdown', 'text']}
 nmap <Leader>W <Plug>VimwikiTabIndex
 nmap <Leader>d <Plug>VimwikiTabMakeDiaryNote
