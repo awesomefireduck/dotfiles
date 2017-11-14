@@ -69,7 +69,8 @@ endif
 
 call plug#begin('~/.config/nvim/plugged')
 " COLOURS
-Plug 'NLKNguyen/papercolor-theme'
+"Plug 'NLKNguyen/papercolor-theme'
+Plug 'kristijanhusak/vim-hybrid-material'
 " give paretheses matching colours
 Plug 'luochen1990/rainbow'
 let g:rainbow_conf = {
@@ -304,8 +305,7 @@ let g:lightline = {
 Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 
-set background=dark
-colorscheme PaperColor
+colorscheme hybrid_material
 set background=dark
 augroup syntaxrange
 autocmd Syntax * call SyntaxRange#Include('Examples:$', '("""|\\n\\n)$', "python")
