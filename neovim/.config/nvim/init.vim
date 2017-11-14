@@ -100,8 +100,14 @@ let g:rainbow_conf = {
 	\}
 let g:rainbow_active = 1
 " syntax highlighting within another syntax
-Plug 'inkarkat/vim-ingo-library'
-Plug 'inkarkat/vim-SyntaxRange'
+"Plug 'inkarkat/vim-ingo-library'
+"Plug 'inkarkat/vim-SyntaxRange'
+" Highlight and fix trailing whitespace with :FixWhitespace
+"Plug 'bronson/vim-trailing-whitespace'
+augroup whitespace
+"  au BufEnter nowrite
+augroup END
+
 
 " GIT
 "better commit message editing
