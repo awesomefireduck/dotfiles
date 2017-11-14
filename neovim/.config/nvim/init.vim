@@ -32,6 +32,10 @@ if has('nvim')
 	set inccommand=nosplit
 endif
 
+if !has('nvim')
+    set viminfo+=~/.vim/viminfo
+endif
+
 source ~/.config/nvim/tabline.vim
 
 " no shift for command mode
