@@ -120,6 +120,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim' "requires fugitive
 
 " FILES
+" file finder using fzf, see https://github.com/junegunn/fzf#as-vim-plugin
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " file finder using fzy. see 'cloudhead/neovim-fuzzy' and jhawthorn/fzy
 " Plugin outside ~/.vim/plugged with post-update hook
 Plug 'jhawthorn/fzy', { 'dir': '~/.fzy', 'do': 'make && sudo make install' }
