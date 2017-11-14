@@ -24,10 +24,24 @@ endif
 let g:hlstate=0
 " toggle search highlight with <Space>h
 nnoremap <silent> <leader>h :set hlsearch!<cr>
+" write with <space>w
 nnoremap <silent> <leader>w :w<cr>
+" quit with nonzero exit code with ZQ
 nnoremap <silent> ZQ :cq<cr>
+
 inoremap jj <Esc>
 inoremap hh <Esc>
+
+"disable arrow keys
+noremap  <Up> ""
+noremap! <Up> <Esc>
+noremap  <Down> ""
+noremap! <Down> <Esc>
+noremap  <Left> ""
+noremap! <Left> <Esc>
+noremap  <Right> ""
+noremap! <Right> <Esc>
+
 if has('nvim')
 	set inccommand=nosplit
 endif
