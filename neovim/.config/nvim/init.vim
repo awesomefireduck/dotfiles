@@ -16,6 +16,7 @@ set number
 
 if has('persistent_undo')
   set undofile
+  " should be ~/.local/share
   set undodir=$HOME/.local/share/nvim/undo
   set undolevels=1000
   set undoreload=10000
@@ -173,7 +174,7 @@ Plug 'mmahnic/vim-flipwords'
 
 Plug 'easymotion/vim-easymotion'
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
-let g:EasyMotion_keys = "aoeidtn;,.pyfgcrl/@'qjkxbmwvzuhs-"
+let g:EasyMotion_keys = "aoeidtn;,.pyfgcrl/@'qjkxbmwvzuhs-" " programmer dvorak version of the default
 
 " Jump to anywhere you want with minimal keystrokes, with just one key binding.
 " `s{char}{label}`
@@ -257,7 +258,8 @@ augroup python
 " within the function body
 au FileType python set tabstop=4 expandtab shiftwidth=4
 au FileType python let g:LookOfDisapprovalTabThreshold=7 | let g:LookOfDisapprovalSpaceThreshold=(&tabstop*7)
-au FileType python let b:ale_python_flake8_options = '--max-line-length 120'
+" default is E121,E123,E126,E226,E24,E704,W503,W504
+au FileType python let b:ale_python_flake8_options = '--max-line-length=100 --ignore=E221,E241'
 augroup END
 
 " ELM
