@@ -12,7 +12,7 @@ set t_ut=
 set timeoutlen=200
 set background=dark
 set number
-set colorcolumn=120,121,122
+"set colorcolumn=120,121,122
 
 if has('persistent_undo')
   set undofile
