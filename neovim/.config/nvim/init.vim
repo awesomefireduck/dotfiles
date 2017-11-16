@@ -42,6 +42,10 @@ noremap  <Left> ""
 noremap! <Left> <Esc>
 noremap  <Right> ""
 noremap! <Right> <Esc>
+cnoremap <C-K> <Up>
+cnoremap <C-L> <Right>
+cnoremap <C-H> <Left>
+cnoremap <C-J> <Down>
 
 if has('nvim')
 	set inccommand=nosplit
