@@ -162,6 +162,8 @@ Plug 'jiangmiao/auto-pairs'
 "Plug 'Raimondi/delimitMate'
 " auto align titles
 Plug 'guywald1/vim-prismo'
+" surround words with anything (parentheses, quotes)
+Plug 'tpope/vim-surround'
 
 " strip trailing whitespace on edited lines only
 Plug 'thirtythreeforty/lessspace.vim'
