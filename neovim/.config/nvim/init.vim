@@ -222,6 +222,13 @@ let g:nuuid_no_mappings = 1
 
 " COMPLETION
 Plug 'roxma/nvim-completion-manager'
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+inoremap <c-c> <ESC>
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+"complete words from other buffers
+Plug 'fgrsnau/ncm-otherbuf'
+" for vim script
 Plug 'Shougo/neco-vim'
 
 " LINTING
@@ -254,6 +261,9 @@ augroup spell
 autocmd FileType text,markdown,mail,gitcommit setlocal spell
 autocmd FileType help setlocal nospell
 augroup END
+" Github
+Plug 'roxma/nvim-completion-manager'
+Plug 'roxma/ncm-github'
 
 " RUST
 " highlighting for rust
@@ -261,6 +271,7 @@ Plug 'rust-lang/rust.vim', {'for': 'rust'}
 " highlighting for Cargo.toml
 Plug 'cespare/vim-toml', {'for': 'toml'}
 " rust completion for nvim-completion-manager
+Plug 'roxma/nvim-completion-manager'
 Plug 'roxma/nvim-cm-racer'
 " completion using racer
 Plug 'racer-rust/vim-racer', {'for': 'rust', 'do': 'cargo install racer'}
@@ -279,6 +290,9 @@ augroup END
 
 " PYTHON
 Plug 'vim-scripts/indentpython.vim' , {'for': 'python'} "better indent detection
+" nvim completion manager has built-in completion support for python
+Plug 'roxma/nvim-completion-manager', {'for': 'python', 'do': 'sudo pip install jedi'}
+
 augroup python
 " since the body of a class method requires two indents, that leaves 5 for use
 " within the function body
@@ -291,6 +305,8 @@ augroup END
 " ELM
 Plug 'ElmCast/elm-vim' , {'for': 'elm'}
 Plug 'hoelzro/vim-elm-help', {'for': 'elm'}
+Plug 'roxma/nvim-completion-manager'
+Plug 'roxma/ncm-elm-oracle', {'for': 'elm'}
 
 " NIX config files
 Plug 'LnL7/vim-nix', {'for': 'nix'}
