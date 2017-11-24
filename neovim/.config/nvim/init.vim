@@ -353,5 +353,5 @@ call plug#end()
 colorscheme hybrid_material
 set background=dark
 augroup syntaxrange
-autocmd Syntax * call SyntaxRange#Include('Examples:$', '("""|\\n\\n)$', "python")
+"autocmd Syntax * call SyntaxRange#Include('Examples:$', '("""|\\n\\n)$', "python")
 augroup END
