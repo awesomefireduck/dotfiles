@@ -48,7 +48,9 @@ cnoremap <C-H> <Left>
 cnoremap <C-J> <Down>
 
 if has('nvim')
-	set inccommand=nosplit
+    set inccommand=nosplit
+    " copy file to system clipboard
+    map <leader>y gg"+yG
 endif
 
 if !has('nvim')
