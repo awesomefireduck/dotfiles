@@ -1,3 +1,5 @@
+set encoding=utf-8
+scriptencoding utf-8
 
 if (has("termguicolors"))
 	set termguicolors
@@ -64,6 +66,7 @@ map ; :
 " original ; behavior of repeating the last `f` or `t` now on ;;
 noremap ;; ;
 
+set listchars=tab:⭾ ,trail:•,precedes:≺,extends:€,nbsp:‗
 
 " auto install plugin manager if it is not installed
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
