@@ -1,3 +1,4 @@
+#!/bin/bash
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -7,4 +8,8 @@ if ! shopt -oq posix; then
   elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
   fi
+fi
+
+if command -v pandoc >/dev/null 2>&1; then
+  eval "$(pandoc --bash-completion)"
 fi
