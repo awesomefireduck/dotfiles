@@ -152,6 +152,19 @@ set viewoptions=cursor,folds,slash,unix
 Plug 'vim-scripts/gitignore.vim'
 
 " EDITING
+if has('nvim')
+	" edit browser text fields with neovim
+	Plug 'raghur/vim-ghost', {'do': ':GhostInstall'}
+	let g:ghost_autostart = 1
+	augroup ghost
+		au!
+		autocmd BufNewFile,BufRead *stackexchange.com*	set filetype=markdown   | set spell   | set spelllang=en
+		autocmd BufNewFile,BufRead *stackoverflow.com*	set filetype=markdown   | set spell   | set spelllang=en
+		autocmd BufNewFile,BufRead *github.com*		set filetype=markdown   | set spell   | set spelllang=en
+		autocmd BufNewFile,BufRead *gitlab.com*		set filetype=markdown   | set spell   | set spelllang=en
+		autocmd BufNewFile,BufRead *service-now.com*	set filetype=javascript | set nospell
+	augroup END
+endif
 "easily add print statements
 Plug 'mptre/vim-printf'
 augroup vim_printf
