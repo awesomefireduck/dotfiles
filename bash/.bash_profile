@@ -43,3 +43,5 @@ if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile
 
 if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
 
+
+export PATH="$HOME/.cargo/bin:$PATH"
