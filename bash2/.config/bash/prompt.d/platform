@@ -1,7 +1,1 @@
 #!/bin/bash
-#find platform
-case $(uname) in
-	"Darwin") platform="OSX" ;;
-	"linux") platform="linux" ;;
-	"Linux") platform="linux" ;;
-esac

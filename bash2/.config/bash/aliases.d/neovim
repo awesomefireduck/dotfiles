@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if command -v nvim &>/dev/null;
+then
+  alias vim='nvim'
+fi
+
+alias vimrc='vim -c "e \$MYVIMRC"'
+alias initvim='nvim -c "e \$MYVIMRC"'

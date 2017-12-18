@@ -36,8 +36,8 @@ bash_config_dir="${bash_abs_path}/.config/bash"
 
 source "${bash_config_dir}/settings"
 source "${bash_config_dir}/path"
-source "${bash_config_dir}/completion"
 source "${bash_config_dir}/aliases"
+source "${bash_config_dir}/completion"
 source "${bash_config_dir}/libraries"
 source "${bash_config_dir}/prompt"
 
