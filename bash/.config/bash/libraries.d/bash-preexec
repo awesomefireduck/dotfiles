@@ -32,7 +32,7 @@ get_preexec_files() {
 
 		git pull --rebase >/dev/null 2>&1
 	    fi
-	    cd -
+	    cd - &>/dev/null
 	fi
     fi
 }

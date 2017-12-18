@@ -49,5 +49,3 @@ source "${bash_config_dir}/aliases"
 source "${bash_config_dir}/completion"
 source "${bash_config_dir}/libraries"
 source "${bash_config_dir}/prompt"
-
-echo "BASHRC DONE"
