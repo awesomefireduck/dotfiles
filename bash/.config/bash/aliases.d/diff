@@ -1,6 +1,6 @@
 #!/bin/bash
 # be verbose when files are the same
-alias diff='diff -s --color=always'
+alias diff='diff -s' #--color=always'
 
 xmldiff() {
 	if ! command -v xmllint >/dev/null; then

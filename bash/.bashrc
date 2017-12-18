@@ -5,53 +5,40 @@
 
 # If not running interactively, don't do anything
 case $- in
-	*i*) ;;
-	*) return;;
+    *i*) ;;
+      *) return;;
 esac
 
 find_abs_path() {
-	local TARGET_FILE PHYS_DIR RESULT
-	TARGET_FILE="$1"
+	local target_file phys_dir
+	target_file="$1"
 
-	cd "$(dirname $TARGET_FILE)"
-	TARGET_FILE="$(basename $TARGET_FILE)"
+	cd "$(dirname $target_file)"
+	target_file="$(basename $target_file)"
 
 	# Iterate down a (possible) chain of symlinks
-	while [ -L "$TARGET_FILE" ]
+	while [ -L "$target_file" ]
 	do
-		TARGET_FILE="$(readlink $TARGET_FILE)"
-		cd "$(dirname $TARGET_FILE)"
-		TARGET_FILE="$(basename $TARGET_FILE)"
+		target_file="$(readlink $target_file)"
+		cd "$(dirname $target_file)"
+		target_file="$(basename $target_file)"
 	done
 
 	# Compute the canonicalized name by finding the physical path
 	# for the directory we're in and appending the target file.
-	PHYS_DIR="$(pwd -P)"
-	RESULT="$PHYS_DIR/$TARGET_FILE"
-	echo "$RESULT"
+	phys_dir="$(pwd -P)"
+	echo "$phys_dir/$target_file"
 }
 
-#find platform
-case $(uname) in
-	"Darwin") platform="OSX" ;;
-	"linux") platform="linux" ;;
-	"Linux") platform="linux" ;;
-esac
 
 bash_abs_path="$(dirname "$(find_abs_path "${BASH_SOURCE[0]}" )")"
+bash_config_dir="${bash_abs_path}/.config/bash"
 
-for file in "/etc/bash_completion" "/usr/local/etc/bash_completion" "options" "env" "$(hostname)" "aliases" "completion" "colours" "prompt" ;
-do
-	if [[ -e "$bash_abs_path/.config/bash/$file" ]];
-	then
-		source "$bash_abs_path/.config/bash/$file"
-	elif [[ -e "$file" ]];
-	then
-		source "$file"
-	fi
-done
+source "${bash_config_dir}/settings"
+source "${bash_config_dir}/path"
+source "${bash_config_dir}/aliases"
+source "${bash_config_dir}/completion"
+source "${bash_config_dir}/libraries"
+source "${bash_config_dir}/prompt"
 
-unset bash_abs_path
-
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+echo "BASHRC DONE"

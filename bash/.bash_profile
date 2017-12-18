@@ -1,47 +1,34 @@
 #!/bin/bash
-# check if user is connected over ssh
-if [ ! -z "$TMUX" ]; then
-  SESSION_TYPE=remote/tmux
-elif [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-  SESSION_TYPE=remote/ssh
-# many other tests omitted
-else
-  case $(ps -o comm= -p $PPID) in
-    sshd|*/sshd) SESSION_TYPE=remote/ssh;;
-  esac
-fi
-case "$SESSION_TYPE" in
-	"remote/ssh")
-	if [ -f ~/.config/bash/tmux ]; then
-		. ~/.config/bash/tmux
-	fi
-	run_tmux
-esac
+# the default umask is set in /etc/profile; for setting the umask
+# for ssh logins, install and configure the libpam-umask package.
+#umask 022
 
-#find platform
-case $(uname) in
-	"Darwin") platform="OSX" ;;
-	"linux") platform="linux" ;;
-	"Linux") platform="linux" ;;
-esac
+find_abs_path() {
+	local target_file phys_dir
+	target_file="$1"
 
-if [[ $platform == 'OSX' ]];
-then
-	if [ -f $(brew --prefix)/etc/bash_completion ]; then
-		. $(brew --prefix)/etc/bash_completion
-	fi
-	if [[ -f '/Library/Ruby/Gems/2.0.0/gems/tmuxinator-0.8.1/completion/tmuxinator.bash' ]]
-	then
-		source /Library/Ruby/Gems/2.0.0/gems/tmuxinator-0.8.1/completion/tmuxinator.bash
-	fi
+	cd "$(dirname $target_file)"
+	target_file="$(basename $target_file)"
+
+	# Iterate down a (possible) chain of symlinks
+	while [ -L "$target_file" ]
+	do
+		target_file="$(readlink $target_file)"
+		cd "$(dirname $target_file)"
+		target_file="$(basename $target_file)"
+	done
+
+	# Compute the canonicalized name by finding the physical path
+	# for the directory we're in and appending the target file.
+	phys_dir="$(pwd -P)"
+	echo "$phys_dir/$target_file"
+}
+
+bash_abs_path="$(dirname "$(find_abs_path "${BASH_SOURCE[0]}" )")"
+
+# include .bashrc if it exists
+if [ -f "${bash_abs_path}/.bashrc" ]; then
+    . "${bash_abs_path}/.bashrc"
 fi
 
-
-if [ -f ~/.cargo/env ]; then . ~/.cargo/env; fi
-
-if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile.d/nix.sh; fi
-
-if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
-
-
-export PATH="$HOME/.cargo/bin:$PATH"
+echo "BASH PROFILE DONE"

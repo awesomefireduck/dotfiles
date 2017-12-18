@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -11,8 +10,14 @@ if ! shopt -oq posix; then
   fi
 fi
 
-for file in $(find "${BASH_SOURCE[0]}.d/" -type f);
-do
-	source "$file"
-done
+if command -v pandoc >/dev/null 2>&1; then
+  eval "$(pandoc --bash-completion)"
+fi
 
+if command -v kubectl >/dev/null 2>&1; then
+  eval "$(kubectl completion bash)"
+fi
+
+if command -v minikube >/dev/null 2>&1; then
+  eval "$(minikube completion bash)"
+fi
