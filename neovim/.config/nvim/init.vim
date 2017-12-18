@@ -79,7 +79,7 @@ endif
 
 
 function! s:sourceConfig()
-    let path = $HOME  . '/dotfiles/neovim/.config/nvim/plugins'
+    let path = $HOME  . '/.config/nvim/plugins'
 
     let file_list = split(globpath(path, '*'), '\n')
 
