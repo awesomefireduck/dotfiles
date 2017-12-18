@@ -1,0 +1,4 @@
+#!/bin/bash
+if ! command -v thefuck &>/dev/null; then
+  echo "thefuck not installed; please install 'thefuck' via apt, homebrew or pip3" >&2
+fi
