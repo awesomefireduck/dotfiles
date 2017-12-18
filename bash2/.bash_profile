@@ -4,25 +4,24 @@
 #umask 022
 
 find_abs_path() {
-	local TARGET_FILE PHYS_DIR RESULT
-	TARGET_FILE="$1"
+	local target_file phys_dir
+	target_file="$1"
 
-	cd "$(dirname $TARGET_FILE)"
-	TARGET_FILE="$(basename $TARGET_FILE)"
+	cd "$(dirname $target_file)"
+	target_file="$(basename $target_file)"
 
 	# Iterate down a (possible) chain of symlinks
-	while [ -L "$TARGET_FILE" ]
+	while [ -L "$target_file" ]
 	do
-		TARGET_FILE="$(readlink $TARGET_FILE)"
-		cd "$(dirname $TARGET_FILE)"
-		TARGET_FILE="$(basename $TARGET_FILE)"
+		target_file="$(readlink $target_file)"
+		cd "$(dirname $target_file)"
+		target_file="$(basename $target_file)"
 	done
 
 	# Compute the canonicalized name by finding the physical path
 	# for the directory we're in and appending the target file.
-	PHYS_DIR="$(pwd -P)"
-	RESULT="$PHYS_DIR/$TARGET_FILE"
-	echo "$RESULT"
+	phys_dir="$(pwd -P)"
+	echo "$phys_dir/$target_file"
 }
 
 bash_abs_path="$(dirname "$(find_abs_path "${BASH_SOURCE[0]}" )")"
@@ -31,8 +30,5 @@ bash_abs_path="$(dirname "$(find_abs_path "${BASH_SOURCE[0]}" )")"
 if [ -f "${bash_abs_path}/.bashrc" ]; then
     . "${bash_abs_path}/.bashrc"
 fi
-
-# set PATH so it includes user's private bin directory
-export PATH="$HOME/bin:$HOME/.cargo/bin:$PATH"
 
 echo "BASH PROFILE DONE"
