@@ -2,7 +2,7 @@ set encoding=utf-8
 scriptencoding utf-8
 
 if (has("termguicolors"))
-	set termguicolors
+    set termguicolors
 endif
 
 let g:mapleader = "\<Space>"
@@ -17,11 +17,11 @@ set number
 "set colorcolumn=120,121,122
 
 if has('persistent_undo')
-  set undofile
-  " should be ~/.local/share
-  set undodir=$HOME/.local/share/nvim/undo
-  set undolevels=1000
-  set undoreload=10000
+    set undofile
+    " should be ~/.local/share
+    set undodir=$HOME/.local/share/nvim/undo
+    set undolevels=1000
+    set undoreload=10000
 endif
 
 let g:hlstate=0
@@ -70,11 +70,11 @@ set listchars=tab:⭾ ,trail:•,precedes:≺,extends:€,nbsp:‗
 
 " auto install plugin manager if it is not installed
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
-  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
-        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  augroup bootstrap
-  autocmd VimEnter * PlugInstall | source $MYVIMRC
-  augroup END
+    silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+		\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    augroup bootstrap
+	autocmd VimEnter * PlugInstall | source $MYVIMRC
+    augroup END
 endif
 
 call plug#begin('~/.config/nvim/plugged')
@@ -84,29 +84,29 @@ Plug 'kristijanhusak/vim-hybrid-material'
 " give paretheses matching colours
 Plug 'luochen1990/rainbow'
 let g:rainbow_conf = {
-	\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-	\	'ctermfgs': ['fg', '14', '208', '34', '196', '4', '11', '167', '76', '163'],
-	\	'operators': '_,\|+\|-\|%\|/[^/]\|=\|==\|===\|!=\|!==\|<\|>\|:_',
-	\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-	\	'separately': {
-	\		'*': {},
-	\		'tex': {
-	\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
-	\		},
-	\		'lisp': {
-	\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
-	\		},
-	\		'vim': {
-	\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
-	\		},
-	\		'html': {
-	\			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
-	\		    'operators': '_=_',
-	\		},
-	\		'css': 0,
-	\		'help': 0,
-	\	}
-	\}
+	    \	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+	    \	'ctermfgs': ['fg', '14', '208', '34', '196', '4', '11', '167', '76', '163'],
+	    \	'operators': '_,\|+\|-\|%\|/[^/]\|=\|==\|===\|!=\|!==\|<\|>\|:_',
+	    \	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+	    \	'separately': {
+	    \		'*': {},
+	    \		'tex': {
+	    \			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+	    \		},
+	    \		'lisp': {
+	    \			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+	    \		},
+	    \		'vim': {
+	    \			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+	    \		},
+	    \		'html': {
+	    \			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+	    \		    'operators': '_=_',
+	    \		},
+	    \		'css': 0,
+	    \		'help': 0,
+	    \	}
+	    \}
 let g:rainbow_active = 1
 " syntax highlighting within another syntax
 "Plug 'inkarkat/vim-ingo-library'
@@ -114,7 +114,7 @@ let g:rainbow_active = 1
 " Highlight and fix trailing whitespace with :FixWhitespace
 "Plug 'bronson/vim-trailing-whitespace'
 augroup whitespace
-"  au BufEnter nowrite
+    "  au BufEnter nowrite
 augroup END
 
 
@@ -153,26 +153,26 @@ Plug 'vim-scripts/gitignore.vim'
 
 " EDITING
 if has('nvim')
-	" edit browser text fields with neovim
-	Plug 'raghur/vim-ghost', {'do': ':GhostInstall'}
-	let g:ghost_autostart = 1
-	augroup ghost
-		au!
-		autocmd BufNewFile,BufRead *stackexchange.com*	set filetype=markdown   | set spell   | set spelllang=en
-		autocmd BufNewFile,BufRead *stackoverflow.com*	set filetype=markdown   | set spell   | set spelllang=en
-		autocmd BufNewFile,BufRead *github.com*		set filetype=markdown   | set spell   | set spelllang=en
-		autocmd BufNewFile,BufRead *gitlab.com*		set filetype=markdown   | set spell   | set spelllang=en
-		autocmd BufNewFile,BufRead *service-now.com*	set filetype=javascript | set nospell
-	augroup END
+    " edit browser text fields with neovim
+    Plug 'raghur/vim-ghost', {'do': ':GhostInstall'}
+    let g:ghost_autostart = 1
+    augroup ghost
+	au!
+	autocmd BufNewFile,BufRead *stackexchange.com*	set filetype=markdown   | set spell   | set spelllang=en
+	autocmd BufNewFile,BufRead *stackoverflow.com*	set filetype=markdown   | set spell   | set spelllang=en
+	autocmd BufNewFile,BufRead *github.com*		set filetype=markdown   | set spell   | set spelllang=en
+	autocmd BufNewFile,BufRead *gitlab.com*		set filetype=markdown   | set spell   | set spelllang=en
+	autocmd BufNewFile,BufRead *service-now.com*	set filetype=javascript | set nospell
+    augroup END
 endif
 "easily add print statements
 Plug 'mptre/vim-printf'
 augroup vim_printf
-autocmd FileType vim let b:printf_pattern = 'echom printf("%s", %s)'
-autocmd FileType rust let b:printf_pattern = 'println!("%s {}", %s);'
-autocmd FileType php let b:printf_pattern = 'error_log(var_export(["%s" => %s], true);'
-autocmd FileType javascript let b:printf_pattern = 'console.debug("%s: ", %s);'
-autocmd FileType elixir let b:printf_pattern = 'IO.puts " %s: #{%s}"'
+    autocmd FileType vim let b:printf_pattern = 'echom printf("%s", %s)'
+    autocmd FileType rust let b:printf_pattern = 'println!("%s {}", %s);'
+    autocmd FileType php let b:printf_pattern = 'error_log(var_export(["%s" => %s], true);'
+    autocmd FileType javascript let b:printf_pattern = 'console.debug("%s: ", %s);'
+    autocmd FileType elixir let b:printf_pattern = 'IO.puts " %s: #{%s}"'
 augroup END
 nnoremap <Leader>p :Printf<CR>
 " auto insert matching parens, brackets and quotes
@@ -253,11 +253,11 @@ Plug 'Shougo/neco-vim'
 let g:ale_linters_install = 'sudo apt-get install -y tidy shellcheck npm python3-flake8 python3-pip yamllint && pip3 install vint proselint neovim; sudo npm install -g xo jshint htmlhint stylelint'
 Plug 'w0rp/ale', {'do': g:ale_linters_install}
 let g:ale_linters = {
-\	'rust': ['rls'],
-\	'text': ['proselint'],
-\	'markdown': ['proselint'],
-\	'gitcommit': ['proselint'],
-\}
+	    \	'rust': ['rls'],
+	    \	'text': ['proselint'],
+	    \	'markdown': ['proselint'],
+	    \	'gitcommit': ['proselint'],
+	    \}
 let g:ale_sh_shellcheck_options = '-x'
 
 
@@ -276,8 +276,8 @@ Plug 'junegunn/limelight.vim'
 Plug 'Konfekt/vim-guesslang' "guess the language for spell checking
 let g:guesslang_langs = [ 'en_US', 'nl_NL', 'nl' ]
 augroup spell
-autocmd FileType text,markdown,mail,gitcommit setlocal spell
-autocmd FileType help setlocal nospell
+    autocmd FileType text,markdown,mail,gitcommit setlocal spell
+    autocmd FileType help setlocal nospell
 augroup END
 " Github
 Plug 'roxma/nvim-completion-manager'
@@ -298,10 +298,10 @@ let g:racer_experimental_completer = 1
 " plugin needs to know where it can find racer
 let g:racer_cmd = '/home/vince/.cargo/bin/racer'
 augroup rust
-au FileType rust nmap gd <Plug>(rust-def)
-au FileType rust nmap gs <Plug>(rust-def-split)
-au FileType rust nmap gx <Plug>(rust-def-vertical)
-au FileType rust nmap <leader>gd <Plug>(rust-doc)
+    au FileType rust nmap gd <Plug>(rust-def)
+    au FileType rust nmap gs <Plug>(rust-def-split)
+    au FileType rust nmap gx <Plug>(rust-def-vertical)
+    au FileType rust nmap <leader>gd <Plug>(rust-doc)
 augroup END
 
 " CLOJURE
@@ -315,12 +315,12 @@ Plug 'vim-scripts/indentpython.vim' , {'for': 'python'} "better indent detection
 Plug 'roxma/nvim-completion-manager', {'for': 'python', 'do': 'sudo pip install jedi'}
 
 augroup python
-" since the body of a class method requires two indents, that leaves 5 for use
-" within the function body
-au FileType python set tabstop=4 expandtab shiftwidth=4
-au FileType python let g:LookOfDisapprovalTabThreshold=7 | let g:LookOfDisapprovalSpaceThreshold=(&tabstop*7)
-" default is E121,E123,E126,E226,E24,E704,W503,W504
-au FileType python let b:ale_python_flake8_options = '--max-line-length=100 --ignore=E221,E241'
+    " since the body of a class method requires two indents, that leaves 5 for use
+    " within the function body
+    au FileType python set tabstop=4 expandtab shiftwidth=4
+    au FileType python let g:LookOfDisapprovalTabThreshold=7 | let g:LookOfDisapprovalSpaceThreshold=(&tabstop*7)
+    " default is E121,E123,E126,E226,E24,E704,W503,W504
+    au FileType python let b:ale_python_flake8_options = '--max-line-length=100 --ignore=E221,E241'
 augroup END
 
 " ELM
@@ -359,20 +359,20 @@ Plug 'johngrib/vim-game-code-break'
 Plug 'itchyny/lightline.vim'
 set laststatus=2
 let g:lightline = {
-      \ 'colorscheme': 'PaperColor',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
-      \ },
-      \ }
+	    \ 'colorscheme': 'PaperColor',
+	    \ 'active': {
+	    \   'left': [ [ 'mode', 'paste' ],
+	    \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+	    \ },
+	    \ 'component_function': {
+	    \   'gitbranch': 'fugitive#head'
+	    \ },
+	    \ }
 Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 
 colorscheme hybrid_material
 set background=dark
 augroup syntaxrange
-"autocmd Syntax * call SyntaxRange#Include('Examples:$', '("""|\\n\\n)$', "python")
+    "autocmd Syntax * call SyntaxRange#Include('Examples:$', '("""|\\n\\n)$', "python")
 augroup END
