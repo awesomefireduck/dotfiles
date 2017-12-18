@@ -1,0 +1,29 @@
+#!/bin/bash
+thisfile="${BASH_SOURCE[0]}"
+thisdir="$(dirname "${thisfile}" )"
+preexec_dir_relative="${thisdir}/../lib/bash-preexec"
+preexec_dir="$(find_abs_path "${preexec_dir_relative}" )"
+preexec_file="${preexec_dir}/bash-preexec.sh"
+
+if [ ! -f "$preexec_file" ];
+then
+	mkdir -p "${preexec_dir}"
+
+	if command -v git >/dev/null 2>&1; then
+		git clone https://github.com/rcaloras/bash-preexec.git --depth=1 "${preexec_dir}" >/dev/null 2>&1
+	else
+		# If git isn't availiable, we will download it separately
+		curl https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh -o "$preexec_file"
+	fi
+else
+	# if the file exists, and installed via git, we update
+	if [ -d "$preexec_dir/.git" ]; then
+		cd "$preexec_dir" && git pull --rebase >/dev/null 2>&1
+		cd -
+	fi
+fi
+
+
+if [ -f "$preexec_file" ]; then
+	source "$preexec_file"
+fi

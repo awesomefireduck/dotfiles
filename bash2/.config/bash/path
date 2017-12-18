@@ -5,7 +5,6 @@ PATH="$PATH"
 # loop over files, starting with 00-system
 for file in $(find "${BASH_SOURCE[0]}.d/" -type f);
 do
-    echo "$file"
     if [[ -f "$file" ]]; then
 
         # we read the entire file in an arry, one line per entry
@@ -19,6 +18,4 @@ do
     fi
 done
 
-echo $PATH
 eval PATH="$PATH"
-echo $PATH
