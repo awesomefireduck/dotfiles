@@ -16,11 +16,25 @@ fi
 
 unset color_prompt force_color_prompt
 
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
+
+PROMPT_COMMAND="get_exit_code;cpupercent"
+# Define the sexy-bash-prompt
+PS1="\n\
+┏━━━\[$user_color\] $user_name \[$reset\]\$(get_newl)\
+\[$preposition_color\] 💻 \[$reset\]\
+\[\$(host_color)\]$host_name \[$reset\]
+┃\[$preposition_color\] 📂 \[$reset\]\
+\[$dir_color\]\w (\$(get_dirstack_count))\[$reset\]\
+\$(get_files)\
+\$(get_time)\
+\$( is_on_git &&\
+  echo -n \"\n┃\[$preposition_color\] ⛕ \[$reset\] \" &&\
+  echo -n \"\[$git_status_color\]\$(get_git_info)\" &&\
+  echo -n \"\[$git_progress_color\]\$(get_git_progress)\" &&\
+  echo -en \"\[$preposition_color\]\")\[$reset\]\$(get_newl)\
+\$(get_vgit_changes)\
+\$(get_cpupercent)\
+\$(get_shellpercent)\
+\$(jobs_prompt)\
+\$(print_exit_code)
+┗━\[$symbol_color\]$(get_prompt_symbol) \[$reset\] "
