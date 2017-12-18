@@ -1,29 +1,45 @@
 #!/bin/bash
+
 thisfile="${BASH_SOURCE[0]}"
 thisdir="$(dirname "${thisfile}" )"
 preexec_dir_relative="${thisdir}/../lib/bash-preexec"
 preexec_dir="$(find_abs_path "${preexec_dir_relative}" )"
 preexec_file="${preexec_dir}/bash-preexec.sh"
 
-if [ ! -f "$preexec_file" ];
-then
+
+get_preexec_files() {
+    local last_pull_time current_time timedelta daylength
+
+    if [ ! -f "$preexec_file" ];
+    then
 	mkdir -p "${preexec_dir}"
 
 	if command -v git >/dev/null 2>&1; then
-		git clone https://github.com/rcaloras/bash-preexec.git --depth=1 "${preexec_dir}" >/dev/null 2>&1
+	    git clone https://github.com/rcaloras/bash-preexec.git --depth=1 "${preexec_dir}" >/dev/null 2>&1
 	else
-		# If git isn't availiable, we will download it separately
-		curl https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh -o "$preexec_file"
+	    # If git isn't availiable, we will download it separately
+	    curl https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh -o "$preexec_file"
 	fi
-else
+    else
 	# if the file exists, and installed via git, we update
 	if [ -d "$preexec_dir/.git" ]; then
-		cd "$preexec_dir" && git pull --rebase >/dev/null 2>&1
-		cd -
+	    cd "$preexec_dir"
+	    last_pull_time="$(stat -c %Y .git/FETCH_HEAD)"
+	    current_time="$(date +%s)"
+	    timedelta="$(( current_time - last_pull_time ))"
+	    daylength="$(( 24 * 60 * 60 ))"
+	    if [[ "$timedelta" -gt "$daylength" ]]; then
+
+		git pull --rebase >/dev/null 2>&1
+	    fi
+	    cd -
 	fi
-fi
+    fi
+}
+
+get_preexec_files
 
 
 if [ -f "$preexec_file" ]; then
-	source "$preexec_file"
+    source "$preexec_file"
 fi
