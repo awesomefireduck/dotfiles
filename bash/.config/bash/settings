@@ -28,3 +28,22 @@ case $(uname) in
 	"Linux") platform="linux" ;;
 	*) echo "unknown platform" >&2 platform="unknown";;
 esac
+
+# some default type
+session_type=local/shell
+
+# check if running inside tmux
+if [ ! -z "$TMUX" ]; then
+  session_type=remote/tmux
+
+# check if user is connected over ssh
+elif [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+  session_type=remote/ssh
+
+else
+  case $(ps -o comm= -p $PPID) in
+    # check if parent process is SSH
+    sshd|*/sshd) session_type=remote/ssh;;
+  esac
+fi
+

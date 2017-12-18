@@ -35,6 +35,15 @@ bash_abs_path="$(dirname "$(find_abs_path "${BASH_SOURCE[0]}" )")"
 bash_config_dir="${bash_abs_path}/.config/bash"
 
 source "${bash_config_dir}/settings"
+
+case "$session_type" in
+	"remote/ssh")
+	if [ -f ~/.config/bash/tmux ]; then
+		. ~/.config/bash/tmux
+	fi
+	run_tmux
+esac
+
 source "${bash_config_dir}/path"
 source "${bash_config_dir}/aliases"
 source "${bash_config_dir}/completion"
