@@ -1,0 +1,8 @@
+#!/bin/bash
+
+function git_branch_info() {
+    echo -n "${bold_yellow}"
+    get_git_info
+    echo -n "${textreset}"
+}
+

@@ -1,0 +1,37 @@
+#!/bin/bash
+function display_prompt() {
+    # save exit code of command
+    declare -g last_status="$?"
+
+    if [[ "$(cursor_x)" -gt 0 ]]; then
+	echo -ne "\n"
+    fi
+
+    local prompt="$(construct_prompt)"
+    echo -n "$prompt" > ~/prompt.txt
+    local prompt_height="$(get_prompt_height "$prompt")"
+    local startline=1
+
+    if [[ "$last_status" -gt 0 ]]; then
+	prompt_height=$((prompt_height - 1))
+	startline=$((startline + 1))
+    fi
+
+    # prompt starts with an empty newline, we don't count that
+    local first_line="$(echo -n "$prompt" | sed "${startline}q;d")"
+    local first_line_length="$(echo -n "$first_line" | line_length)"
+
+
+    # TODO: fix this bug,
+    # this hack shouldn't be necessary
+    if [[ "$last_status" -gt 0 ]]; then
+        first_line_length=$((first_line_length + 1))
+    fi
+
+    local last_line="$(echo -n "$prompt" | tail -n 1)"
+    local last_line_length="$(echo -n "$last_line" | line_length)"
+
+    local move_cursor="\[$(tput cuu "$prompt_height")$(tput cub "$((last_line_length - first_line_length))")\]"
+
+    export PS1="${prompt}${move_cursor}"
+}

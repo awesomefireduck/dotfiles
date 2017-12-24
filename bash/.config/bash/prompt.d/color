@@ -32,40 +32,72 @@ esac
 # should be on the output of commands, not on the prompt
 force_color_prompt=yes
 
-txtblk="$(tput setaf 0)" # Black - Regular
-txtred="$(tput setaf 1)" # Red
-txtgrn="$(tput setaf 2)" # Green  joshua
-txtylw="$(tput setaf 3)" # Yellow
-txtblu="$(tput setaf 4)" # Blue   leidenuniv
-txtpur="$(tput setaf 5)" # Purple cesium
-txtcyn="$(tput setaf 6)" # Cyan   titanium
-txtwht="$(tput setaf 7)" # White
-bold="$(tput bold )"
-bldblk="${bold}${txtblk}" # Black - Bold
-bldred="${bold}${txtred}" # Red
-bldgrn="${bold}${txtgrn}" # Green
-bldylw="${bold}${txtylw}" # Yellow
-bldblu="${bold}${txtblu}" # Blue
-bldpur="${bold}${txtpur}" # Purple
-bldcyn="${bold}${txtcyn}" # Cyan
-bldwht="${bold}${txtwht}" # White
-unkblk="${underline}${txtblk}" # Black - Underline
-undred="${underline}${txtred}" # Red
-undgrn="${underline}${txtgrn}" # Green
-undylw="${underline}${txtylw}" # Yellow
-undblu="${underline}${txtblu}" # Blue
-undpur="${underline}${txtpur}" # Purple
-undcyn="${underline}${txtcyn}" # Cyan
-undwht="${underline}${txtwht}" # White
-bakblk="${background}${txtblk}"   # Black - Background
-bakred="${background}${txtred}"   # Red
-bakgrn="${background}${txtgrn}"   # Green
-bakylw="${background}${txtylw}"   # Yellow
-bakblu="${background}${txtblu}"  # Blue
-bakpur="${background}${txtpur}"   # Purple
-bakcyn="${background}${txtcyn}"   # Cyan
-bakwht="${background}${txtwht}"   # White
-txtrst="$(tput sgr0)"   # Text Reset
+escstart='\['
+escend='\]'
+
+_color_black="$(tput setaf 0)"
+_color_red="$(tput setaf 1)"
+_color_green="$(tput setaf 2)"
+_color_yellow="$(tput setaf 3)"
+_color_blue="$(tput setaf 4)"
+_color_purple="$(tput setaf 5)"
+_color_cyan="$(tput setaf 6)"
+_color_white="$(tput setaf 7)"
+
+
+_light_black="$(tput setaf 8)"
+_light_red="$(tput setaf 9)"
+_light_green="$(tput setaf 10)"
+_light_yellow="$(tput setaf 11)"
+_light_blue="$(tput setaf 12)"
+_light_purple="$(tput setaf 13)"
+_light_cyan="$(tput setaf 14)"
+_light_white="$(tput setaf 15)"
+
+_bold="$(tput bold)"
+
+text_black="${escstart}${_color_black}${escend}"
+text_red="${escstart}${_color_red}${escend}"
+text_green="${escstart}${_color_green}${escend}"
+text_yellow="${escstart}${_color_yellow}${escend}"
+text_blue="${escstart}${_color_blue}${escend}"
+text_purple="${escstart}${_color_purple}${escend}"
+text_cyan="${escstart}${_color_cyan}${escend}"
+text_white="${escstart}${_color_white}${escend}"
+
+
+bold_black="${escstart}${_bold}${_color_black}${escend}"
+bold_red="${escstart}${_bold}${_color_red}${escend}"
+bold_green="${escstart}${_bold}${_color_green}${escend}"
+bold_yellow="${escstart}${_bold}${_color_yellow}${escend}"
+bold_blue="${escstart}${_bold}${_color_blue}${escend}"
+bold_purple="${escstart}${_bold}${_color_purple}${escend}"
+bold_cyan="${escstart}${_bold}${_color_cyan}${escend}"
+bold_white="${escstart}${_bold}${_color_white}${escend}"
+
+underline_black="${escstart}${underline}${_color_black}${escend}"
+underline_red="${escstart}${underline}${_color_red}${escend}"
+underline_green="${escstart}${underline}${_color_green}${escend}"
+underline_yellow="${escstart}${underline}${_color_yellow}${escend}"
+underline_blue="${escstart}${underline}${_color_blue}${escend}"
+underline_purple="${escstart}${underline}${_color_purple}${escend}"
+underline_cyan="${escstart}${underline}${_color_cyan}${escend}"
+underline_white="${escstart}${underline}${_color_white}${escend}"
+
+background_black="${escstart}${background}${_color_black}${escend}"
+background_red="${escstart}${background}${_color_red}${escend}"
+background_green="${escstart}${background}${_color_green}${escend}"
+background_yellow="${escstart}${background}${_color_yellow}${escend}"
+background_blue="${escstart}${background}${_color_blue}${escend}"
+background_purple="${escstart}${background}${_color_purple}${escend}"
+background_cyan="${escstart}${background}${_color_cyan}${escend}"
+background_white="${escstart}${background}${_color_white}${escend}"
+
+
+textreset="${escstart}$(tput sgr0)${escend}"   # Text Reset
+
+hostcolor="\[$(tput setaf $hostnum)\]"
+usercolor="\[$(tput setaf $usernum)\]"
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then

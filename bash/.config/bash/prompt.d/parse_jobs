@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Transforms the output of `jobs` to something more
+# pleasing to the eye
+function parse_jobs() {
+	remove_brackets \
+	| remove_second_word_and_compact_whitespace \
+	| indicate_sudo \
+	| filter_job_number_and_command \
+	| move_job_indicator_to_end \
+        | remove_newlines
+}

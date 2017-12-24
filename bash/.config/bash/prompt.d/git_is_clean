@@ -1,0 +1,5 @@
+#!/bin/bash
+
+function git_is_clean() {
+    return $(git status --porcelain | wc -l )
+}

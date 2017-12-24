@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Uses the `jobs` command to get all
+# running and stopped jobs
+function get_all_jobs() {
+    running_jobs="$(jobs -r | grep -v 'Done')";
+    stopped_jobs="$(jobs -s | grep -v 'Done')";
+
+    if [[ "${running_jobs}" != "" ]]; then
+	echo -n "${bold_cyan}🏃${textreset}$(jobs -r | parse_jobs | colorize_recent_running_job)"
+    fi
+
+    if [[ "$running_jobs" != "" && "$stopped_jobs" != "" ]]; then
+	echo -n "${newline}"
+    fi
+
+    if [[ "${stopped_jobs}" != "" ]]; then
+	echo -ne "${bold_blue}🚫${textreset}$(jobs -s | parse_jobs | colorize_recent_stopped_job)"
+    fi
+}

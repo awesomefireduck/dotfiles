@@ -1,0 +1,61 @@
+#!/bin/bash
+
+function prompt_symbol {
+
+    if [[ "$last_status" -ne 0 ]];
+    then
+        echo -n "┏┥$(last_history_command): ${bold_red}${last_status}${textreset}│\n";
+        echo -n '┣'
+    else
+        echo -n "┏"
+    fi
+    # prompt symbol
+    echo -n "━━━▌ "
+}
+
+function prompt_chroot() {
+        echo -n "${newline}chroot: ${debian_chroot}"
+}
+
+
+function construct_prompt {
+    declare -g newline="${textreset}\n┃ "
+
+    local prompt=""
+
+    prompt+="\[$(tput ed)\]"
+
+    prompt+="$(prompt_symbol)"
+
+    # chroot location
+    if [[ -n "$debian_chroot" ]]; then
+        prompt+="$(prompt_chroot)"
+    fi
+
+    # current dir
+    prompt+=${newline}"📂 ${bold_green}\w"
+
+    if git rev-parse &>/dev/null; then
+        prompt+="${newline}⛕  $(git_branch_info)"
+        if ! git_is_clean; then
+            prompt+="${newline}$(git_files_status)"
+        fi
+    fi
+
+    # running and stopped jobs
+    if [[ "$(jobs | grep -v 'Done')" != "" ]]; then
+        prompt+="${newline}$(get_all_jobs)"
+    fi
+
+    # current time, but this is also in tmux?
+    #prompt+=${newline}"🕐 $(date +%H:%M:%S)"
+
+    # display host when working remote
+    if [[ "$session_type" =~ remote/.* ]]; then
+        prompt+="${newline}💻 ${hostcolor}$(hostname)"
+    fi
+
+    # username
+    prompt+="${textreset}\n┗ 👤 ${usercolor} ${USER}${textreset}"
+    echo -ne "$prompt"
+}

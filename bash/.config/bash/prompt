@@ -2,45 +2,35 @@
 
 for file in $(find "${BASH_SOURCE[0]}.d/" -type f);
 do
-	if [[ -f "$file" ]];
-	then
-		source "$file"
-	fi
+    if [[ -f "$file" ]];
+    then
+	source "$file"
+    fi
 done
 
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-
-unset color_prompt force_color_prompt
+PS2='$(tput ed)> '
+PS4='+ '
 
 
-PROMPT_COMMAND="get_exit_code;cpupercent"
-# Define the sexy-bash-prompt
-PS1="\n\
-┏━━━\[$user_color\] $user_name \[$reset\]"
+precmd_functions+=(get_exit_code)
+precmd_functions+=(display_prompt)
 
-if [[ "$session_type" == "remote/"* ]]; then
-	echo "REMOTE"
-	PS1+="\$(get_newl)\
-\[$preposition_color\] 💻 \[$reset\]\
-\[\$(host_color)\]$host_name \[$reset\]"
-fi
+wipe_prompt() {
+    # save cursor position
+    tput sc
+    # go to beginnig of previous line
+    tput cuu 1
+    # overwrite char
+    echo -n "━"
+    if [[ "$last_status" -ne 0 ]]; then
+        tput cuu 1
+        tput cub 1
+        echo -n "┗"
+    fi
+    # restore position
+    tput rc
+    # wipe until end of screen
+    tput ed
+}
 
-PS1+="\n┃\[$preposition_color\] 📂 \[$reset\]\
-\[$dir_color\]\w (\$(get_dirstack_count))\[$reset\]\
-\$(get_files)\
-\$(get_time)\
-\$( is_on_git &&\
-  echo -n \"\n┃\[$preposition_color\] ⛕ \[$reset\] \" &&\
-  echo -n \"\[$git_status_color\]\$(get_git_info)\" &&\
-  echo -n \"\[$git_progress_color\]\$(get_git_progress)\" &&\
-  echo -en \"\[$preposition_color\]\")\[$reset\]\$(get_newl)\
-\$(get_vgit_changes)\
-\$(get_cpupercent)\
-\$(get_shellpercent)\
-\$(jobs_prompt)\
-\$(print_exit_code)
-┗━\[$symbol_color\]$(get_prompt_symbol) \[$reset\] "
+preexec_functions+=(wipe_prompt)

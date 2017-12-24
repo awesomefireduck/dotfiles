@@ -1,0 +1,6 @@
+function parse_git_dirty() {
+    # If the git status has *any* changes (e.g. dirty), echo our character
+    if [[ -n "$(git status --porcelain 2> /dev/null)" ]]; then
+	echo 1
+    fi
+}

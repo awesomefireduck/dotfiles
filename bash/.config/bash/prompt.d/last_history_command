@@ -1,0 +1,5 @@
+#!/bin/bash
+
+function last_history_command() {
+history | tail -n 1 | awk '{print $2}'
+}

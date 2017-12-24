@@ -39,7 +39,6 @@ get_preexec_files() {
 
 get_preexec_files
 
-
 if [ -f "$preexec_file" ]; then
     source "$preexec_file"
 fi

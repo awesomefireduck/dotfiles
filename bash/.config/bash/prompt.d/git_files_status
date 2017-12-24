@@ -1,0 +1,86 @@
+#!/bin/bash
+
+function git_files_status() {
+    files_status="$(git status --porcelain)"
+
+    staged="$(echo "$files_status"    | grep '^[MARCD].' | wc -l)"
+    unstaged="$(echo "$files_status"  | grep '^.[MD]' | wc -l)"
+    unmerged="$(echo "$files_status"  | grep '^DD\|AU\|UD\|UA\|DU\|AA\|UU' | wc -l)"
+    untracked="$(echo "$files_status" | grep '^??' | wc -l)"
+    deleted_or_moved="$(echo "$files_status"   | grep '^[DR].\|.D' | wc -l)"
+
+    echo -n "📄 "
+
+    if [[ "$staged" -gt 0 ]]; then
+        echo -n "${bold_green}✔ ${staged}${textreset} "
+    fi
+
+    if [[ "$unstaged" -gt 0 ]]; then
+        echo -n "${bold_yellow}✚ ${unstaged}${textreset} "
+    fi
+
+    if [[ "$deleted_or_moved" -gt 0 ]]; then
+        echo -n "${bold_red}✘ ${deleted_or_moved}${textreset} "
+    fi
+
+    if [[ "$untracked" -gt 0 ]]; then
+        echo -n "${light_black}？${untracked}${textreset} "
+    fi
+
+    if [[ "$unmerged" -gt 0 ]]; then
+        echo -n "${light_red}\[${bold}\]unmerged: ${unmerged}${textreset} "
+    fi
+}
+
+#           XY PATH1 -> PATH2
+#
+#       where PATH1 is the path in the HEAD, and the " -> PATH2" part is shown only when PATH1 corresponds to a different path in
+#       the index/worktree (i.e. the file is renamed). The XY is a two-letter status code.
+#
+#       The fields (including the ->) are separated from each other by a single space. If a filename contains whitespace or other
+#       nonprintable characters, that field will be quoted in the manner of a C string literal: surrounded by ASCII double quote
+#       (34) characters, and with interior special characters backslash-escaped.
+#
+#       For paths with merge conflicts, X and Y show the modification states of each side of the merge. For paths that do not have
+#       merge conflicts, X shows the status of the index, and Y shows the status of the work tree. For untracked paths, XY are ??.
+#       Other status codes can be interpreted as follows:
+#
+#       ·   ' ' = unmodified
+#
+#       ·   M = modified
+#
+#       ·   A = added
+#
+#       ·   D = deleted
+#
+#       ·   R = renamed
+#
+#       ·   C = copied
+#
+#       ·   U = updated but unmerged
+#
+#       Ignored files are not listed, unless --ignored option is in effect, in which case XY are !!.
+#
+#           X          Y     Meaning
+#           -------------------------------------------------
+#                     [MD]   not updated
+#           M        [ MD]   updated in index
+#           A        [ MD]   added to index
+#           D         [ M]   deleted from index
+#           R        [ MD]   renamed in index
+#           C        [ MD]   copied in index
+#           [MARC]           index and work tree matches
+#           [ MARC]     M    work tree changed since index
+#           [ MARC]     D    deleted in work tree
+#           -------------------------------------------------
+#           D           D    unmerged, both deleted
+#           A           U    unmerged, added by us
+#           U           D    unmerged, deleted by them
+#           U           A    unmerged, added by them
+#           D           U    unmerged, deleted by us
+#           A           A    unmerged, both added
+#           U           U    unmerged, both modified
+#           -------------------------------------------------
+#           ?           ?    untracked
+#           !           !    ignored
+#           -------------------------------------------------

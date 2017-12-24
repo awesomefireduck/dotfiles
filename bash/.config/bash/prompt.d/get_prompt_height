@@ -1,0 +1,6 @@
+#!/bin/bash
+function get_prompt_height() {
+    local prompt_string="$1"
+    local prompt_height="$(echo "$prompt_string" | wc -l)"
+    echo -n "$((prompt_height - 1))"
+}

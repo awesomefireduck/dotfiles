@@ -1,0 +1,5 @@
+#!/bin/bash
+
+function add_prepending_newline() {
+    sed -r -e 's/^/'"${newline}"'/gm'
+}

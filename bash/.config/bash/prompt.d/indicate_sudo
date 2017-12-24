@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# prepends !! to all commands that are run with sudo (as root or otherwise)
+function indicate_sudo() {
+    local sudo_regex
+
+    # we filter out all sudo arguments
+    # this was a challenge, since some
+    # arguments accept a value
+    # e.g.: sudo -u user ls
+
+    #only match jobs with sudo
+    sudo_regex='sudo'
+    sudo_regex+='(';
+	    # we match all of the short arguments that accept a value
+	    sudo_regex+=' -[CghprtUu] #?\$?\w+'
+	sudo_regex+='|'
+	    # we match most of the long arguments that accept a value
+	    sudo_regex+=' --[cgtou][-a-zA-Z0-9_]+( |=)#?\$?\w+'
+	sudo_regex+='|'
+	    # we match the host (--h matches --help as well)
+	    sudo_regex+=' --host \w+'
+	sudo_regex+='|'
+	    # we match the role (--r matches --refresh-timer as well)
+	    sudo_regex+=' --role \w+'
+	sudo_regex+='|'
+	    ## we match all other arguments
+	    sudo_regex+=' -?-[-a-zA-Z0-9_]+'
+    sudo_regex+=')*'
+    sudo_regex+=' (.*)$'
+
+    # we remove the sudo stuff and prepend !! to the command
+    sed -r -e 's/'"${sudo_regex}"'/!!\3/gm'
+}

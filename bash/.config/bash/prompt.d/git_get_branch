@@ -1,0 +1,11 @@
+#!/bin/bash
+function get_git_branch() {
+    # On branches, this will return the branch name
+    # On non-branches, (no branch)
+    ref="$(git symbolic-ref HEAD 2> /dev/null | sed -e 's/refs\/heads\///')"
+    if [[ "$ref" != "" ]]; then
+	echo "$ref"
+    else
+	echo "(no branch)"
+    fi
+}

@@ -1,0 +1,6 @@
+#!/bin/bash
+# set $last_status to the exit code of the last command
+function get_exit_code() {
+    #declare -g last_status="$?"
+    true
+}

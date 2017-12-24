@@ -1,0 +1,5 @@
+#!/bin/bash
+
+function remove_newlines() {
+    tr -d '\n'
+}

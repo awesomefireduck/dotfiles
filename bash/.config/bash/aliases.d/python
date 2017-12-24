@@ -1,3 +1,4 @@
+#!/bin/bash
 alias snek=python
 alias snek3=python3
 alias snek2=python2

@@ -1,0 +1,18 @@
+parse_git_behind () {
+    # Grab the branch
+    branch="$(get_git_branch)"
+    remote_branch="origin/$branch"
+
+    # $ git log master..origin/master
+    # commit 4a633f715caf26f6e9495198f89bba20f3402a32
+    # Author: Todd Wolfson <todd@twolfson.com>
+    # Date:   Sun Jul 7 22:12:17 2013 -0700
+    #
+    #     Unsynced commit
+
+    # If the local branch is behind the remote branch
+    if is_branch1_behind_branch2 "$branch" "$remote_branch"; then
+	# echo our character
+	echo 1
+    fi
+}

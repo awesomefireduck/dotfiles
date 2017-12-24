@@ -1,0 +1,25 @@
+#!/bin/bash
+function line_length() {
+    local count=0
+    local inblocks=false
+    local prevchar=''
+
+    while IFS= read -r -n1 char; do
+	if [[ "$inblocks" != "true" ]]; then
+	    (( count++ ))
+	fi
+
+	if [[ "$prevchar" == "\\" ]]; then
+
+	    case "$char" in
+		# we also "uncount" the previous char
+		"[") inblocks=true; (( count-- ));;
+
+		"]") inblocks=false;             ;;
+	    esac
+
+	fi
+	prevchar="$char"
+    done
+    echo -n "$count"
+}

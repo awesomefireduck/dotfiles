@@ -1,8 +1,9 @@
 #!/bin/bash
 
-PATH="$PATH"
+# start with the system PATH
+source <(grep 'PATH' /etc/environment)
 
-# loop over files, starting with 00-system
+# loop over files, starting with 00-home
 for file in $(find "${BASH_SOURCE[0]}.d/" -type f);
 do
     if [[ -f "$file" ]]; then

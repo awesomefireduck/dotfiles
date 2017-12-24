@@ -9,6 +9,7 @@ case $- in
       *) return;;
 esac
 
+
 find_abs_path() {
 	local target_file phys_dir
 	target_file="$1"
@@ -34,6 +35,7 @@ find_abs_path() {
 bash_abs_path="$(dirname "$(find_abs_path "${BASH_SOURCE[0]}" )")"
 bash_config_dir="${bash_abs_path}/.config/bash"
 
+source "${bash_config_dir}/aliases.d/debug"
 source "${bash_config_dir}/settings"
 
 case "$session_type" in
