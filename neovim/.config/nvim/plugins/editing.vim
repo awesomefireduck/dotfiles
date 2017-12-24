@@ -72,7 +72,7 @@ let g:EasyMotion_smartcase = 1
 " JK motions: Line motions
 map <leader>j <Plug>(easymotion-j)
 map <leader>k <Plug>(easymotion-k)
-map <leader>w <Plug>(easymotion-w)
+"map <leader>w <Plug>(easymotion-w)
 map <leader>b <Plug>(easymotion-b)
 map <leader>e <Plug>(easymotion-e)
 
