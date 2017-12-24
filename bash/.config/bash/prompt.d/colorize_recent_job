@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# we use "\\\\[" as the escape sequence because of two escape moments:
+# first bash's double quoted string escape, which we have to use because we want variable expansion
+#   this turns "\\\\[" into "\\["
+# then sed's replacement escaping, not that \[ or [ means anything in sed's replacement part
+#   but the backslash is removed nonetheless, which means we must use "\\["
+# the same goes for "\\\\]" of course
+
 function colorize_recent_running_job() {
     local running_color="\\\\[${_bold}${_color_cyan}\\\\]"
     local textreset="\\\\[$(tput sgr0)\\\\]"

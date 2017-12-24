@@ -1,16 +1,10 @@
 #!/bin/bash
 
 function prompt_symbol {
-
     if [[ "$last_status" -ne 0 ]];
     then
         echo -n "┏┥$(last_history_command): ${bold_red}${last_status}${textreset}│\n";
-        echo -n '┣'
-    else
-        echo -n "┏"
     fi
-    # prompt symbol
-    echo -n "━━━▌ "
 }
 
 function prompt_chroot() {
@@ -33,7 +27,7 @@ function construct_prompt {
     fi
 
     # current dir
-    prompt+=${newline}"📂 ${bold_green}\w"
+    prompt+=${newline}"📂 ${bold_green}$(pwd | sed -r -e "s!^${HOME}!~!")"
 
     if git rev-parse &>/dev/null; then
         prompt+="${newline}⛕  $(git_branch_info)"

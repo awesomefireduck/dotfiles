@@ -1,14 +1,31 @@
 #!/bin/bash
+
+function create_ps1() {
+    PS1=""
+    if [[ "$last_status" -ne 0 ]];
+    then
+        PS1+='┣'
+    else
+        PS1+="┏"
+    fi
+    # prompt symbol
+    PS1+="━━━▌ "
+    echo -n "$PS1"
+}
+
+function remove_escapes() {
+    sed -r -e 's/\\\[//g' -e 's/\\\]//g'
+}
+
 function display_prompt() {
     # save exit code of command
     declare -g last_status="$?"
 
-    if [[ "$(cursor_x)" -gt 0 ]]; then
-	echo -ne "\n"
+    if ! cursor_x &>/dev/null; then
+        add_newline
     fi
 
-    local prompt="$(construct_prompt)"
-    echo -n "$prompt" > ~/prompt.txt
+    local prompt="$(construct_prompt | remove_escapes)"
     local prompt_height="$(get_prompt_height "$prompt")"
     local startline=1
 
@@ -33,5 +50,6 @@ function display_prompt() {
 
     local move_cursor="\[$(tput cuu "$prompt_height")$(tput cub "$((last_line_length - first_line_length))")\]"
 
-    export PS1="${prompt}${move_cursor}"
+    echo -n "${prompt}${move_cursor}" | remove_escapes
+    export PS1="$(create_ps1)"
 }

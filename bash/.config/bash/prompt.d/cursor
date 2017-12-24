@@ -12,6 +12,7 @@ function cursor_y() {
     row=$((${pos[0]:2} - 1))    # strip off the esc-[
 
     echo "$row"
+    return "$row"
 }
 function cursor_x() {
     exec < /dev/tty
@@ -26,4 +27,9 @@ function cursor_x() {
     col=$((${pos[1]} - 1))
 
     echo "$col"
+    return "$col"
+}
+
+function cursor_at_start_of_line() {
+    return "$(cursor_x)"
 }

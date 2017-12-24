@@ -3,6 +3,7 @@
 function git_branch_info() {
     echo -n "${bold_yellow}"
     get_git_info
+    get_git_progress
     echo -n "${textreset}"
 }
 

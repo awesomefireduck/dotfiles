@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Sexy bash prompt by twolfson
+# https://github.com/twolfson/sexy-bash-prompt
+# Forked from gf3, https://gist.github.com/gf3/306785
+
+synced_symbol=" "
+dirty_synced_symbol=" "
+unpushed_symbol=" unpushed"
+dirty_unpushed_symbol=" unpushed"
+unpulled_symbol=" unpulled"
+dirty_unpulled_symbol=" unpulled"
+unpushed_unpulled_symbol=" unpushed & unpulled"
+dirty_unpushed_unpulled_symbol=" unpushed, unpulled"

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 function get_git_status() {
     # Grab the git dirty and git behind
     dirty_branch="$(parse_git_dirty)"

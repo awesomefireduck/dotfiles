@@ -15,6 +15,6 @@ function get_all_jobs() {
     fi
 
     if [[ "${stopped_jobs}" != "" ]]; then
-	echo -ne "${bold_blue}🚫${textreset}$(jobs -s | parse_jobs | colorize_recent_stopped_job)"
+	echo -n "${bold_blue}🚫${textreset}$(jobs -s | parse_jobs | colorize_recent_stopped_job)"
     fi
 }
