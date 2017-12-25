@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# prints the input and appends the given arguments
+function append() {
+    input;
+    echo -ne "$@"
+}
+
+function append_line() {
+    local newline="${textreset}\n┃ "
+    input;
+    echo -ne "${newline}$@"
+}

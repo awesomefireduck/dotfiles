@@ -6,8 +6,10 @@ function get_all_jobs() {
     running_jobs="$(jobs -r | grep -v 'Done')";
     stopped_jobs="$(jobs -s | grep -v 'Done')";
 
+    echo -e "\nR${running_jobs}\nS${stopped_jobs}"
+
     if [[ "${running_jobs}" != "" ]]; then
-	echo -n "${bold_cyan}🏃${textreset}$(jobs -r | parse_jobs | colorize_recent_running_job)"
+        echo -n "${bold_cyan}🏃${textreset}$(jobs -r )" #"| parse_jobs | colorize_recent_running_job)"
     fi
 
     if [[ "$running_jobs" != "" && "$stopped_jobs" != "" ]]; then

@@ -1,0 +1,6 @@
+#!/bin/bash
+# this takes whatever is received on the input
+# and copies it to stdout
+function output() {
+    cat
+}

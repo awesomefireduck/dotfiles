@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# use this to capture the standard input stream
+# like so:
+# ```sh
+# function do_stuff_with_input() {
+#     local my_first_input="$(input)"
+#
+#     # do stuff with $my_first_input
+#     # here we add START and END markers
+#     echo -n "START${my_first_input}END"
+# }
+# ```
+function input() {
+    cat
+}

@@ -1,55 +1,73 @@
 #!/bin/bash
 
 function prompt_symbol {
-    if [[ "$last_status" -ne 0 ]];
-    then
-        echo -n "┏┥$(last_history_command): ${bold_red}${last_status}${textreset}│\n";
-    fi
+	input;
+	if [[ "$last_status" -ne 0 ]];
+	then
+		echo -en "┏┥$(last_history_command): ${bold_red}${last_status}${textreset}│\n";
+	fi
 }
 
 function prompt_chroot() {
-        echo -n "${newline}chroot: ${debian_chroot}"
+	# chroot location
+	if [[ -n "$debian_chroot" ]]; then
+		append_line "chroot: ${debian_chroot}"
+	else
+		input
+	fi
 }
 
+function git_status() {
+	input;
+	echo -n "\
+	$(git_branch_info) \
+	$(git_files_status)"
+}
+
+function wipe_screen() {
+	append "\[$(tput ed)\]"
+}
+function current_directory() {
+	append_line "📂 ${bold_green}$(pwd | sed -r -e "s!^${HOME}!~!")"
+}
+
+function job_status() {
+	# running and stopped jobs
+	if [[ "$(builtin jobs | \grep -v 'Done')" != "" ]]; then
+		 append "$(get_all_jobs)"
+	 else
+		input
+	fi
+}
+function display_hostname() {
+	# display host when working remote
+	if [[ "$session_type" =~ remote/.* ]]; then
+		append_line "💻 ${hostcolor}$(hostname)"
+	fi
+}
+function display_username() {
+	# username
+	append "${textreset}\n┗ 👤 ${usercolor}${USER}${textreset}"
+}
 
 function construct_prompt {
-    declare -g newline="${textreset}\n┃ "
 
-    local prompt=""
+	# we start with an empty string
+	printf "" \
+	| wipe_screen \
+	| prompt_symbol \
+	| prompt_chroot \
+	| current_directory \
+	| git_status \
+	| job_status \
+	| display_hostname \
+	| display_username
 
-    prompt+="\[$(tput ed)\]"
 
-    prompt+="$(prompt_symbol)"
 
-    # chroot location
-    if [[ -n "$debian_chroot" ]]; then
-        prompt+="$(prompt_chroot)"
-    fi
+	# current time, but this is also in tmux?
+	#prompt+=${newline}"🕐 $(date +%H:%M:%S)"
 
-    # current dir
-    prompt+=${newline}"📂 ${bold_green}$(pwd | sed -r -e "s!^${HOME}!~!")"
 
-    if git rev-parse &>/dev/null; then
-        prompt+="${newline}⛕  $(git_branch_info)"
-        if ! git_is_clean; then
-            prompt+="${newline}$(git_files_status)"
-        fi
-    fi
-
-    # running and stopped jobs
-    if [[ "$(jobs | grep -v 'Done')" != "" ]]; then
-        prompt+="${newline}$(get_all_jobs)"
-    fi
-
-    # current time, but this is also in tmux?
-    #prompt+=${newline}"🕐 $(date +%H:%M:%S)"
-
-    # display host when working remote
-    if [[ "$session_type" =~ remote/.* ]]; then
-        prompt+="${newline}💻 ${hostcolor}$(hostname)"
-    fi
-
-    # username
-    prompt+="${textreset}\n┗ 👤 ${usercolor} ${USER}${textreset}"
-    echo -ne "$prompt"
+	#echo -ne "$prompt"
 }

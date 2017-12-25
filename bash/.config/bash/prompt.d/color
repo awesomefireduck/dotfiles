@@ -32,8 +32,8 @@ esac
 # should be on the output of commands, not on the prompt
 force_color_prompt=yes
 
-escstart='\['
-escend='\]'
+escstart='' #'\['
+escend='' #'\]'
 
 _color_black="$(tput setaf 0)"
 _color_red="$(tput setaf 1)"
@@ -64,6 +64,15 @@ text_blue="${escstart}${_color_blue}${escend}"
 text_purple="${escstart}${_color_purple}${escend}"
 text_cyan="${escstart}${_color_cyan}${escend}"
 text_white="${escstart}${_color_white}${escend}"
+
+light_black="${escstart}${_light_black}${esc_end}"
+light_red="${escstart}${_light_red}${esc_end}"
+light_green="${escstart}${_light_green}${esc_end}"
+light_yellow="${escstart}${_light_yellow}${esc_end}"
+light_blue="${escstart}${_light_blue}${esc_end}"
+light_purple="${escstart}${_light_purple}${esc_end}"
+light_cyan="${escstart}${_light_cyan}${esc_end}"
+light_white="${escstart}${_light_white}${esc_end}"
 
 
 bold_black="${escstart}${_bold}${_color_black}${escend}"
@@ -96,8 +105,8 @@ background_white="${escstart}${background}${_color_white}${escend}"
 
 textreset="${escstart}$(tput sgr0)${escend}"   # Text Reset
 
-hostcolor="\[$(tput setaf $hostnum)\]"
-usercolor="\[$(tput setaf $usernum)\]"
+hostcolor="${escstart}$(tput setaf $hostnum)${escend}"
+usercolor="${escstart}$(tput setaf $usernum)${escend}"
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then

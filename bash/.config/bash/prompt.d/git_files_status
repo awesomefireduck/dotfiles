@@ -1,34 +1,41 @@
 #!/bin/bash
 
 function git_files_status() {
-    files_status="$(git status --porcelain)"
+    if git rev-parse &>/dev/null; then
+        if [[ "$(git status --porcelain | wc -l)" -ne 0 ]]; then
+            local my_input="$(input)"
+            local files_status="$(git status --porcelain)"
 
-    staged="$(echo "$files_status"    | grep '^[MARCD].' | wc -l)"
-    unstaged="$(echo "$files_status"  | grep '^.[MD]' | wc -l)"
-    unmerged="$(echo "$files_status"  | grep '^DD\|AU\|UD\|UA\|DU\|AA\|UU' | wc -l)"
-    untracked="$(echo "$files_status" | grep '^??' | wc -l)"
-    deleted_or_moved="$(echo "$files_status"   | grep '^[DR].\|.D' | wc -l)"
+            local staged="$(echo "$files_status"    | grep '^[MARCD].' | wc -l)"
+            local unstaged="$(echo "$files_status"  | grep '^.[MD]' | wc -l)"
+            local unmerged="$(echo "$files_status"  | grep '^DD\|AU\|UD\|UA\|DU\|AA\|UU' | wc -l)"
+            local untracked="$(echo "$files_status" | grep '^??' | wc -l)"
+            local deleted_or_moved="$(echo "$files_status"   | grep '^[DR].\|.D' | wc -l)"
 
-    echo -n "📄 "
+            local files_line="📄 "
 
-    if [[ "$staged" -gt 0 ]]; then
-        echo -n "${bold_green}✔ ${staged}${textreset} "
-    fi
+            if [[ "$staged" -gt 0 ]]; then
+                files_line+="${bold_green}✔ ${staged}${textreset} "
+            fi
 
-    if [[ "$unstaged" -gt 0 ]]; then
-        echo -n "${bold_yellow}✚ ${unstaged}${textreset} "
-    fi
+            if [[ "$unstaged" -gt 0 ]]; then
+                files_line+="${bold_yellow}✚ ${unstaged}${textreset} "
+            fi
 
-    if [[ "$deleted_or_moved" -gt 0 ]]; then
-        echo -n "${bold_red}✘ ${deleted_or_moved}${textreset} "
-    fi
+            if [[ "$deleted_or_moved" -gt 0 ]]; then
+                files_line+="${bold_red}✘ ${deleted_or_moved}${textreset} "
+            fi
 
-    if [[ "$untracked" -gt 0 ]]; then
-        echo -n "${light_black}？${untracked}${textreset} "
-    fi
+            if [[ "$untracked" -gt 0 ]]; then
+                files_line+="${light_black}？${untracked}${textreset} "
+            fi
 
-    if [[ "$unmerged" -gt 0 ]]; then
-        echo -n "${light_red}\[${bold}\]unmerged: ${unmerged}${textreset} "
+            if [[ "$unmerged" -gt 0 ]]; then
+                files_line+="${light_red}\[${_bold}\]unmerged: ${unmerged}${textreset} "
+            fi
+
+            append_line "$files_line"
+        fi
     fi
 }
 

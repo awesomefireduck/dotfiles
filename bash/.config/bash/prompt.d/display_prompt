@@ -17,15 +17,8 @@ function remove_escapes() {
     sed -r -e 's/\\\[//g' -e 's/\\\]//g'
 }
 
-function display_prompt() {
-    # save exit code of command
-    declare -g last_status="$?"
-
-    if ! cursor_x &>/dev/null; then
-        add_newline
-    fi
-
-    local prompt="$(construct_prompt | remove_escapes)"
+function add_cursor_movement() {
+    local prompt="$(input)"
     local prompt_height="$(get_prompt_height "$prompt")"
     local startline=1
 
@@ -48,8 +41,22 @@ function display_prompt() {
     local last_line="$(echo -n "$prompt" | tail -n 1)"
     local last_line_length="$(echo -n "$last_line" | line_length)"
 
-    local move_cursor="\[$(tput cuu "$prompt_height")$(tput cub "$((last_line_length - first_line_length))")\]"
+    local move_cursor="$(tput cuu "$prompt_height")$(tput cub "$((last_line_length - first_line_length ))")"
+    echo -n "${prompt}${move_cursor}"
+}
 
-    echo -n "${prompt}${move_cursor}" | remove_escapes
+
+function display_prompt() {
+    # save exit code of command
+    declare -g last_status="$?"
+
+    if ! cursor_at_start_of_line; then
+        add_newline
+    fi
+
+    construct_prompt \
+    | remove_escapes \
+    | add_cursor_movement
+
     export PS1="$(create_ps1)"
 }

@@ -1,9 +1,13 @@
 #!/bin/bash
 
 function git_branch_info() {
-    echo -n "${bold_yellow}"
-    get_git_info
-    get_git_progress
-    echo -n "${textreset}"
+	if [[ -n "$(git rev-parse HEAD 2>/dev/null)" ]]; then
+		append_line "⛕  ${bold_yellow}" \
+		| append "$(get_git_info)" \
+		| append "$(get_git_progress)" \
+		| append "${textreset}"
+	else
+		input
+	fi
 }
 
