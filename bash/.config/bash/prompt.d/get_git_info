@@ -1,17 +1,17 @@
 #!/bin/bash
 get_git_info () {
-    # Grab the branch
-    branch="$(get_git_branch)"
+	# Grab the branch
+	branch="$(get_git_branch)"
 
-    # If there are any branches
-    if [[ "$branch" != "" ]]; then
-	# Echo the branch
-	output="$branch"
+	# If there are any branches
+	if [[ "$branch" != "" ]]; then
+		# Echo the branch
+		output="$branch"
 
-	# Add on the git status
-	output="$output$(get_git_status)"
+		# Add on the git status
+		output="$output$(get_git_status)"
 
-	# Echo our output
-	echo -n "$output"
-    fi
+		# Echo our output
+		echo -n "$output"
+	fi
 }

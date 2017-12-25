@@ -3,5 +3,5 @@
 # from:[2]   Running                 sleep 1000000 &
 #   to:[2] sleep 1000000 &
 function remove_second_word_and_compact_whitespace() {
-    awk '{$2=""}1'
+	awk '{$2=""}1'
 }

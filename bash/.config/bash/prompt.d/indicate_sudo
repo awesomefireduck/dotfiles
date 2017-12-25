@@ -4,40 +4,40 @@
 # from:[2] sudo sleep 1000000 &
 #   to:[2] !!sleep 1000000 &
 function indicate_sudo() {
-    local sudo_regex
+	local sudo_regex
 
-    # we filter out all sudo arguments
-    # this was a challenge, since some
-    # arguments accept a value
-    # e.g.: sudo -u user ls
+	# we filter out all sudo arguments
+	# this was a challenge, since some
+	# arguments accept a value
+	# e.g.: sudo -u user ls
 
-    #only match jobs with sudo
-    sudo_regex='sudo'
-    sudo_regex+='(';
-	    # we match all of the short arguments that accept a value
-	    sudo_regex+=' -[CghprtUu] #?\$?\w+'
+	#only match jobs with sudo
+	sudo_regex='sudo'
+	sudo_regex+='(';
+		# we match all of the short arguments that accept a value
+		sudo_regex+=' -[CghprtUu] #?\$?\w+'
 	sudo_regex+='|'
-	    # we match most of the long arguments that accept a value
-	    sudo_regex+=' --[cgtou][-a-zA-Z0-9_]+( |=)#?\$?\w+'
+		# we match most of the long arguments that accept a value
+		sudo_regex+=' --[cgtou][-a-zA-Z0-9_]+( |=)#?\$?\w+'
 	sudo_regex+='|'
-	    # we match the host (--h matches --help as well)
-	    sudo_regex+=' --host \w+'
+		# we match the host (--h matches --help as well)
+		sudo_regex+=' --host \w+'
 	sudo_regex+='|'
-	    # we match the role (--r matches --refresh-timer as well)
-	    sudo_regex+=' --role \w+'
+		# we match the role (--r matches --refresh-timer as well)
+		sudo_regex+=' --role \w+'
 	sudo_regex+='|'
-	    ## we match all other arguments
-	    sudo_regex+=' -?-[-a-zA-Z0-9_]+'
-    sudo_regex+=')*'
-    sudo_regex+=' (.*)$'
+		## we match all other arguments
+		sudo_regex+=' -?-[-a-zA-Z0-9_]+'
+	sudo_regex+=')*'
+	sudo_regex+=' (.*)$'
 
-    # we remove the sudo stuff and prepend !! to the command
-    sed -r -e "s/${sudo_regex}/!!\3/gm"
+	# we remove the sudo stuff and prepend !! to the command
+	sed -r -e "s/${sudo_regex}/!!\3/gm"
 }
 
 function colorize_sudo() {
-    local underline_start="$(tput smul)"
-    local underline_end="$(tput rmul)"
+	local underline_start="$(tput smul)"
+	local underline_end="$(tput rmul)"
 
-    sed -r -e "s@([0-9]+):!!([a-zA-Z0-9_-]+)@\1:${underline_start}\2${underline_end}@gm"
+	sed -r -e "s@([0-9]+):!!([a-zA-Z0-9_-]+)@\1:${underline_start}\2${underline_end}@gm"
 }

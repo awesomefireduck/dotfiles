@@ -8,5 +8,5 @@ function parse_jobs() {
 	| indicate_sudo \
 	| filter_job_number_and_command \
 	| move_job_indicator_to_end \
-        | remove_newlines
+	| remove_newlines
 }

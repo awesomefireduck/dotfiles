@@ -34,7 +34,7 @@ function current_directory() {
 function job_status() {
 	# running and stopped jobs
 	if [[ "$(jobs | \grep -v 'Done')" != "" ]]; then
-		 echo -n "$(get_all_jobs)"
+		echo -n "$(get_all_jobs)"
 	fi
 }
 function display_hostname() {
@@ -49,11 +49,11 @@ function display_username() {
 }
 
 function construct_prompt {
-    declare -g newline="${textreset}\n┃ "
+	declare -g newline="${textreset}\n┃ "
 
 	# we start with an empty string
-    # we use append for the jobs because
-    # the jobs command doesn't work in a pipeline
+	# we use append for the jobs because
+	# the jobs command doesn't work in a pipeline
 	printf "" \
 	| wipe_screen \
 	| prompt_symbol \

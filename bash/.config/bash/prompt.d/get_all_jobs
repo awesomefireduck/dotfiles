@@ -3,14 +3,14 @@
 # Uses the `jobs` command to get all
 # running and stopped jobs
 function get_all_jobs() {
-    running_jobs="$(jobs -r | grep -v 'Done')";
-    stopped_jobs="$(jobs -s | grep -v 'Done')";
+	running_jobs="$(jobs -r | grep -v 'Done')";
+	stopped_jobs="$(jobs -s | grep -v 'Done')";
 
-    if [[ "${running_jobs}" != "" ]]; then
-        echo -n "${newline}${bold_cyan}🏃${textreset}$(jobs -r | parse_jobs | colorize_recent_running_job | colorize_sudo)"
-    fi
+	if [[ "${running_jobs}" != "" ]]; then
+		echo -n "${newline}${bold_cyan}🏃${textreset}$(jobs -r | parse_jobs | colorize_recent_running_job | colorize_sudo)"
+	fi
 
-    if [[ "${stopped_jobs}" != "" ]]; then
-	echo -n "${newline}${bold_blue}🚫${textreset}$(jobs -s | parse_jobs | colorize_recent_stopped_job | colorize_sudo)"
-    fi
+	if [[ "${stopped_jobs}" != "" ]]; then
+		echo -n "${newline}${bold_blue}🚫${textreset}$(jobs -s | parse_jobs | colorize_recent_stopped_job | colorize_sudo)"
+	fi
 }

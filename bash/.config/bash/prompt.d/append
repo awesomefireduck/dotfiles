@@ -2,11 +2,11 @@
 
 # prints the input and appends the given arguments
 function append() {
-    input;
-    echo -ne "$@"
+	input;
+	echo -ne "$@"
 }
 
 function append_line() {
-    input;
-    echo -ne "${newline}$@"
+	input;
+	echo -ne "${newline}$@"
 }

@@ -1,5 +1,5 @@
 #!/bin/bash
 branch_exists () {
-    # List remote branches           | # Find our branch and exit with 0 or 1 if found/not found
-	git branch --remote 2> /dev/null | grep --quiet "$1"
+	# List remote branches           | # Find our branch and exit with 0 or 1 if found/not found
+		git branch --remote 2> /dev/null | grep --quiet "$1"
 }

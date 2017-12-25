@@ -1,65 +1,65 @@
 #!/bin/bash
 
 function create_ps1() {
-    PS1=""
-    if [[ "$last_status" -ne 0 ]];
-    then
-        PS1+='┣'
-    else
-        PS1+="┏"
-    fi
-    # prompt symbol
-    PS1+="━━━▌ "
-    echo -n "$PS1"
+	PS1=""
+	if [[ "$last_status" -ne 0 ]];
+	then
+		PS1+='┣'
+	else
+		PS1+="┏"
+	fi
+	# prompt symbol
+	PS1+="━━━▌ "
+	echo -n "$PS1"
 }
 
 function remove_escapes() {
-    sed -r -e 's/\\\[//g' -e 's/\\\]//g'
+	sed -r -e 's/\\\[//g' -e 's/\\\]//g'
 }
 
 function add_cursor_movement() {
-    local prompt="$(input)"
-    local prompt_height="$(get_prompt_height "$prompt")"
-    local startline=1
+	local prompt="$(input)"
+	local prompt_height="$(get_prompt_height "$prompt")"
+	local startline=1
 
-    if [[ "$last_status" -gt 0 ]]; then
-	prompt_height=$((prompt_height - 1))
-	startline=$((startline + 1))
-    fi
+	if [[ "$last_status" -gt 0 ]]; then
+		prompt_height=$((prompt_height - 1))
+		startline=$((startline + 1))
+	fi
 
-    # prompt starts with an empty newline, we don't count that
-    local first_line="$(echo -n "$prompt" | sed "${startline}q;d")"
-    local first_line_length="$(echo -n "$first_line" | line_length)"
+	# prompt starts with an empty newline, we don't count that
+	local first_line="$(echo -n "$prompt" | sed "${startline}q;d")"
+	local first_line_length="$(echo -n "$first_line" | line_length)"
 
 
-    # TODO: fix this bug,
-    # this hack shouldn't be necessary
-    if [[ "$last_status" -gt 0 ]]; then
-        first_line_length=$((first_line_length + 1))
-    fi
+	# TODO: fix this bug,
+	# this hack shouldn't be necessary
+	if [[ "$last_status" -gt 0 ]]; then
+		first_line_length=$((first_line_length + 1))
+	fi
 
-    local last_line="$(echo -n "$prompt" | tail -n 1)"
-    local last_line_length="$(echo -n "$last_line" | line_length)"
+	local last_line="$(echo -n "$prompt" | tail -n 1)"
+	local last_line_length="$(echo -n "$last_line" | line_length)"
 
-    local move_cursor="$(tput cuu "$prompt_height")$(tput cub "$((last_line_length - first_line_length ))")"
-    echo -n "${prompt}${move_cursor}"
+	local move_cursor="$(tput cuu "$prompt_height")$(tput cub "$((last_line_length - first_line_length ))")"
+	echo -n "${prompt}${move_cursor}"
 }
 
 
 function display_prompt() {
-    # save exit code of command
-    declare -g last_status="$?"
+	# save exit code of command
+	declare -g last_status="$?"
 
-    if ! cursor_at_start_of_line; then
-        add_newline
-    fi
+	if ! cursor_at_start_of_line; then
+		add_newline
+	fi
 
 
-    # we use `echo -n "$(construct_prompt)" | ...` instead of just `construct_prompt | ...`
-    # because the `jobs` command doesn't work inside a pipeline
-    echo -n "$(construct_prompt)" \
-    | remove_escapes \
-    | add_cursor_movement
+	# we use `echo -n "$(construct_prompt)" | ...` instead of just `construct_prompt | ...`
+	# because the `jobs` command doesn't work inside a pipeline
+	echo -n "$(construct_prompt)" \
+	| remove_escapes \
+	| add_cursor_movement
 
-    export PS1="$(create_ps1)"
+	export PS1="$(create_ps1)"
 }

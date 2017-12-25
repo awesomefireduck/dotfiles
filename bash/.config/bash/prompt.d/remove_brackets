@@ -3,5 +3,5 @@
 # from:[2] sleep 1000000 &
 #   to:2 sleep 1000000 &
 function remove_brackets() {
-    sed -r -e 's/\[|\]//g'
+	sed -r -e 's/\[|\]//g'
 }

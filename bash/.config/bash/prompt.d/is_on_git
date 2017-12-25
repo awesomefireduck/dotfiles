@@ -1,4 +1,4 @@
 #!/bin/bash
 function is_on_git() {
-    git rev-parse 2> /dev/null
+	git rev-parse 2> /dev/null
 }

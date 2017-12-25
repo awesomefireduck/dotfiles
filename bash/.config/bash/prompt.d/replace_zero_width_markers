@@ -1,5 +1,5 @@
 #!/bin/bash
 
 function replace_zero_width_markers() {
-    tee ~/input.txt | sed -r -e 's/ZERO_WIDTH_START/\\\[/g' -e 's/ZERO_WIDTH_END/\\]/g' | tee ~/output.txt
+	tee ~/input.txt | sed -r -e 's/ZERO_WIDTH_START/\\\[/g' -e 's/ZERO_WIDTH_END/\\]/g' | tee ~/output.txt
 }

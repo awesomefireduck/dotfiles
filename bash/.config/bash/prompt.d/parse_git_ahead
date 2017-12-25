@@ -1,21 +1,21 @@
 #!/bin/bash
 parse_git_ahead () {
-    # Grab the local and remote branch
-    branch="$(get_git_branch)"
-    remote_branch="origin/$branch"
+	# Grab the local and remote branch
+	branch="$(get_git_branch)"
+	remote_branch="origin/$branch"
 
-    # $ git log origin/master..master
-    # commit 4a633f715caf26f6e9495198f89bba20f3402a32
-    # Author: Todd Wolfson <todd@twolfson.com>
-    # Date:   Sun Jul 7 22:12:17 2013 -0700
-    #
-    #     Unsynced commit
+	# $ git log origin/master..master
+	# commit 4a633f715caf26f6e9495198f89bba20f3402a32
+	# Author: Todd Wolfson <todd@twolfson.com>
+	# Date:   Sun Jul 7 22:12:17 2013 -0700
+	#
+	#     Unsynced commit
 
-    # If the remote branch is behind the local branch
-    # or it has not been merged into origin (remote branch doesn't exist)
-    if (is_branch1_behind_branch2 "$remote_branch" "$branch" ||
-	! branch_exists "$remote_branch"); then
-    # echo our character
-    echo 1
+	# If the remote branch is behind the local branch
+	# or it has not been merged into origin (remote branch doesn't exist)
+	if (is_branch1_behind_branch2 "$remote_branch" "$branch" ||
+		! branch_exists "$remote_branch"); then
+	# echo our character
+	echo 1
 fi
 }

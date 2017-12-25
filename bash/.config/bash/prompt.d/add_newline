@@ -1,5 +1,5 @@
 #!/bin/bash
 
 function add_newline() {
-    printf "\n"
+	printf "\n"
 }

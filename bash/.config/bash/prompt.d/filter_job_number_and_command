@@ -3,5 +3,5 @@
 # from:2 sleep 1000000 &
 #   to:2:sleep
 function filter_job_number_and_command() {
-    awk '{print $1" "$2}'
+	awk '{print $1" "$2}'
 }
