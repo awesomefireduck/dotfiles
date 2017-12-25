@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # prepends !! to all commands that are run with sudo (as root or otherwise)
+# from:[2] sudo sleep 1000000 &
+#   to:[2] !!sleep 1000000 &
 function indicate_sudo() {
     local sudo_regex
 
@@ -30,5 +32,12 @@ function indicate_sudo() {
     sudo_regex+=' (.*)$'
 
     # we remove the sudo stuff and prepend !! to the command
-    sed -r -e 's/'"${sudo_regex}"'/!!\3/gm'
+    sed -r -e "s/${sudo_regex}/!!\3/gm"
+}
+
+function colorize_sudo() {
+    local underline_start="$(tput smul)"
+    local underline_end="$(tput rmul)"
+
+    sed -r -e "s@([0-9]+):!!([a-zA-Z0-9_-]+)@\1:${underline_start}\2${underline_end}@gm"
 }

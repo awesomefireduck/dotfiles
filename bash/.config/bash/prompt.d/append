@@ -7,7 +7,6 @@ function append() {
 }
 
 function append_line() {
-    local newline="${textreset}\n┃ "
     input;
     echo -ne "${newline}$@"
 }

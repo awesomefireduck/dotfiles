@@ -54,7 +54,10 @@ function display_prompt() {
         add_newline
     fi
 
-    construct_prompt \
+
+    # we use `echo -n "$(construct_prompt)" | ...` instead of just `construct_prompt | ...`
+    # because the `jobs` command doesn't work inside a pipeline
+    echo -n "$(construct_prompt)" \
     | remove_escapes \
     | add_cursor_movement
 
