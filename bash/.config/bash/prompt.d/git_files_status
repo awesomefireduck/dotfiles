@@ -31,7 +31,7 @@ function git_files_status() {
             fi
 
             if [[ "$unmerged" -gt 0 ]]; then
-                files_line+="${light_red}\[${_bold}\]unmerged: ${unmerged}${textreset} "
+                files_line+="${light_red}\[${_bold}\]🔀${unmerged}${textreset} "
             fi
 
             append_line "$files_line"
