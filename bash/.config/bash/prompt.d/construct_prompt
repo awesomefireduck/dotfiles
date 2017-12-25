@@ -41,6 +41,8 @@ function display_hostname() {
 	# display host when working remote
 	if [[ "$session_type" =~ remote/.* ]]; then
 		append_line "💻 ${hostcolor}$(hostname)"
+	else
+		input
 	fi
 }
 function display_username() {
