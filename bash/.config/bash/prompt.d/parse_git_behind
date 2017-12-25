@@ -1,3 +1,4 @@
+#!/bin/bash
 parse_git_behind () {
     # Grab the branch
     branch="$(get_git_branch)"

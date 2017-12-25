@@ -1,3 +1,4 @@
+#!/bin/bash
 parse_git_ahead () {
     # Grab the local and remote branch
     branch="$(get_git_branch)"
