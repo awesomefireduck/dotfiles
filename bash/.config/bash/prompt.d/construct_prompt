@@ -39,11 +39,7 @@ function job_status() {
 }
 function display_hostname() {
 	# display host when working remote
-	if [[ "$session_type" =~ remote/.* ]]; then
-		append_line "💻 ${hostcolor}$(hostname)"
-	else
-		input
-	fi
+	append_line "💻 ${hostcolor}$(hostname)"
 }
 function display_username() {
 	# username
