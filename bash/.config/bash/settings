@@ -53,6 +53,20 @@ export COLORTERM="gnome-terminal"
 #colour for GCC !!
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
+
+if command -v nvim &>/dev/null; then
+	EDITOR=nvim
+elif command -v vim &>/dev/null; then
+	EDITOR=vim
+elif command -v nano &>/dev/null; then
+	EDITOR=nano
+else
+	# give up
+	true
+fi
+export EDITOR
+export VISUAL="${EDITOR}"
+
 hostsum="$(hostname | cksum | awk '{print $1}')";
 export hostnum="$((hostsum%253))";
 
