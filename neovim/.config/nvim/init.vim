@@ -90,7 +90,7 @@ function! s:sourceConfig()
 endfunction
 
 
-call plug#begin('~/.config/nvim/plugged')
+call plug#begin('~/.local/share/nvim/plugins')
 
 call <SID>sourceConfig()
 
