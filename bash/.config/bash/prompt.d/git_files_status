@@ -19,7 +19,7 @@ function git_files_status() {
 			fi
 
 			if [[ "$unstaged" -gt 0 ]]; then
-				files_line+="${bold_yellow}✚ ${unstaged}${textreset} "
+				files_line+="${dark_yellow}✚ ${unstaged}${textreset} "
 			fi
 
 			if [[ "$deleted_or_moved" -gt 0 ]]; then

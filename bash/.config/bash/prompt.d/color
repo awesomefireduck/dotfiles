@@ -54,6 +54,8 @@ _light_purple="$(tput setaf 13)"
 _light_cyan="$(tput setaf 14)"
 _light_white="$(tput setaf 15)"
 
+_dark_yellow="$(tput setaf 178)"
+
 _bold="$(tput bold)"
 
 text_black="${escstart}${_color_black}${escend}"
@@ -73,6 +75,8 @@ light_blue="${escstart}${_light_blue}${esc_end}"
 light_purple="${escstart}${_light_purple}${esc_end}"
 light_cyan="${escstart}${_light_cyan}${esc_end}"
 light_white="${escstart}${_light_white}${esc_end}"
+
+dark_yellow="${escstart}${_dark_yellow}${_bold}${escend}"
 
 
 bold_black="${escstart}${_bold}${_color_black}${escend}"
