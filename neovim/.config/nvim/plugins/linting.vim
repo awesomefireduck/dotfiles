@@ -6,6 +6,7 @@ let g:ale_linters = {
 	    \	'text': ['proselint'],
 	    \	'markdown': ['proselint'],
 	    \	'gitcommit': ['proselint'],
+	    \	'python': ['flake8'],
 	    \}
 let g:ale_sh_shellcheck_options = '-x'
 
