@@ -105,8 +105,8 @@ background_white="${escstart}${background}${_color_white}${escend}"
 
 textreset="${escstart}$(tput sgr0)${escend}"   # Text Reset
 
-hostcolor="${escstart}$(tput setaf $hostnum)${escend}"
-usercolor="${escstart}$(tput setaf $usernum)${escend}"
+hostcolor="${escstart}$(tput setaf $hostnum)${_bold}${escend}"
+usercolor="${escstart}$(tput setaf $usernum)${_bold}${escend}"
 
 if [ -n "$force_color_prompt" ]; then
 	if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
