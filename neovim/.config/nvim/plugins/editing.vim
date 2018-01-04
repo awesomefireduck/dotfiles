@@ -23,7 +23,7 @@ augroup vim_printf
 augroup END
 nnoremap <Leader>p :Printf<CR>
 " auto insert matching parens, brackets and quotes
-Plug 'jiangmiao/auto-pairs'
+"Plug 'jiangmiao/auto-pairs'
 "Plug 'Raimondi/delimitMate'
 " auto align titles
 Plug 'guywald1/vim-prismo'
