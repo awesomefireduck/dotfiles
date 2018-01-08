@@ -188,6 +188,33 @@ install_teensy_loader() {
 	mkdir -p ~/install/bin
 	ln -s ~/git/teensy_loader_cli ~/install/bin/teensy_loader_cli
 	ln -s ~/git/teensy_loader_cli ~/install/bin/teensy-loader-cli
+
+	tee /etc/udev/rules.d/49-teensy.rules <<-EOF
+		# UDEV Rules for Teensy boards, http://www.pjrc.com/teensy/
+		#
+		# The latest version of this file may be found at:
+		#   http://www.pjrc.com/teensy/49-teensy.rules
+		#
+		# This file must be placed at:
+		#
+		# /etc/udev/rules.d/49-teensy.rules    (preferred location)
+		#
+		ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", ENV{ID_MM_DEVICE_IGNORE}="1"
+		ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789A]?", ENV{MTP_NO_PROBE}="1"
+		SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789ABCD]?", GROUP:="teensy"
+		KERNEL=="ttyACM*", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", GROUP:="teensy"
+		#
+		# If using USB Serial you get a new device each time (Ubuntu 9.10)
+		# eg: /dev/ttyACM0, ttyACM1, ttyACM2, ttyACM3, ttyACM4, etc
+		#    apt-get remove --purge modemmanager     (reboot may be necessary)
+		#
+		# After this file is installed, physically unplug and reconnect Teensy.
+		#
+	EOF
+
+	sudo addgroup teensy
+	sudo usermod -a -G teensy "${USER}"
+	echo "please log out to activate teensy stuff"
 }
 
 
