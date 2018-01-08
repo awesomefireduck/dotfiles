@@ -1,0 +1,230 @@
+#!/bin/bash
+
+set -e
+
+case "$(uname -a)" in
+	*Ubuntu*)
+		pkgmgr="apt-get";
+		pkg_install='-y install';
+		pkgmgr_update='update';
+		;;
+esac
+
+
+
+PPAs="\
+neovim-ppa/stable			# for neovim binary
+team-gcc-arm-embedded/ppa	# for embedded development
+"
+
+# alacritty is installed via cargo,
+# but it needs a few libs, which we install with apt
+alacritty_deps="cmake libfreetype6-dev libfontconfig1-dev xclip"
+
+# neovim needs a python library for the python plugins
+neovim_system_deps="python-pip python3-dev python3-pip" #supposedly python-pip (python2) as well..
+neovim_python_deps="neovim"
+
+
+
+system_packages="\
+${alacritty_deps}\
+${neovim_sysrem_deps}\
+htop
+git
+firefox
+neovim
+python3-flake8	# python linter
+shellcheck		# bash linter
+tidy			# HTML formatting
+yamllint
+"
+
+
+
+
+python3_packages="
+${neovim_python_deps}\
+vim-vint		# linter for vimscript
+proselint		# to prevent repetition and such
+"
+
+
+rust_tools="\
+exa									# ls replacement
+fd                                  # find replacement
+fd-find								# find replacement
+git-journal							# better git log messages
+just								# make-like task runner
+ripgrep								# R.I.P grep
+zou									# wget + dowload accelerator
+xargo								# cross-comiling cargo
+clog-cli							# geterate change log
+andrew-d/emoji256.git				# base256 encoding with emoji
+bertptrs/autonice.git				# automatically `nice` programs after being started
+killercup/rustfix.git				# auto-apply cargo's suggestions
+lincheney/nvim-cat.git				# cat with syntax highlighting due to neovim :-)
+lotabout/skim.git					# fuzzy finder
+redox-os/ion.git					# the ion shell
+rolandshoemaker/theca.git bla		# terminal note taking
+techhazard/amputate.git				# skip the last few lines in stream (opposite of tail)
+techhazard/decapitate.git			# skip the first few lines in stream (opposite of head)
+funzzy								# run action on file change
+watchexec							# run action on file change
+"
+
+
+############################################################################################################################################
+
+install_cargo_packages() {
+	# we print only the first column
+	# we print all the packages not ending in '.git' as is.
+	# we prepend https://github.com/ to all packages that do not start with https or have an @
+	# we then prepend --git to all packages that end in '.git'
+	local packages="$(echo "$1" | awk '{print $1}' | sed -r -e '/\.git$/!b' -e '/(^https|@)/!s/^/https:\/\/github.com\//g' -e's/^/--git /')"
+	echo "$packages"
+
+	install_rust
+
+	local IFS=''
+	for package in $packages;
+	do
+		if command -v $package &>/dev/null; then continue; fi
+		local IFS=' 	'
+		echo "cargo: $package"
+		cargo install $package
+	done
+}
+
+install_alacritty() {
+	install_system_packages "\
+	cmake
+	libfreetype6-dev
+	libfontconfig1-dev
+	xclip"
+
+	install_cargo_packages jwilm/alacritty.git
+
+	stow alacritty
+}
+
+install_rust() {
+
+	if command -v rustup &>/dev/null; then return; fi
+
+	install_system_packages "curl"
+	# install nightly automatically, path is modified in the path.d directory
+	true || curl https://sh.rustup.rs -sSf | bash -s -- -y --no-modify-path --default-toolchain nightly &
+}
+
+update_system_index() {
+	sudo ${pkgmgr:?} $pkgmgr_update
+}
+
+install_system_packages() {
+
+	local packages="$(echo "$1" | awk '{print $1}' | tr '\n' ' ' )"
+	echo $packages
+
+	update_system_index
+
+	for package in $packages;
+	do
+		if command -v $package &>/dev/null;then continue; fi
+
+		echo "apt: '$package'"
+		sudo ${pkgmgr:?} $pkg_install $package
+	done
+
+}
+
+
+add_ppas() {
+	local PPAs="$(echo "$1" | awk '{print $1}')"
+
+	local IFS=''
+	for PPA in "$PPAs"; do
+		echo "ppa: $ppa"
+		true || sudo add-apt-repository --yes "ppa:${PPA}"
+	done
+}
+
+
+
+install_pip3_packages() {
+	local packages="$(echo "$1" | awk '{print $1}' | tr '\n' ' ' )"
+
+	install_system_packages "python3-pip"
+
+	for package in $packages;
+	do
+		if command -v $package &>/dev/null; then continue; fi
+		echo "pip3: $package"
+		true || pip3 install $package
+	done
+}
+
+install_embedded() {
+	add_ppas 'team-gcc-arm-embedded/ppa'
+	install_system_packages "gcc-arm-none-eabi"
+	install_teensy_loader
+	install_cargo_packages "xargo
+	bobbin-cli"
+}
+
+
+install_teensy_loader() {
+	mkdir -p ~/git
+	install_system_packages "libusb-dev
+	git
+	build-essential"
+
+	cd ~/git
+	git clone https://github.com/PaulStoffregen/teensy_loader_cli
+	cd ~/git/teensy_loader_cli
+
+	make
+
+	mkdir -p ~/install/bin
+	ln -s ~/git/teensy_loader_cli ~/install/bin/teensy_loader_cli
+	ln -s ~/git/teensy_loader_cli ~/install/bin/teensy-loader-cli
+}
+
+
+install_spotify() {
+	# 1. Add the Spotify repository signing keys to be able to verify downloaded packages
+	sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0DF731E45CE24F27EEEB1450EFDC8610341D9410
+
+	# 2. Add the Spotify repository
+	echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
+
+	# 3. Update list of available packages
+	sudo apt update
+
+	# 4. Install Spotify
+	sudo apt install spotify-client
+}
+
+
+install_bash() {
+	install_system_packages "bash"
+	mv ~/.{,old_}bashrc
+	mv ~/.{,old_}bash_logout
+	stow bash
+}
+
+
+for arg in "$@";
+do
+	case $arg in
+		bash) install_bash;;
+		rust) install_rust;;
+		rust_tools) install_cargo_packages "$rust_tools";;
+		embedded) install_embedded_tools;;
+		spotify) install_spotify;;
+		n*vim) add_ppas "neovim-ppa/stable"; install_system_packages "neovim"; stow neovim;;
+		alacritty) install_alacritty;;
+	esac
+done
+wait
+exit 0
