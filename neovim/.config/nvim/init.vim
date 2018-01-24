@@ -29,6 +29,7 @@ let g:hlstate=0
 nnoremap <silent> <leader>h :set hlsearch!<cr>
 " write with <space>w
 nnoremap <silent> <leader>w :w<cr>
+cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
 " quit with nonzero exit code with ZQ
 nnoremap <silent> ZQ :cq<cr>
 
