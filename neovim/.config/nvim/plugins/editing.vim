@@ -57,6 +57,7 @@ Plug 'mmahnic/vim-flipwords'
 
 Plug 'easymotion/vim-easymotion'
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
+"let g:EasyMotion_keys = 'asdghklqwertyuiopzxcvbnmfj;' " The default
 let g:EasyMotion_keys = "aoeidtn;,.pyfgcrl/@'qjkxbmwvzuhs-" " programmer dvorak version of the default
 
 " Jump to anywhere you want with minimal keystrokes, with just one key binding.
