@@ -1,0 +1,86 @@
+#!/bin/bash
+
+if ! command -v rustup &>/dev/null; then
+	echo "please install rustup" >&2;
+	exit 1
+fi
+
+if [[ "$1" =~ .*update.* ]]; then
+	force_install=y
+else
+	force_install=n
+fi
+
+if [[ $force_install == n ]]; then
+	cargo_args=" -f "
+else
+	cargo_args=""
+fi
+
+# managed by rustup:
+# cargo*
+# cargo-fmt*
+# rls*
+# rustc*
+# rustdoc*
+# rustfmt*
+# rust-gdb*
+# rust-lldb*
+# rustup*
+# rustup-init*
+
+rust_tools="\
+clog-cli
+core-utils
+exa
+fd
+funzzy
+just
+mdbook
+parallel
+racer
+ripgrep
+rls
+rrun
+rustfix
+systemd-manager
+watchexec
+zou
+"
+
+git_tools="\
+alacritty	https://github.com/jwilm/alacritty.git
+autonice	https://github.com/bertptrs/autonice.git
+concurr		https://github.com/mmstick/concurr.git
+coreutils	https://github.com/uutils/coreutils.git
+decapitate	https://github.com/techhazard/decapitate.git
+emoji256	https://github.com/andrew-d/emoji256.git
+ion			https://github.com/redox-os/ion.git
+nvim-cat	https://github.com/lincheney/nvim-cat.git
+skim		https://github.com/lotabout/skim.git
+weld		https://github.com/serayuzgur/weld.git
+"
+
+# first we add the git_tools to the rust_tools, prepending '--git ' for each
+while read -r tool; do
+	# skip empty lines
+	if [[ -z "$tool" ]]; then continue; fi
+
+	set -- $tool
+	rust_tools+="--git $2
+	"
+done <<<"$git_tools"
+
+
+# we then install all tools
+while read -r tool; do
+	# skip empty lines
+	if [[ -z "$tool" ]]; then continue; fi
+
+	echo "Installing '$tool'"
+
+	rustup run nightly cargo install $cargo_args $tool
+
+done <<<"$rust_tools"
+
+exit
