@@ -20,6 +20,7 @@ augroup vim_printf
     autocmd FileType php let b:printf_pattern = 'error_log(var_export(["%s" => %s], true);'
     autocmd FileType javascript let b:printf_pattern = 'console.debug("%s: ", %s);'
     autocmd FileType elixir let b:printf_pattern = 'IO.puts " %s: #{%s}"'
+    autocmd FileType python let b:printf_pattern = 'print("{}".format(%s))'
 augroup END
 nnoremap <Leader>p :Printf<CR>
 " auto insert matching parens, brackets and quotes
