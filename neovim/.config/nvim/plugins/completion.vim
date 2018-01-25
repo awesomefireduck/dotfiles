@@ -1,4 +1,12 @@
 " COMPLETION
+"Plug 'autozimu/LanguageClient-neovim'
+let g:LanguageClient_autoStart=0
+let g:LanguageClient_serverCommands = {
+    \ 'python': ['pyls'],
+    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \ 'javascript': ['javascript-typescript-stdio'],
+    \ 'go': ['go-langserver'] }
+
 Plug 'roxma/nvim-completion-manager'
 inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 inoremap <c-c> <ESC>

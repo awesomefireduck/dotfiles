@@ -2,7 +2,7 @@
 if has('nvim')
     " edit browser text fields with neovim
     Plug 'raghur/vim-ghost', {'do': ':GhostInstall'}
-    let g:ghost_autostart = 1
+    let g:ghost_autostart = 0
     augroup ghost
 	au!
 	autocmd BufNewFile,BufRead *stackexchange.com*	set filetype=markdown   | set spell   | set spelllang=en
@@ -33,7 +33,7 @@ Plug 'tpope/vim-surround'
 
 " strip trailing whitespace on edited lines only
 Plug 'thirtythreeforty/lessspace.vim'
-let g:lessspace_blacklist = ['md', 'markdown']
+let g:lessspace_blacklist = ['md', 'markdown', 'whitespace']
 
 " undo tree visualiser with live diff
 Plug 'mbbill/undotree'
