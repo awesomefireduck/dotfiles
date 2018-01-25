@@ -23,6 +23,14 @@
 
 [diff]
 	mnemonicprefix = true
+	tool = vimdiff
+
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+
+[mergetool "vimdiff"]
+	cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w'
 
 [branch]
 	autosetuprebase = always
