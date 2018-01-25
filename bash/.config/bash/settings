@@ -72,3 +72,5 @@ export hostnum="$((hostsum%253))";
 
 usersum="$(echo "$USER" | cksum | awk '{print $1}')";
 export usernum="$((usersum%250))";
+
+export RUST_SRC_PATH="$(~/.cargo/bin/rustc --print sysroot)/lib/rustlib/src/rust/src"
