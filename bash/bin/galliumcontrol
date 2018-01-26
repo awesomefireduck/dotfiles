@@ -1,0 +1,2 @@
+#!/bin/bash
+ssh gallium x2x -east -to :0 &
