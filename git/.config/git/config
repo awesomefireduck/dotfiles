@@ -3,26 +3,60 @@
 [push]
 	default = simple
 
-[color "diff"]
-	meta = yellow
-	frag = magenta
-	old = red
-	new = green
-	plain = white
-
-[color "status"]
-	added = green bold
-	changed = 178 bold
-	unmerged = red bold
-	untracked = 243 bold
-
 [color "branch"]
 	current = 178 bold
-	local = green
+	local = 178
 	remote = blue
+	upstream = red
+	plain = white
+
+[color "diff"]
+	context = white
+	meta = yellow
+	frag = magenta
+	func = white bold
+	old = red
+	new = green
+	commit = black bold
+	whitespace = red bold
+
+[color "decorate"]
+	branch = 178 bold
+	remoteBranch = blue bold
+	HEAD = magenta bold
+	#tag
+	#stash
+
+[color "grep"]
+	# non-matching text in context lines (when using -A, -B, or -C)
+	context = normal
+ 	# filename prefix (when not using -h)
+        filename = normal
+ 	# function name lines (when using -p)
+        function = white bold
+ 	# line number prefix (when using -n)
+        linenumber = normal
+ 	# matching text in context lines
+        matchContext = red dim
+ 	# matching text in selected lines
+        matchSelected = red
+ 	# non-matching text in selected lines
+        selected = white
+ 	# separators between fields on a line (:, -, and =) and between hunks (--)
+	separator = cyan dim
+
+[color "status"]
+	header = white
+	added = green bold
+	changed = 178 bold
+	untracked = 243 bold
+	branch = 178 bold
+	nobranch = red
+	unmerged = red bold
 
 [diff]
 	mnemonicprefix = true
+	compactionHeuristic = true
 	tool = vimdiff
 
 [merge]
@@ -34,6 +68,9 @@
 
 [branch]
 	autosetuprebase = always
+
+[grep]
+	lineNumber = true
 
 [alias]
 	# make e.g. `git git clone [..]` work like `git clone`
