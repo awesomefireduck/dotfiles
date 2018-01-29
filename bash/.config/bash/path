@@ -4,7 +4,7 @@
 source <(grep 'PATH' /etc/environment)
 
 # loop over files, starting with 00-home
-for file in $(find "${BASH_SOURCE[0]}.d/" -type f);
+for file in $(find "${BASH_SOURCE[0]}.d/" -type f | sort -r);
 do
     if [[ -f "$file" ]]; then
 
