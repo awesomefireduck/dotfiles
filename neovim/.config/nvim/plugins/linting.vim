@@ -3,6 +3,7 @@
 let g:ale_linters_install = ""
 
 Plug 'w0rp/ale', {'do': g:ale_linters_install}
+
 let g:ale_linters = {
 	    \	'rust': ['rls'],
 	    \	'text': ['proselint'],
