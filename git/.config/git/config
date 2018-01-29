@@ -126,3 +126,11 @@
 	# unassume all the assumed files
 	unassumeall = "!git assumed | xargs git update-index --no-assume-unchanged"
 	assumeall = "!git status -s | awk {'print $2'} | xargs git assume"
+
+	# List files not in git
+	untracked = "!f() { git status -s -uall ${GIT_PREFIX}${1-.} | grep '^??'; }; f"
+	ignored = "!f() { git status --short --untracked=all --ignored ${GIT_PREFIX}${1-.} | grep '^!!'; }; f "
+
+	# get details of a commit
+	diffr  = "!f() { git diff "$1"^.."$1"; }; f"
+	lookup  = "!f() { git ll "$1"^.."$1"; }; f"
