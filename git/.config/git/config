@@ -80,7 +80,7 @@
 	unstage = reset HEAD --
 
 	# undo last change, via https://megakemp.com/2016/08/25/git-undo/
-	undo = "!f(){git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}};}; f"
+	undo = "!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}} ; }; f"
 
 	# alias HEAD to head
 	head = "!find -type f -name HEAD -execdir ln -s '{}' head \\;"
