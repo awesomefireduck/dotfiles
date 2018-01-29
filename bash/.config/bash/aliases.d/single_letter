@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# these are meant for interactive use only
+
+alias a=ansible-playbook
+#alias b
+#alias c
+alias d=docker
+#alias e
+#alias f
+#alias g=git
+#alias h
+#alias i
+#alias j
+#alias k
+alias l='ls -CF'
+#alias m
+#alias n
+#alias o
+#alias p
+#alias q
+alias r=rustup
+# ssh seems short enough :-)
+alias s='sudo systemctl'
+alias t=tmux
+#alias u
+#alias v
+#alias w
+alias x=xdg-open
+#alias y
+#alias z
