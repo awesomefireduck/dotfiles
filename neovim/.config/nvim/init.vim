@@ -78,7 +78,6 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
     augroup END
 endif
 
-
 function! s:sourceConfig()
     let path = $HOME  . '/.config/nvim/plugins'
 
