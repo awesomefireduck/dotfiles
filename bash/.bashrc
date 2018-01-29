@@ -38,12 +38,26 @@ bash_config_dir="${bash_abs_path}/.config/bash"
 source "${bash_config_dir}/aliases.d/debug"
 source "${bash_config_dir}/settings"
 
+if [ -f ~/.config/bash/tmux ]; then
+	. ~/.config/bash/tmux
+fi
+
 case "$session_type" in
 	"remote/ssh")
-	if [ -f ~/.config/bash/tmux ]; then
-		. ~/.config/bash/tmux
-	fi
-	run_tmux
+		# one default session for all remotes
+		run_tmux "remote"
+	;;
+	"local/shell")
+		# one session per TTY
+		run_tmux "$(tty | sed -e 's!/dev/pts/!!')"
+	;;
+	"remote/tmux")
+		# already in tmux, no need to do anything
+	;;
+	*)
+		# if we encounter this we'll need to update this switch
+		echo "Session type not recognised: $session_type" >&2
+	;;
 esac
 
 source "${bash_config_dir}/path"
