@@ -1,6 +1,6 @@
 " COMPLETION
-"Plug 'autozimu/LanguageClient-neovim'
-let g:LanguageClient_autoStart=0
+Plug 'autozimu/LanguageClient-neovim'
+let g:LanguageClient_autoStart=1
 let g:LanguageClient_serverCommands = {
     \ 'python': ['pyls'],
     \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
