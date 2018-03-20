@@ -1,9 +1,21 @@
 #!/bin/bash
 
 # set 256 colors and unicode support
-alias tmux="tmux -2 -u"
-alias tn="tmux new-session -A -D -d -s"
-alias tl="tmux list-sessions"
+alias tmux='$(which tmux) -2 -u'
+
+function tn() {
+	tmux new-session -A -D -d -s $@
+}
+
+function tl() {
+	tmux list-sessions $@
+}
+
 function ta() {
-	tmux attach-session -d -t $@ 2>/dev/null || tmux switch-client -t $@
+	if tmux has-session -t "$@" &>/dev/null; then
+		tmux switch-client -t $@
+	else
+		tmux new-session -A -D -d -s $@
+		tmux switch-client -t $@
+	fi
 }
