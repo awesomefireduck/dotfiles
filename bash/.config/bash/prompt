@@ -11,9 +11,15 @@ done
 PS2='$(tput ed)> '
 PS4='+ '
 
+store_history() {
+	history -a
+	history -c
+	history -r
+}
 
 precmd_functions+=(get_exit_code)
 precmd_functions+=(display_prompt)
+precmd_functions+=(store_history)
 
 wipe_prompt() {
     # save cursor position
