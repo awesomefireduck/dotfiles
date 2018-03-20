@@ -1,7 +1,4 @@
 #!/bin/bash
-alias tmux='$(which tmux) -2 -u'
-alias ta='tmux new-session -A -D -s'
-
 run_tmux() {
 	exec tmux -2 -u new-session -A -D -s ${1-default}
 }
