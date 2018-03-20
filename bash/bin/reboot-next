@@ -1,0 +1,38 @@
+#!/bin/bash -e
+
+# use `efibootmgr` or `efibootmgr -v` to find the disk
+nextboot="${1:-0001}"
+nextbootname="$(efibootmgr | grep "Boot$nextboot" | sed "s/Boot$nextboot  //")"
+
+
+function help() {
+
+local last_in_bootorder="$(efibootmgr | grep BootOrder  | sed "s/.*,//")"
+local nextbootname="$(efibootmgr | grep "Boot$last_in_bootorder" | sed "s/Boot$last_in_bootorder  //")"
+
+echo "
+	first, find the efi number for your boot device, using \`efibootmgr\`:
+
+$(efibootmgr)
+
+	then, as root, using the \"$nextbootname\" as an example:
+
+user@host$ sudo $0 $last_in_bootorder
+"
+
+}
+
+if [[ $1 == '--help' ]] || [[ $1 == '-h' ]]; then
+	help
+	exit 0
+fi
+
+
+if [[ "$EUID" -ne 0 ]]; then
+	echo "please run as root or use --help for extra help" >&2
+	exit 1
+fi
+
+efibootmgr --bootnext "$nextboot" >/dev/null
+
+systemctl reboot || reboot
