@@ -2,7 +2,9 @@
 "let g:ale_linters_install = 'sudo apt-get install -y tidy shellcheck npm python3-flake8 python3-pip yamllint && pip3 install vint proselint neovim; sudo npm install -g xo jshint htmlhint stylelint'
 let g:ale_linters_install = ""
 
-Plug 'w0rp/ale', {'do': g:ale_linters_install}
+Plug 'w0rp/ale'
+", {'do': g:ale_linters_install}
+let g:airline#extensions#ale#enabled = 1
 
 let g:ale_linters = {
 	    \	'rust': ['rls'],
