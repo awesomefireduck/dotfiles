@@ -69,6 +69,27 @@ noremap ;; ;
 
 set listchars=tab:⭾ ,trail:•,precedes:≺,extends:€,nbsp:‗
 
+" soft-wrap at window border (any char)
+set wrap
+
+" wrap only at characters in breakat
+set linebreak
+
+" wrap at <Space><Tab>!@*-+;:,./?
+set breakat=" ^I!@*-+;:,./?"
+
+" start soft-wrapped lines with an ellipsis
+set showbreak=…
+
+" auto-wrap Comments at text-width, insert comment leader with <Return>,
+"   and with 'o' and 'O', format comments with gQ, trailing Whitespace
+"   indicates continuation of paragraph, Auto format paragraphs, format
+"   Number lists, indent comments with <, break at Multibyte chars,
+"   don't break a line after 1 char word, remove comment leader when Joining
+"   lines with another comment
+set formatoptions="croqwan<m1j"
+
+
 " auto install plugin manager if it is not installed
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
     silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
