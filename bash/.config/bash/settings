@@ -10,6 +10,8 @@ shopt -s histappend
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=10000
 HISTFILESIZE=20000
+# ignore lines of 1 and 2 characters
+HISTIGNORE=?:??
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -17,7 +19,19 @@ shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-#shopt -s globstar
+shopt -s globstar
+
+# do cd with just the dirname
+shopt -s autocd
+
+# fix spelling errors with cd
+shopt -s cdspell
+
+# expand globs and fix spelling while completing
+shopt -s direxpand dirspell
+
+# enable history expansion with e.g. !! and !$
+bind Space:magic-space
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
