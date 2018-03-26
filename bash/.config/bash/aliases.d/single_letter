@@ -2,6 +2,7 @@
 
 # these are meant for interactive use only
 
+alias .='ls -hCF --color=auto'
 alias a=ansible-playbook
 #alias b
 #alias c

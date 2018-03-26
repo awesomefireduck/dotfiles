@@ -1,22 +1,16 @@
 #!/bin/bash
 # enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-
-    lscolor="--color=auto"
-    if [[ ${platform:?} == "OSX" ]]; then
-	    lscolor="-G"
-    fi
-
-    alias ls="ls $lscolor"
-    unset lscolor
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
+if [[ ${platform:?} == "OSX" ]]; then
+	lscolor="-G"
+else
+	lscolor="--color=auto"
 fi
 
-# some more ls aliases
-alias ll='ls -alFh'
-alias la='ls -A'
-alias ls='ls -F'
+alias ls="ls $lscolor -F"
+alias ll="ls $lscolor -alFh"
+alias la="ls $lscolor -A"
+
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
