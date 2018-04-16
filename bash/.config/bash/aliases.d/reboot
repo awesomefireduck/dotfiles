@@ -1,0 +1,1 @@
+alias reboot-win='sudo /home/vince/bin/reboot-next 0001'
