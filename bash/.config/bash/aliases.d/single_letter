@@ -18,7 +18,7 @@ alias l='ls -CF'
 #alias m
 #alias n
 #alias o
-#alias p
+alias p='pipenv run'
 #alias q
 alias r=rustup
 # ssh seems short enough :-)
