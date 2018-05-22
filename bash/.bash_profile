@@ -27,6 +27,6 @@ find_abs_path() {
 bash_abs_path="$(dirname "$(find_abs_path "${BASH_SOURCE[0]}" )")"
 
 # include .bashrc if it exists
-if [ -f "~/.bashrc" ]; then
-    . "~/.bashrc"
+if [ -e "$HOME/.bashrc" ]; then
+. "$HOME/.bashrc"
 fi
