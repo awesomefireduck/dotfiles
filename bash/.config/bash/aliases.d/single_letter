@@ -7,6 +7,7 @@ alias a=ansible-playbook
 #alias b
 #alias c
 alias d=docker
+alias D=docker-compose
 #alias e
 #alias f
 #alias g=git
