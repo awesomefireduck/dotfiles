@@ -1,0 +1,97 @@
+version: '3.6'
+
+services:
+
+  # docker run -d -p 80:80 -p 443:443 \
+  # --name nginx \
+  # -v /etc/nginx/conf.d  \
+  # -v /etc/nginx/vhost.d \
+  # -v /usr/share/nginx/html \
+  # -v /path/to/certs:/etc/nginx/certs:ro \
+  # --label com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy \
+  # nginx
+
+  nginx-proxy:
+    image: jwilder/nginx-proxy:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - nginx_conf:/etc/nginx/conf.d:rw
+      - nginx_vhost:/etc/nginx/vhost.d:rw
+      - nginx_html:/usr/share/nginx/html:ro
+      - certificates:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - nginx
+    labels:
+      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
+
+  # docker run -d \
+  # --name nginx-gen \
+  # --volumes-from nginx \
+  # -v /path/to/nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro \
+  # -v /var/run/docker.sock:/tmp/docker.sock:ro \
+  # --label com.github.jrcs.letsencrypt_nginx_proxy_companion.docker_gen \
+  # jwilder/docker-gen \
+  # -notify-sighup nginx -watch -wait 5s:30s /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
+
+#  docker-gen:
+#    image: jwilder/docker-gen
+#    volumes:
+#      - /var/run/docker.sock:/tmp/docker.sock:ro
+#      - /etc/nginx/nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro
+#      - nginx_conf:/etc/nginx/conf.d:rw
+#      - certificates:/etc/nginx/certs:ro
+#    command: [
+#      "-notify-sighup",
+#      "docker_nginx_1",
+#      "-watch",
+#      "-wait",
+#      "5s:30s",
+#      "/etc/docker-gen/templates/nginx.tmpl",
+#      "/etc/nginx/conf.d/default.conf"
+#    ]
+#    labels:
+#      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.docker_gen"
+#    depends_on:
+#      - nginx
+
+
+  # docker run -d \
+  # --name nginx-letsencrypt \
+  # --volumes-from nginx \
+  # -v /path/to/certs:/etc/nginx/certs:rw \
+  # -v /var/run/docker.sock:/var/run/docker.sock:ro \
+  # jrcs/letsencrypt-nginx-proxy-companion
+
+  nginx-letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    volumes:
+      - nginx_conf:/etc/nginx/conf.d:rw
+      - nginx_vhost:/etc/nginx/vhost.d:rw
+      - nginx_html:/usr/share/nginx/html:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - certificates:/etc/nginx/certs:rw
+    depends_on:
+      - nginx-proxy
+        #      - docker-gen
+
+
+  whoami:
+    image: jwilder/whoami
+    environment:
+      - VIRTUAL_HOST=whoami.vince.lol
+      - LETSENCRYPT_HOST=whoami.vince.lol
+    networks:
+      - nginx
+
+
+networks:
+  nginx:
+
+volumes:
+  nginx_html:
+  nginx_vhost:
+  nginx_conf:
+  certificates:
