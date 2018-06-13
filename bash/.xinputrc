@@ -1,4 +1,4 @@
 # im-config(8) generated on Thu, 24 May 2018 15:19:49 +0200
 run_im ibus
 # im-config signature: 48e4884f452747079867708259100512  -
-set-prop "AlpsPS/2 ALPS DualPoint Stick" "Coordinate Transformation Matrix" 0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.02
+xinput set-prop "AlpsPS/2 ALPS DualPoint Stick" "Coordinate Transformation Matrix" 0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.02
