@@ -6,7 +6,7 @@ Plug 'luochen1990/rainbow'
 let g:rainbow_conf = {
 	    \	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
 	    \	'ctermfgs': ['fg', '14', '208', '34', '196', '4', '11', '167', '76', '163'],
-	    \	'operators': '_,\|+\|-\|%\|=\|==\|===\|!=\|!==\|<\|>\|:_',
+	    \	'operators': '_,\|(:!^)+\|(:!^)-\|%\|=\|==\|===\|!=\|!==\|<\|>\|:_',
 	    \	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
 	    \	'separately': {
 	    \		'*': {},
@@ -28,6 +28,8 @@ let g:rainbow_conf = {
 	    \	}
 	    \}
 let g:rainbow_active = 1
+
+autocmd FileType diff RainbowToggleOff
 " syntax highlighting within another syntax
 "Plug 'inkarkat/vim-ingo-library'
 "Plug 'inkarkat/vim-SyntaxRange'
