@@ -18,7 +18,12 @@
 	old = red
 	new = green
 	commit = black bold
-	whitespace = red bold
+	whitespace = red reverse
+	colorMoved = zebra
+	newMoved = green bold
+	oldMoved = red bold
+	newMovedAlternative = green bold ul italic
+	oldMovedAlternative = red bold ul italic
 
 [color "decorate"]
 	branch = 178 bold
