@@ -16,7 +16,9 @@ alias D=docker-compose
 #alias j
 #alias k
 alias l='ls -CF'
-#alias m
+
+# run django's manage.py within pipenv
+alias m='find "$(dirname "$(find $(git rev-parse --show-toplevel) -name "Pipfile")")" -name "manage\\.py" | xargs -I MANAGE_PY pipenv run MANAGE_PY'
 #alias n
 #alias o
 alias p='pipenv run'
