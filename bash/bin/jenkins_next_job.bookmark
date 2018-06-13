@@ -1,0 +1,11 @@
+javascript:javascript: (
+    function () {
+        job_re = /^(\/job\/.*\/job\/.*\/)(\d+)(\/.*)?$/;
+        result =job_re.exec(window.location.pathname);
+        if (result !== null) {
+            job_nr = parseInt(result[2]);
+            new_nr = (job_nr +1).toString();
+            new_url = result[1] + new_nr + result[3];
+            window.location.assign(window.location.origin + new_url)
+        }
+    })();
