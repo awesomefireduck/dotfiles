@@ -2,7 +2,7 @@
 
 function git_branch_info() {
 	if [[ -n "$(git rev-parse HEAD 2>/dev/null)" ]]; then
-		append_line "⛕  ${dark_yellow}" \
+		append_line "🎋 ${dark_yellow}" \
 		| append "$(get_git_info)" \
 		| append "$(get_git_progress)" \
 		| append "${textreset}"

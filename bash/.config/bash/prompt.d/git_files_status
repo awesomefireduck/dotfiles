@@ -12,7 +12,7 @@ function git_files_status() {
 			local untracked="$(echo "$files_status" | grep '^??' | wc -l)"
 			local deleted_or_moved="$(echo "$files_status"   | grep '^[DR].\|.D' | wc -l)"
 
-			local files_line="📄 "
+			local files_line="🗃  "
 
 			if [[ "$staged" -gt 0 ]]; then
 				files_line+="${bold_green}✔ ${staged}${textreset} "
@@ -27,7 +27,7 @@ function git_files_status() {
 			fi
 
 			if [[ "$untracked" -gt 0 ]]; then
-				files_line+="${light_black}？${untracked}${textreset} "
+				files_line+="${bold_white}？${untracked}${textreset} "
 			fi
 
 			if [[ "$unmerged" -gt 0 ]]; then

@@ -39,11 +39,11 @@ function job_status() {
 }
 function display_hostname() {
 	# display host when working remote
-	append_line "💻 ${hostcolor}$(hostname)"
+	append_line "🤖 ${hostcolor}$(hostname)"
 }
 function display_username() {
 	# username
-	append "${textreset}\n┗ 👤 ${usercolor}${USER}${textreset}"
+	append "${textreset}\n┗ 🙂 ${usercolor}${USER}${textreset}"
 }
 
 function construct_prompt {
