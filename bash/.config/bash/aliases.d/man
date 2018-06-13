@@ -2,8 +2,10 @@
 
 alias mansplain='man'
 
-if command -v tldr &>/dev/null; then
-	alias man='tldr'
-else
-	echo 'please install `tldr` with `cargo install tldr' >&2
-fi
+# if command -v tldr &>/dev/null; then
+# 	alias man='tldr'
+# else
+# 	echo 'please install `tldr` with `cargo install tldr' >&2
+# fi
+
+alias man=man
