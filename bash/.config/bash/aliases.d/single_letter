@@ -34,6 +34,7 @@ alias u='systemctl --user'
 alias x=xdg-open
 #alias y
 alias z='sudo zfs'
+alias Z='sudo zpool'
 
 docker-compose() {
 	name="$(sed -nre "s/^x-project-name: (\"|P)(.*)(\1)$/\2/p" docker-compose.yml 2>/dev/null)"
