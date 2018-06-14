@@ -7,7 +7,7 @@ alias a=ansible-playbook
 #alias b
 #alias c
 alias d=docker
-alias D=docker-compose
+alias D=_docker-compose
 #alias e
 #alias f
 #alias g=git
@@ -33,3 +33,10 @@ alias u='systemctl --user'
 alias x=xdg-open
 #alias y
 #alias z
+
+_docker-compose() {
+	name="$(sed -nre "s/^x-project-name: (\"|P)(.*)(\1)$/\2/p" docker-compose.yml)"
+	# default to directory name, just like docker-compose
+	project_name="${name:-"$(pwd | xargs basename)"}"
+	docker-compose --project-name "$project_name" $@
+}
