@@ -7,10 +7,10 @@ function get_all_jobs() {
 	stopped_jobs="$(jobs -s | grep -v 'Done')";
 
 	if [[ "${running_jobs}" != "" ]]; then
-		echo -n "${newline}${bold_cyan}🏃${textreset}$(jobs -r | parse_jobs | colorize_recent_running_job | colorize_sudo)"
+		echo -n "${newline}${bold_cyan}🌀${textreset}$(jobs -r | parse_jobs | colorize_recent_running_job | colorize_sudo)"
 	fi
 
 	if [[ "${stopped_jobs}" != "" ]]; then
-		echo -n "${newline}${bold_blue}🚫${textreset}$(jobs -s | parse_jobs | colorize_recent_stopped_job | colorize_sudo)"
+		echo -n "${newline}${bold_blue}🛑${textreset}$(jobs -s | parse_jobs | colorize_recent_stopped_job | colorize_sudo)"
 	fi
 }

@@ -8,13 +8,13 @@
 # the same goes for "\\\\]" of course
 
 function colorize_recent_running_job() {
-	local running_color="\\\\[${_bold}${_color_cyan}\\\\]"
+	local running_color="\\\\[${_bold}${_color_blue}\\\\]"
 	local textreset="\\\\[$(tput sgr0)\\\\]"
 	sed -r -e "s/([0-9]+:(!!)?[a-zA-Z0-9_-]+)\+/${running_color}\1${textreset}/"
 }
 
 function colorize_recent_stopped_job() {
-	local stopped_color="\\\\[${_bold}${_color_blue}\\\\]"
+	local stopped_color="\\\\[${_bold}${_color_red}\\\\]"
 	local textreset="\\\\[$(tput sgr0)\\\\]"
 	sed -r -e "s/([0-9]+:(!!)?[a-zA-Z0-9_-]+)\+/${stopped_color}\1${textreset}/"
 }
