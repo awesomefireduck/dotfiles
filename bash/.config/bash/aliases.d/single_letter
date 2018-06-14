@@ -7,7 +7,8 @@ alias a=ansible-playbook
 #alias b
 #alias c
 alias d=docker
-alias D=_docker-compose
+# uses a shell wrapper, see below
+alias D=docker-compose
 #alias e
 #alias f
 #alias g=git
@@ -34,9 +35,10 @@ alias x=xdg-open
 #alias y
 alias z='sudo zfs'
 
-_docker-compose() {
-	name="$(sed -nre "s/^x-project-name: (\"|P)(.*)(\1)$/\2/p" docker-compose.yml)"
+docker-compose() {
+	name="$(sed -nre "s/^x-project-name: (\"|P)(.*)(\1)$/\2/p" docker-compose.yml 2>/dev/null)"
 	# default to directory name, just like docker-compose
 	project_name="${name:-"$(pwd | xargs basename)"}"
-	docker-compose --project-name "$project_name" $@
+	command docker-compose --project-name "$project_name" $@
 }
+complete -F _docker_compose docker-compose D
