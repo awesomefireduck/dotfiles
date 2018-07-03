@@ -63,6 +63,11 @@ endif
 
 source ~/.config/nvim/tabline.vim
 
+"   :BufMessage registers
+"   :WinMessage ls
+"   :TabMessage echo "Key mappings for Control+A:" | map <C-A>
+source ~/.config/nvim/redir_messages.vim
+
 " no shift for command mode
 map ; :
 " original ; behavior of repeating the last `f` or `t` now on ;;
