@@ -5,5 +5,8 @@ then
   alias vim='nvim'
 fi
 
-alias vimrc='vim -c "e \$MYVIMRC"'
-alias initvim='nvim -c "e \$MYVIMRC"'
+alias vimrc='vim -c "cd ~/dotfiles/neovim/.config/nvim" -p ~/dotfiles/neovim/.config/nvim/init.vim ~/dotfiles/neovim/.config/nvim/plugins/*.vim'
+
+alias initvim='vimrc'
+
+alias nvmi=nvim
