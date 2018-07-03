@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE lmms-config-file>
+<lmms version="1.2.0-rc6">
+  <MidiAlsaRaw device="default"/>
+  <MidiJack device="lmms"/>
+  <Midialsaseq device="default"/>
+  <app nomsgaftersetup="0" openlastproject="0" language="nl" displaydbfs="0" configured="1" disablebackup="0" nommpz="0"/>
+  <audioalsa device="default" channels="2"/>
+  <audiojack clientname="lmms" channels="2"/>
+  <audiooss device="/dev/dsp" channels="2"/>
+  <audiopa device="default" channels="2"/>
+  <audioportaudio device="HDA Intel PCH: ALC255 Analog (hw:0,0)" backend="ALSA"/>
+  <audiosdl device=""/>
+  <audiosoundio out_device_raw="no" out_device_id="dummy-out" backend="Dummy"/>
+  <midioss device="/dev/midi"/>
+  <mixer mididev="ALSA-Sequencer (Advanced Linux Sound Architecture)" framesperaudiobuffer="256" audiodev="SDL (Simple DirectMedia Layer)" hqaudio="1"/>
+  <paths defaultsf2="" sf2dir="/home/vince/Documents/lmms/samples/soundfonts/" workingdir="/home/vince/Documents/lmms/" stkdir="/tmp/.mount_lmms-12CYEof/usr/bin/../share/stk/rawwaves/" vstdir="/home/vince/Documents/lmms/plugins/vst/" backgroundartwork="" gigdir="/home/vince/Documents/lmms/samples/gig/" laddir="/home/vince/Documents/lmms/plugins/ladspa/" artwork="data:/themes/default/"/>
+  <tooltips disabled="0"/>
+  <ui printnotelabels="0" smoothscroll="1" disableautoquit="0" syncvstplugins="0" enablerunningautosave="0" compacttrackbuttons="0" enableautosave="1" animateafp="1" vstembedmethod="xembed" oneinstrumenttrackwindow="0" saveinterval="2" displaywaveform="0"/>
+  <recentfiles>
+    <file path="data:/projects/templates/default.mpt"/>
+  </recentfiles>
+</lmms>
