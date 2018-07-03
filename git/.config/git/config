@@ -1,5 +1,16 @@
-[include]
-	path = ~/.config/git/user
+[user]
+	email = techhazard@codeforyouand.me
+	name = Vince van Oosten
+
+[includeIf "gitdir:~/Work/"]
+	path = ~/Work/.gitconfig
+
+[includeIf "gitdir:~/github/"]
+	path = ~/github/.gitconfig
+
+[includeIf "gitdir:~/gitlab/"]
+	path = ~/gitlab/.gitconfig
+
 [push]
 	default = simple
 
