@@ -93,15 +93,18 @@
 	# also works for `git git git git git clone` (and of course other subcommands)
 	git = !git
 
-	unstage = reset HEAD --
-
-	# undo last change, via https://megakemp.com/2016/08/25/git-undo/
-	undo = "!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}} ; }; f"
-
 	# alias HEAD to head
 	head = "!find -type f -name HEAD -execdir ln -s '{}' head \\;"
 
-        ##  GIT LOG
+
+## ----------------------------------- UNDO -----------------------------------
+	unstage = reset HEAD --
+
+	# undo last change, via https://megakemp.com/2016/08/25/git-undo/
+	# git rev-parse --abbrev-ref HEAD lists the current branch name
+	undo = "!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}} ; }; f"
+
+## ---------------------------------  GIT LOG ---------------------------------
 	# one line with shorthash, first line and author
 	l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=format:
 	# no colour version of ls for use in pipes/scripts
@@ -115,17 +118,17 @@
 	# show logs with diffs for e.g. a file
 	lu = log -u
 
-	## DIFF
+## ----------------------------------- DIFF -----------------------------------
 	# show modified files in last commit
 	dl = !git ls -1 --date=relative
 	# show diff with the last commit
 	dlc = diff --cached HEAD^
 
-	## LIST ALIASES
-	alias = !git config -l | grep alias | grep -v '^alias\\.\\(git\\|alias\\|aliases\\)\\b'| sed -r 's/alias.([a-z]+)=(!git )?(.+)/\\1\\t \\3/' | sort -k1,1
+## ------------------------------- LIST ALIASES -------------------------------
+	alias = "!git config -l | grep alias | grep -v '^alias\\.\\(git\\|alias\\|aliases\\)\\b'| sed -r 's/alias.([a-z]+)=(!git )?(.+)/\\1\\t \\3/' | sort -k1,1 | column -t -s '	'"
 	aliases = !git alias
 
-	## GIT STASH
+## --------------------------------- GIT STASH --------------------------------
 	sl  = stash list
 	sa  = stash apply
 	# git stash diff
@@ -133,7 +136,7 @@
 	ss  = stash save
 	srm = stash drop
 
-	## ASSUME UNCHANGED
+## ----------------------------- ASSUME UNCHANGED -----------------------------
 	# assume files are unchanged
 	assume = update-index --assume-unchanged
 	unassume = update-index --no-assume-unchanged
@@ -143,10 +146,10 @@
 	unassumeall = "!git assumed | xargs git update-index --no-assume-unchanged"
 	assumeall = "!git status -s | awk {'print $2'} | xargs git assume"
 
-	# List files not in git
+# ------------------------------ FILES NOT IN GIT -----------------------------
 	untracked = "!f() { git status -s -uall ${GIT_PREFIX}${1-.} | grep '^??'; }; f"
 	ignored = "!f() { git status --short --untracked=all --ignored ${GIT_PREFIX}${1-.} | grep '^!!'; }; f "
 
-	# get details of a commit
+# ------------------------------- COMMIT DETAILS ------------------------------
 	diffr  = "!f() { git diff "$1"^.."$1"; }; f"
 	lookup  = "!f() { git ll "$1"^.."$1"; }; f"
