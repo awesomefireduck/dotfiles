@@ -8,9 +8,9 @@ function git_files_status() {
 
 			local staged="$(echo "$files_status"    | grep '^[MARCD].' | wc -l)"
 			local unstaged="$(echo "$files_status"  | grep '^.[MD]' | wc -l)"
-			local unmerged="$(echo "$files_status"  | grep '^DD\|AU\|UD\|UA\|DU\|AA\|UU' | wc -l)"
+			local unmerged="$(echo "$files_status"  | grep '^(DD\|AU\|UD\|UA\|DU\|AA\|UU)' | wc -l)"
 			local untracked="$(echo "$files_status" | grep '^??' | wc -l)"
-			local deleted_or_moved="$(echo "$files_status"   | grep '^[DR].\|.D' | wc -l)"
+			local deleted_or_moved="$(echo "$files_status"   | grep '^([DR].\|.D)' | wc -l)"
 
 			local files_line="🗃  "
 
