@@ -29,7 +29,8 @@ alias r=rustup
 alias s='sudo systemctl'
 alias t=tmux
 alias u='systemctl --user'
-#alias v
+alias v=vagrant
+alias V='nvim Vagrantfile'
 #alias w
 alias x=xdg-open
 #alias y
