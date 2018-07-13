@@ -1,0 +1,43 @@
+#!/bin/bash
+get_git_stash_status () {
+	# Grab the branch
+	branch="$(get_git_branch)"
+	head="$(git rev-parse --short HEAD)"
+
+	# check for stashes matching this branch
+	stashes="$(git stash list | grep "${branch}")"
+	[[ -z "$stashes" ]] && return
+
+	# check if commit id's are visible
+	commit_ids="$(echo "$stashes" | grep ': [a-zA-Z0-9]\{7\}' | sed -re 's/.*: ([0-9a-zA-Z]{7}) .*/\1/')"
+	#[[ -z "$commit_ids" ]] && return
+
+
+	# stash entries that do not have a commit id
+	unknown_stash_count="$(echo "$stashes" | grep -v ': [a-zA-Z0-9]\{7\}' | wc -l)"
+	# stashes matching the current HEAD
+	matching_stash_count=0
+	# stashes not matching HEAD
+	outdated_stash_count=0
+
+	for id in $commit_ids; do
+		if [[ "$id" == "$head" ]]; then
+			((matching_stash_count++))
+		else
+			((outdated_stash_count++))
+		fi
+	done
+
+	if [[ "$matching_stash_count" -gt 0 ]] || [[ "$outdated_stash_count" -gt 0 ]] || [[ "$unknown_stash_count" -gt 0 ]]; then
+		append_line "🗳 "
+		if [[ "$matching_stash_count" -gt 0 ]]; then
+			append "${bold_blue} 🆕 $matching_stash_count$textreset"
+		fi
+		if [[ "$outdated_stash_count" -gt 0 ]]; then
+			append "${bold_white} 🕑 $outdated_stash_count$textreset"
+		fi
+		if [[ "$unknown_stash_count" -gt 0 ]]; then
+			append "${bold_red} ？$unknown_stash_count$textreset"
+		fi
+	fi
+}

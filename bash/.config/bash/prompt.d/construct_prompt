@@ -21,7 +21,8 @@ function git_status() {
 	input;
 	echo -n "\
 	$(git_branch_info) \
-	$(git_files_status)"
+	$(git_files_status) \
+	$(get_git_stash_status)"
 }
 
 function wipe_screen() {
