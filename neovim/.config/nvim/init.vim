@@ -73,7 +73,7 @@ map ; :
 " original ; behavior of repeating the last `f` or `t` now on ;;
 noremap ;; ;
 
-set listchars=tab:⭾ ,trail:•,precedes:≺,extends:€,nbsp:‗
+set listchars=tab:>-,space:◦,trail:•,precedes:≺,extends:€,nbsp:‗
 
 " soft-wrap at window border (any char)
 set wrap
