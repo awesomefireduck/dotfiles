@@ -1,0 +1,10 @@
+*/.cache
+*/Cache
+*/cache2
+*/.cargo/git
+*/.cargo/registry
+*/.multirust
+*/.npm/_cacache
+*/.rustup
+*/.sudo_as_admin_successful
+*/.xargo
