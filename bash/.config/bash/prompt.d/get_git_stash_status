@@ -1,4 +1,8 @@
 #!/bin/bash
+strip_stashbrackets() {
+	sed -e 's/stash@{//' -e 's/}://'
+}
+
 get_git_stash_status () {
 	if [[ -z "$(git rev-parse HEAD 2>/dev/null)" ]]; then
 		return
@@ -9,25 +13,31 @@ get_git_stash_status () {
 	head="$(git rev-parse --short HEAD)"
 
 	# check for stashes matching this branch
-	stashes="$(git stash list | grep "${branch}")"
+	stashes="$(git stash list | grep "${branch}" | strip_stashbrackets)"
 	[[ -z "$stashes" ]] && return
 
 	# check if commit id's are visible
-	commit_ids="$(echo "$stashes" | grep ': [a-zA-Z0-9]\{7\}' | sed -re 's/.*: ([0-9a-zA-Z]{7}) .*/\1/')"
+	commit_ids="$(echo "$stashes" | grep ' [a-zA-Z0-9]\{7\} ' | sed -re 's/([0-9]+).* ([0-9a-zA-Z]{7}) .*/\1:\2/')"
 	#[[ -z "$commit_ids" ]] && return
 
 
 	# stash entries that do not have a commit id
-	unknown_stash_count="$(echo "$stashes" | grep -v ': [a-zA-Z0-9]\{7\}' | wc -l)"
+	unknown_stashes="$(echo "$stashes" | grep -v ': [a-zA-Z0-9]\{7\}' | sed -e 's/\([0-9]\+\) .*/\1/' | tr "\n" ' ' )"
+	unknown_stash_count="$(echo "$unknown_stashes" |  wc -w)"
 	# stashes matching the current HEAD
+	matching_stashes=""
 	matching_stash_count=0
 	# stashes not matching HEAD
 	outdated_stash_count=0
+	outdated_stashes=""
 
 	for id in $commit_ids; do
-		if [[ "$id" == "$head" ]]; then
+		stash_num="$(echo "$id" | sed -e 's/:.*//')"
+		if [[ "$id" == *"$head"* ]]; then
+			matching_stashes+=" $stash_num"
 			((matching_stash_count++))
 		else
+			outdated_stashes+=" $stash_num"
 			((outdated_stash_count++))
 		fi
 	done
@@ -35,13 +45,13 @@ get_git_stash_status () {
 	if [[ "$matching_stash_count" -gt 0 ]] || [[ "$outdated_stash_count" -gt 0 ]] || [[ "$unknown_stash_count" -gt 0 ]]; then
 		append_line "🗳 "
 		if [[ "$matching_stash_count" -gt 0 ]]; then
-			append "${bold_blue} 🆕 $matching_stash_count$textreset"
+			append "${bold_blue} 🆕$matching_stashes$textreset"
 		fi
 		if [[ "$outdated_stash_count" -gt 0 ]]; then
-			append "${bold_white} 🕑 $outdated_stash_count$textreset"
+			append "${bold_white} 🕑$outdated_stashes$textreset"
 		fi
 		if [[ "$unknown_stash_count" -gt 0 ]]; then
-			append "${bold_red} ？$unknown_stash_count$textreset"
+			append "${bold_red} ？$unknown_stashes$textreset"
 		fi
 	fi
 }
