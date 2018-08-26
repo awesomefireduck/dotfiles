@@ -14,7 +14,8 @@ alias D=docker-compose
 #alias g=git
 #alias h
 #alias i
-#alias j
+alias j='journalctl -u'
+alias J='journalctl --user -u'
 #alias k
 alias l='ls -CF'
 
@@ -27,8 +28,9 @@ alias p='pipenv run'
 alias r=rustup
 # ssh seems short enough :-)
 alias s='sudo systemctl'
+alias S='systemctl --user'
 alias t=tmux
-alias u='systemctl --user'
+#alias u=
 alias v=vagrant
 alias V='nvim Vagrantfile'
 #alias w
