@@ -1,7 +1,5 @@
 #!/bin/bash
 
-alias mansplain='man'
-
 # if command -v tldr &>/dev/null; then
 # 	alias man='tldr'
 # else

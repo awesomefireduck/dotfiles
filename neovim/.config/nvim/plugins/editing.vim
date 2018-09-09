@@ -52,36 +52,5 @@ Plug 'mmahnic/vim-flipwords'
 " (a, |b, c)  :Flip ,      (a, c), b  "oops...
 " (a, |b, c)  :Flip , )    (a, c, b)
 
-" to make sure functions do not become massive
-"Plug 'dodie/vim-disapprove-deep-indentation'
 
-Plug 'easymotion/vim-easymotion'
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
-"let g:EasyMotion_keys = 'asdghklqwertyuiopzxcvbnmfj;' " The default
-let g:EasyMotion_keys = "aoeidtn;,.pyfgcrl/@'qjkxbmwvzuhs-" " programmer dvorak version of the default
 
-" Jump to anywhere you want with minimal keystrokes, with just one key binding.
-" `s{char}{label}`
-nmap s <Plug>(easymotion-overwin-f)
-" or
-" `s{char}{char}{label}`
-" Need one more keystroke, but on average, it may be more comfortable.
-nmap S <Plug>(easymotion-overwin-f2)
-
-" Turn on case insensitive feature
-let g:EasyMotion_smartcase = 1
-
-" JK motions: Line motions
-map <leader>j <Plug>(easymotion-j)
-map <leader>k <Plug>(easymotion-k)
-"map <leader>w <Plug>(easymotion-w)
-map <leader>b <Plug>(easymotion-b)
-map <leader>e <Plug>(easymotion-e)
-
-" auto resize active window
-Plug 'roman/golden-ratio'
-
-" insert UUIDs
-" use :NuuidAll to replace all instances of nuuid and nguid
-Plug 'kburdett/vim-nuuid'
-let g:nuuid_no_mappings = 1

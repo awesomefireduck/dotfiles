@@ -1,0 +1,4 @@
+#!/bin/bash
+alias mcp='gnome-terminal -- mosh mcp'
+alias mcpl='gnome-terminal -- ssh mcpl'
+

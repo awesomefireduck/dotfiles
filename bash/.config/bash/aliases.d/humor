@@ -1,0 +1,10 @@
+#!/bin/bash
+alias override='sudo $(history -p !!)'
+
+alias By_the_power_of_all_that_is_evil_I_command_you_to_awaken_and='sudo'
+
+alias snek=python
+alias snek3=python3
+alias snek2=python2
+
+alias nani='echo "Omae wa mou shindeiru" && sleep 1.5s && nano'

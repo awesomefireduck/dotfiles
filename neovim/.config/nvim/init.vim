@@ -39,13 +39,13 @@ inoremap hh <Esc>
 
 "disable arrow keys
 noremap  <Up> ""
-noremap! <Up> <Esc>
 noremap  <Down> ""
-noremap! <Down> <Esc>
 noremap  <Left> ""
-noremap! <Left> <Esc>
 noremap  <Right> ""
-noremap! <Right> <Esc>
+inoremap <Up> <Esc>
+inoremap <Down> <Esc>
+inoremap <Left> <Esc>
+inoremap <Right> <Esc>
 cnoremap <C-K> <Up>
 cnoremap <C-L> <Right>
 cnoremap <C-H> <Left>
@@ -54,7 +54,7 @@ cnoremap <C-J> <Down>
 if has('nvim')
     set inccommand=nosplit
     " copy file to system clipboard
-    map <leader>y gg"+yG
+    map <silent> <leader>y :execute '%s/'.$USER.'/techhazard/ge'gg"+yGu:set nohlsearch
 endif
 
 if !has('nvim')

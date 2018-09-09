@@ -1,6 +1,8 @@
 " COLOURS
 "Plug 'NLKNguyen/papercolor-theme'
 Plug 'kristijanhusak/vim-hybrid-material'
+colorscheme hybrid_material
+set background=dark
 " give paretheses matching colours
 Plug 'luochen1990/rainbow'
 let g:rainbow_conf = {

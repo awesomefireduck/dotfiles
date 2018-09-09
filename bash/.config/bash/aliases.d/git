@@ -3,15 +3,33 @@
 alias ga='git add'
 alias gc='git commit'
 alias gch='git checkout'
+alias gs='git status -s'
+alias gb='git branch -vv -a'
+
+# ------------------------------------ DIFF -----------------------------------
 alias gd='git diff'
 alias gdc='git diff --cached'
+
+# ------------------------------------ LOG ------------------------------------
 alias gl='git log --show-signature'
 alias glg='git log --oneline --graph'
-alias gpl='git pull --rebase'
+
+# ----------------------------------- UPDATE ----------------------------------
+alias gpl='git pull --rebase --log --stat'
 alias gps='git push'
-alias gs='git status -s'
-alias gsa='git stash save' #add
-alias gsd='git stash show' #diff
-alias gsl='git stash list'
-alias gss='git stash show'
+
+# ----------------------------------- STASH -----------------------------------
 alias gst='git stash'
+alias gsa='gst apply' # apply
+alias gsd='gst show'  # diff
+alias gss='gst save'  # save
+alias gsr='gst drop'  # remove
+
+_git_list_stash() {
+	branch="$(get_git_branch 2>/dev/null)"
+	if [[ "${1:-""}" == "-a" ]]; then
+		branch+='\|'
+	fi
+	git stash list | grep "$branch"
+}
+alias gsl='_git_list_stash'  # list

@@ -2,4 +2,4 @@
 
 alias du='du -h'
 alias df='df -h'
-alias dush='(du -schx ./* ./.[a-zA-Z0-9]* | sort -h | tee dush.txt); echo -e "dush: \"$PWD\" done.\007"'
+alias dush='du -schx ./* ./.[a-zA-Z0-9]* | sort -h | tee dush.txt)'
