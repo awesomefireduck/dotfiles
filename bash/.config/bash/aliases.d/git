@@ -27,9 +27,14 @@ alias gsr='gst drop'  # remove
 
 _git_list_stash() {
 	branch="$(get_git_branch 2>/dev/null)"
+  grep='grep'
+
 	if [[ "${1:-""}" == "-a" ]]; then
 		branch+='\|'
+  else
+    grep='grep --color=none'
 	fi
-	git stash list | grep "$branch"
+
+	git stash list | ${grep} "$branch"
 }
 alias gsl='_git_list_stash'  # list
