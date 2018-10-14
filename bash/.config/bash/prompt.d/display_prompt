@@ -9,7 +9,7 @@ function create_ps1() {
 		PS1+="┏"
 	fi
 	# prompt symbol
-	PS1+="━━━▌ "
+	PS1+="━━━━━━▌ "
 	echo -n "$PS1"
 }
 

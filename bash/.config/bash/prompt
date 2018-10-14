@@ -27,7 +27,8 @@ wipe_prompt() {
     # go to beginnig of previous line
     tput cuu 1
     # overwrite char
-    echo -n "━"
+    #echo -n "━"
+    echo -e  "━┥${bold_white}$(date +%H:%M)${textreset}│"
     if [[ "$last_status" -ne 0 ]]; then
         tput cuu 1
         tput cub 1
