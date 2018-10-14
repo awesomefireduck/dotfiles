@@ -8,3 +8,16 @@
 */.rustup
 */.sudo_as_admin_successful
 */.xargo
+*/.local/share/nvim
+*/.local/share/virtualenvs
+*/.virtualenvs
+*/.local/lib
+*/.local/opt/android-studio/plugins
+*/.local/opt/android-studio
+*/.local/opt
+*/.config/discord/*/modules
+*/.config/chromium
+*/Work/Eonics/observ-backup
+*/.mozilla/firefox/*/storage
+*/node_modules
+*/.m2
