@@ -1,4 +1,6 @@
 #!/bin/bash
-alias mcp='gnome-terminal -- mosh mcp'
+alias mcp='gnome-terminal -- mosh mcp --port=60000:60100'
 alias mcpl='gnome-terminal -- ssh mcpl'
+alias phos='gnome-terminal -- ssh phos'
+alias phosl='gnome-terminal -- ssh phosl'
 
