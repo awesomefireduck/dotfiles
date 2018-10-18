@@ -1,0 +1,8 @@
+[Unit]
+Description=backup home directory
+
+
+[Service]
+Type=oneshot
+Environment="BORG_PASSCOMMAND=sh -c \"cat ~/.config/borg/pass\""
+ExecStart=/bin/sh -c 'borg create -s --exclude-from ~/.config/borg/exclude mcp:/media/datastore/backup/borg/$(hostname)-$(whoami)::$(date -Im) ~/'
