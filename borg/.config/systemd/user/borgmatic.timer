@@ -1,0 +1,10 @@
+[Unit]
+Description=Run borgmatic hourly
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+RandomizedDelaySec=600
+
+[Install]
+WantedBy=timers.target
