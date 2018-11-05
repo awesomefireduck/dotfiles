@@ -2,9 +2,9 @@
 Description=Run borg-backup daily
 
 [Timer]
-OnCalendar=*-*-* 04:00:00
+OnCalendar=hourly
 Persistent=true
-RandomizedDelaySec=3600
+RandomizedDelaySec=600
 
 [Install]
 WantedBy=timers.target
