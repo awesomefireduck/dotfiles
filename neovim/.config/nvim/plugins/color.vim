@@ -1,7 +1,8 @@
 " COLOURS
 "Plug 'NLKNguyen/papercolor-theme'
 Plug 'kristijanhusak/vim-hybrid-material'
-colorscheme hybrid_material
+"colorscheme is set at the end of init.vim
+"colorscheme hybrid_material
 set background=dark
 " give paretheses matching colours
 Plug 'luochen1990/rainbow'
@@ -33,10 +34,10 @@ let g:rainbow_active = 1
 
 autocmd FileType diff RainbowToggleOff
 " syntax highlighting within another syntax
-"Plug 'inkarkat/vim-ingo-library'
-"Plug 'inkarkat/vim-SyntaxRange'
+Plug 'inkarkat/vim-ingo-library'
+Plug 'inkarkat/vim-SyntaxRange'
 " Highlight and fix trailing whitespace with :FixWhitespace
-"Plug 'bronson/vim-trailing-whitespace'
+Plug 'bronson/vim-trailing-whitespace'
 augroup whitespace
     "  au BufEnter nowrite
 augroup END

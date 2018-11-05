@@ -27,10 +27,13 @@ endif
 let g:hlstate=0
 " toggle search highlight with <Space>h
 nnoremap <silent> <leader>h :set hlsearch!<cr>
+
 " write with <space>w
 nnoremap <silent> <leader>w :w<cr>
+
 " write with :W
 cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
+
 " quit with nonzero exit code with ZQ
 nnoremap <silent> ZQ :cq<cr>
 
@@ -61,12 +64,11 @@ if !has('nvim')
     set viminfo+=~/.vim/viminfo
 endif
 
-source ~/.config/nvim/tabline.vim
 
 "   :BufMessage registers
 "   :WinMessage ls
 "   :TabMessage echo "Key mappings for Control+A:" | map <C-A>
-source ~/.config/nvim/redir_messages.vim
+"source ~/.config/nvim/plugins/redir_messages.vim
 
 " no shift for command mode
 map ; :
@@ -108,7 +110,7 @@ endif
 function! s:sourceConfig()
     let path = $HOME  . '/.config/nvim/plugins'
 
-    let file_list = split(globpath(path, '*'), '\n')
+    let file_list = split(globpath(path, '*.vim'), '\n')
 
     for file in file_list
 	execute 'source' fnameescape(file)
@@ -117,20 +119,14 @@ function! s:sourceConfig()
 endfunction
 
 
+" load plugins
 call plug#begin('~/.local/share/nvim/plugins')
-
 call <SID>sourceConfig()
-
-" OTHER
-" measure startuptime
-Plug 'tweekmonster/startuptime.vim'
-" tiny breakout game
-Plug 'johngrib/vim-game-code-break'
-
 call plug#end()
 
 colorscheme hybrid_material
 set background=dark
+
 augroup syntaxrange
-    "autocmd Syntax * call SyntaxRange#Include('Examples:$', '("""|\\n\\n)$', "python")
+    autocmd Syntax * call SyntaxRange#Include('Examples:$', '("""|\\n\\n)$', "python")
 augroup END
