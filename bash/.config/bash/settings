@@ -88,8 +88,11 @@ export hostnum="$((hostsum%253))";
 usersum="$(echo "$USER" | cksum | awk '{print $1}')";
 export usernum="$((usersum%250))";
 
-export RUST_SRC_PATH="$(~/.cargo/bin/rustc --print sysroot)/lib/rustlib/src/rust/src"
-
+if [[ -x ~/.cargo/bin/rustc ]]; then
+	export RUST_SRC_PATH="$(~/.cargo/bin/rustc --print sysroot)/lib/rustlib/src/rust/src"
+else
+	echo 'Rust is not installed, please install it via  "curl https://sh.rustup.rs -sSf | sh"' >&2;
+fi
 
 # enable color in manpages
 export MANROFFOPT='-c'

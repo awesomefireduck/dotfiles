@@ -1,4 +1,8 @@
 #!/bin/bash
 run_tmux() {
-	exec tmux -2 -u new-session -A -D -s ${1-default}
+	if command -v tmux >/dev/null 2>&1; then
+		exec tmux -2 -u new-session -A -D -s ${1-default};
+	else
+		echo "'tmux' can't be found, please install it." >&2;
+	fi
 }

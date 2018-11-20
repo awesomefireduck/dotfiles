@@ -29,6 +29,9 @@ set backup
 ## The directory to put unique backup files in.
 set backupdir "~/.nano/"
 
+## show linenumbers
+set linenumbers
+
 ## Do backwards searches by default.
 # set backwards
 
@@ -71,7 +74,7 @@ set locking
 ## The opening and closing brackets that can be found by bracket
 ## searches.  They cannot contain blank characters.  The former set must
 ## come before the latter set, and both must be in the same order.
-# set matchbrackets "(<[{)>]}"
+set matchbrackets "(<[{)>]}"
 
 ## Use the blank line below the titlebar as extra editing space.
 # set morespace
