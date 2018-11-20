@@ -1,2 +1,4 @@
 bash/.config/bash/pc86.local
 borg/.config/borg/pass
+# ignore all temporary files
+nano/.nano
