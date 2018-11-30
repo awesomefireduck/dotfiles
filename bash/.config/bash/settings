@@ -3,6 +3,9 @@
 # erasedups causes all previous lines matching the current line to be removed from the history list before that line is saved.
 # See bash(1) for more options
 HISTCONTROL=ignoredups:erasedups
+if [[ -n "$TMUX" ]]; then
+	HISTFILE="$HOME/.bash_history_$(tmux display-message -p '#S' | sed -e 's!/!_!g')"
+fi
 
 # append to the history file, don't overwrite it
 shopt -s histappend
