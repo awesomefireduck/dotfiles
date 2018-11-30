@@ -5,3 +5,7 @@ codecat() {
  sed -e 's/^/    /' "$@";
 }
 alias revkill='sudo netstat -tpln  | grep 2222 | head -n1 | awk "{print $7}" | sed -e "s/\/sshd://" | xargs kill'
+
+# very nice
+alias very_nice='ionice -c2 -n7 nice -n19'
+alias vnice=very_nice
