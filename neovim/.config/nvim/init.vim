@@ -54,6 +54,9 @@ cnoremap <C-L> <Right>
 cnoremap <C-H> <Left>
 cnoremap <C-J> <Down>
 
+"disable consecutive usage of x
+noremap xx <Nop>
+
 if has('nvim')
     set inccommand=nosplit
     " copy file to system clipboard
