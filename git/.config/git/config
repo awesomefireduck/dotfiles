@@ -88,6 +88,9 @@
 [grep]
 	lineNumber = true
 
+[log]
+	date = iso-local
+
 [alias]
 	# make e.g. `git git clone [..]` work like `git clone`
 	# also works for `git git git git git clone` (and of course other subcommands)
