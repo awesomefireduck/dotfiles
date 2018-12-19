@@ -37,8 +37,8 @@ cd "${script_abs_path}"
 cd "$(git rev-parse --show-toplevel)"
 
 mkdir -p /etc/system-dotfiles
-
-chmod 770 /etc/system-dotfiles
+chown root:root /etc/system-dotfiles
+chmod 750 /etc/system-dotfiles
 
 rsync -r .system/ /etc/system-dotfiles/
 
