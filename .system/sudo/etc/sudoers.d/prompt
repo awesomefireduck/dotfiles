@@ -1,0 +1,1 @@
+Defaults passprompt="[sudo] password for %p to run on %H as %U: "

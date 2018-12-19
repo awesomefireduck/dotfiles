@@ -1,0 +1,47 @@
+#!/bin/bash
+set -e
+
+if [[ "$EUID" -ne "0" ]]; then
+	echo "please run this as root (or with sudo)" >&2;
+	exit 1
+fi
+
+find_abs_path() {
+	local target_file phys_dir
+	target_file="$1"
+
+	cd "$(dirname "$target_file")"
+	target_file="$(basename "$target_file")"
+
+	# Iterate down a (possible) chain of symlinks
+	while [ -L "$target_file" ]
+	do
+		target_file="$(readlink "$target_file")"
+		cd "$(dirname "$target_file")"
+		target_file="$(basename "$target_file")"
+	done
+
+	# Compute the canonicalized name by finding the physical path
+	# for the directory we're in and appending the target file.
+	phys_dir="$(pwd -P)"
+	echo "$phys_dir/$target_file"
+}
+script_abs_path="$(dirname "$(find_abs_path "${BASH_SOURCE[0]}" )")"
+
+
+# go to the location of the script,
+# which is .git/hooks in the dotfiles folder
+cd "${script_abs_path}"
+
+# go to the system dotfiles folder
+cd "$(git rev-parse --show-toplevel)"
+
+mkdir -p /etc/system-dotfiles
+
+chmod 770 /etc/system-dotfiles
+
+rsync -r .system/ /etc/system-dotfiles/
+
+cd /etc/system-dotfiles
+
+stow -R */ -t /
